@@ -41,9 +41,9 @@
               </div>
               <div class="icon">
                 @if($cil->description=="car")
-                <i class="fa fa-car"></i>
+                <i class="fa fa-shower"></i>
                 @else
-                <i class="fa fa-shopping-cart"></i>
+                <i class="fa fa-stethoscope"></i>
                 @endif
               </div>
 
@@ -76,6 +76,7 @@
                               <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
                                   <li class="active"><a href="#tab_1" data-toggle="tab">Lista de Pedidos</a></li>
+                                  <!--
                                   <li><a href="#tab_2" data-toggle="tab">Contas a Pagar</a></li>
                                   <li><a href="#tab_3" data-toggle="tab">Contas Pagas</a></li>
                                   <li class="dropdown">
@@ -91,6 +92,7 @@
                                     </ul>
                                   </li>
                                   <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+                                -->
                                 </ul>
                                 <div class="tab-content">
                                   <div class="tab-pane active" id="tab_1">

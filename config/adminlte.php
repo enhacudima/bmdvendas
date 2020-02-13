@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'title' => 'BMVendaS',
+    'title' => 'Petas & Pelos',
 
-    'title_prefix' => '',
+    'title_prefix' => 'Petas&Pelos',
 
     'title_postfix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>BM</b>VendaS',
+    'logo' => '<b>Pelos</b>Patas',
 
-    'logo_mini' => '<b>B</b>V',
+    'logo_mini' => '<b>P</b>P',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'skin' => 'blue',
+    'skin' => 'blue-light',
 
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +111,7 @@ return [
         'MAIN NAVIGATION',
         [
             'text'    => 'Menu',
-            'icon'    => 'th',
+            'icon'    => 'heartbeat',
             'submenu' => [
                 [
                     'text' => 'Home',
@@ -120,10 +120,10 @@ return [
                 ],
             ],
         ],
-        'Outros',
+        'Configuração',
         [
-            'text'       => 'Admin',
-            'icon'       =>'cog',
+            'text'       => 'And Report',
+            'icon'       => 'th-large',
             'url'        => 'admin',
             'submenu'    => [
                             [
@@ -203,11 +203,15 @@ return [
                                                     'url' =>'index_cliente',
                                                 ]    
                                             ]
-                            ],                            [
-                                'text' => 'Configurações',
-                                'url'  => 'admin',
-                            ],
+                            ],  
                         ],   
+        ],
+    'Admin',
+        [
+            'text'    => 'Configurações',
+            'icon'    => 'cog',
+            'url'  => 'admin',
+            
         ],
 
     ],
