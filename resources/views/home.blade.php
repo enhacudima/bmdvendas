@@ -17,7 +17,7 @@
                   <!-- Small boxes (Stat box) -->
 
             <!-- small box -->
-            <div class="small-box bg-blue">
+            <div class="small-box bg-gray">
               <div class="inner">
                 @if($cil->status==0)
                 
