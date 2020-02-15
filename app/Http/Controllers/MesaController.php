@@ -47,7 +47,7 @@ class MesaController extends Controller
     {
         $data=$request->all();
         $this->validate($request, [
-            'name'=>'required',
+            'name'=>'required|string|min:3|max:50|unique:mesa,name',
             'description'=>'required',
             ]);
 

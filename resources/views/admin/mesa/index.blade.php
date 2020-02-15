@@ -1,13 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'BM | Cadastro de Mesas')
+@section('title', ' | Cadastro de Sala')
 
 @section('content_header')
     <h1>Settings</h1>
 @stop
 
 @section('content')
-@include('inc.messages')
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
@@ -16,7 +15,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Nova Mesa
+        <h4>Nova Sala
         </h4>
     </div>
 
@@ -37,7 +36,7 @@
 
 
                     <div class="from-group col-lg-12">
-                        <label><a href="#" data-toggle="tooltip" title="escreva car caso seja car-wash ">Descrição</a></label>
+                        <label><a href="#" data-toggle="tooltip" title="Escreva banho caso seja Sala-de-Banho/consultorio">Descrição</a></label>
                         <input type="text" name="description" id="description" class="form-control" value="{{old('description')}}" for="FirstName" title="Hooray!" required autofocus>
                     </div>
 
@@ -62,7 +61,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Lista de Mesas
+        <h4>Lista de Salas
         </h4>
     </div>
 

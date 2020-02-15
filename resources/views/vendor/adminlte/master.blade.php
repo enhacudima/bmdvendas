@@ -40,9 +40,9 @@
 
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body class="hold-transition @yield('body_class')">
-
 @yield('body')
 <!--data table-->
 <script src="//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>

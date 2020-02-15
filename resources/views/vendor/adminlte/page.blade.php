@@ -354,6 +354,8 @@
             <!-- Main content -->
             <section class="content">
 
+                @include('notification')
+
                 @yield('content')
 
             </section>

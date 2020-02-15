@@ -144,7 +144,7 @@ return [
                                             ],
                             ],
                             [
-                                'text'      => 'Mesas',
+                                'text'      => 'Salas',
                                 'submenu'   => [
                                                 [
                                                     'text' => 'Cadastro',

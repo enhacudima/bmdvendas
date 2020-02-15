@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'BM | Car Create')
+@section('title', ' | Banho Create')
 
 @section('content_header')
     <h1>Settings</h1>
 @stop
 
 @section('content')
-@include('inc.messages')
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
@@ -16,7 +16,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Serviço de Lavagem e Lubrificação de Viaturas
+        <h4>Serviço de Banho
         </h4>
     </div>
 
@@ -26,7 +26,7 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                <h4>Formulario de Cadastro de viatura 
+                <h4>Formulario de Cadastro do Animal 
                     <a href="{{ url('carindex',$mesa_id) }}" class="btn btn-success btn-xs pull-right">Voltar a pagina principal</a>
                 </h4>
             </div>
@@ -53,7 +53,7 @@
 
 
                                     <div class="from-group col-lg-12">
-                                        <label><a href="#" data-toggle="tooltip" title="certifica que não existe duplicação">Chapa de Matricula</a></label>
+                                        <label><a href="#" data-toggle="tooltip" title="certifica que não existe duplicação">Numero da Caderneta</a></label>
                                         <input type="text" name="matricula" id="matricula" class="form-control" value="{{old('matricula')}}" for="FirstName" title="Hooray!" required autofocus>
                                     </div>
 
@@ -61,14 +61,14 @@
 
                             <div class="row">
                                     <div class="from-group col-lg-12">
-                                        <label>Marca de Viatura</label>
+                                        <label>Nome do Animal</label>
                                         <input type="text" name="marca" id="marca" class="form-control" value="{{old('marca')}}" required autofocus>
                                     </div>
                             </div>  
 
                             <div class="row">
                                     <div class="from-group col-lg-12">
-                                        <label>Modelo de Viatura</label>
+                                        <label>Especie</label>
                                         <input type="text" name="modelo" id="modelo" class="form-control" value="{{old('modelo')}}" required autofocus>
                                     </div>
                             </div> 

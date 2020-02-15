@@ -1,13 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'BM | Car admin')
+@section('title', ' | Banho admin')
 
 @section('content_header')
     <h1>Settings</h1>
 @stop
 
 @section('content')
-@include('inc.messages')
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!--sweetalert-->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -18,7 +17,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Serviço de Lavagem e Lubrificação de Viaturas
+        <h4>Serviço de Banho
         </h4>
     </div>
 
@@ -28,8 +27,8 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                <h4>Lista de Viaturas
-                    <a href="{{ url('carcreate',$mesa_id) }}" class="btn btn-success btn-xs pull-right">Criar um nova viatura</a>
+                <h4>Lista de Animais
+                    <a href="{{ url('carcreate',$mesa_id) }}" class="btn btn-success btn-xs pull-right">Criar um novo animal</a>
                 </h4>
             </div>
 
@@ -39,11 +38,11 @@
             <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
                 <thead >
                 <tr>     
-                    <th scope="col">Chapa de Matricula</th>
+                    <th scope="col">Caderneta</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Contacto</th>
-                    <th scope="col">Marca</th>
-                    <th scope="col">Actualizado em:</th>  
+                    <th scope="col">Animal</th>
+                    <th scope="col">Data</th>  
                     <th scope="col">Acção</th>
                 </tr>
                 </thead>
@@ -89,11 +88,11 @@
             <table id="lista" class="table table-striped  table-hover" cellspacing="0" width="100%">
                 <thead >
                 <tr>     
-                    <th scope="col">Chapa de Matricula</th>
+                    <th scope="col">Caderneta</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Contacto</th>
-                    <th scope="col">Marca</th>
-                    <th scope="col">Atualizado em:</th>
+                    <th scope="col">Animal</th>
+                    <th scope="col">Data</th>
                     <th scope="col">Notificar</th>
                     <th scope="col">Venda</th>
                     <th scope="col">Eliminar</th>
