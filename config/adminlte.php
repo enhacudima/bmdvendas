@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'title' => 'Petas & Pelos',
+    'title' => '',
 
-    'title_prefix' => 'Petas&Pelos',
+    'title_prefix' => 'Pelos & Patas',
 
     'title_postfix' => '',
 
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'collapse_sidebar' => true,
+    'collapse_sidebar' => false,
 
     /*
     |--------------------------------------------------------------------------

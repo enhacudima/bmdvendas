@@ -7,6 +7,9 @@ use App\Produtos;
 use App\Entradas;
 use App\Ajustes;
 use DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ProdutoController extends Controller
 {
@@ -48,17 +51,30 @@ class ProdutoController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required|min:3',
-            'codigoproduto'=>'required',
-            'codigobarra'=>'required|max:192',
+            'name'=>'required|min:3|unique:produtos,name|max:192',
+            'codigoproduto'=>'required|max:192|unique:produtos,codigoproduto',
+            'codigobarra'=>'required|max:192|unique:produtos,codigobarra',
             'brand'=>'required|max:192',
             'description'=>'required|string|max:192',
             'tipodeunidadedemedida'=>'required|string|max:192',
-            'unidadedemedida'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+            'unidadedemedida'=>'required|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'peso'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000'
 
         ]);
 
-        Produtos::create($request->all());
+      $file_name="product/default.jpeg";
+      if (isset($request->image))
+      {
+          $file_name='product/'.time() .'.'. $request->file('image')->getClientOriginalExtension();
+          $request->image->storeAs('public', $file_name); 
+          
+      }
+        $data=$request->all();
+        $data['image']=$file_name;
+        
+        
+        Produtos::create($data);
 
         return back()->with('success','Successfully Added to List');
     }
@@ -99,21 +115,32 @@ class ProdutoController extends Controller
 
         $produtos=request()->except(['_token']);
             $this->validate($request, [
-            'name'=>'required|min:3',
-            'codigoproduto'=>'required',
-            'codigobarra'=>'required|max:192',
-            'brand'=>'required|max:192',
-            'description'=>'required|string|max:192',
-            'tipodeunidadedemedida'=>'required|string|max:192',
-            'unidadedemedida'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+            'name'=>['nullable','min:3','max:192',Rule::unique('produtos','name')->ignore($id,'id')],
+            'codigoproduto'=>['required','max:192',Rule::unique('produtos','codigoproduto')->ignore($id,'id')],
+            'codigobarra'=>['nullable','max:192',Rule::unique('produtos','codigobarra')->ignore($id,'id')],
+            'brand'=>'nullable|max:192',
+            'description'=>'nullable|string|max:192',
+            'tipodeunidadedemedida'=>'nullable|string|max:192',
+            'unidadedemedida'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'peso'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
             'status'=>'required',
 
         ]);
-
-
+      $produtos=Produtos::find($id);
+      $file_name=$produtos->image;
+      if (isset($request->image))
+      {
+          Storage::delete('/public/'.$produtos->image);
+          $file_name='product/'.time() .'.'. $request->file('image')->getClientOriginalExtension();
+          $request->image->storeAs('public', $file_name); 
+          
+      }
+        $data=$request->except(['_token']);
+        $data['image']=$file_name;
         
         Produtos::where('id',$id)
-                ->update($produtos);
+                ->update($data);
 
         return back()->with('success','Successfully Updated');
         
