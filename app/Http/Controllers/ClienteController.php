@@ -33,15 +33,13 @@ class ClienteController extends Controller
     {
     	$data=$request->all();
     	$this->validate($request, [
-            'name'=>'required|min:3|max:50|string',
+            'nome'=>'required|min:3|max:50|string',
             'user_id'=>'required',
-            'sname'=>'required|min:3|max:50|string',
-            'morada'=> 'required|min:5|max:100|string',
-            'data_nasce'=>'required|min:3|date',
+            'apelido'=>'required|min:3|max:50|string',
+            'endereco'=> 'required|min:5|max:100|string',
             'contacto1'=>'required|min:9|max:9|unique:cliente',
-            'contacto2'=>'max:9|unique:cliente',
-            'credito'=>'required|string',
-
+            'contacto2'=>'max:9',
+            'email'=>'required|string|unique:cliente',
             ]);
 
 
@@ -55,15 +53,13 @@ class ClienteController extends Controller
     	$cliente=cliente::find($data['id']);
 
     	$newdata=$this->validate($request, [
-            'name'=>'required|min:3|max:50|string',
+            'nome'=>'required|min:3|max:50|string',
             'user_id'=>'required',
-            'sname'=>'required|min:3|max:50|string',
-            'morada'=> 'required|min:5|max:100|string',
-            'data_nasce'=>'required|min:3|date',
+            'apelido'=>'required|min:3|max:50|string',
+            'endereco'=> 'required|min:5|max:100|string',
             'contacto1'=>'required|min:9|max:9',
             'contacto2'=>'max:9',
-            'credito'=>'required|string',
-
+            'email'=>'required|string',
             ]);
 
     	$cliente->update($newdata);

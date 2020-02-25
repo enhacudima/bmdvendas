@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', ' | Cliente Show')
+@section('title', ' | Paciente Show')
 
 @section('content_header')
     <h1>Settings</h1>

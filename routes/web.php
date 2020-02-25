@@ -104,6 +104,9 @@ Route::get('clienteshow/{id}','ClienteController@clienteshow');
 Route::post('updatecliente','ClienteController@updatecliente');
 Route::get('searchcliente','ClienteController@searchcliente')->name('searchloanid');
 
+//Ficha de pacientes
+Route::resource('ficha-paciente', 'FichaPacienteController');
+
 
 
 
