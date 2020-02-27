@@ -3,6 +3,18 @@
 @section('adminlte_css')
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/plugins/iCheck/square/blue.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/auth.css') }}">
+
+
+
+    <style type="text/css">
+          .login-page {
+          background: linear-gradient(to right, #b06ab3, #4568dc );
+          transition: 0.2s;
+          &.is-active {
+            background-color: rgba(255, 255, 255, 0.05);
+
+          }
+    </style>
     @yield('css')
 @stop
 
@@ -11,7 +23,12 @@
 @section('body')
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}"><!--{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}-->
+                <div class="logo">
+                    <img src="{{asset('imglogo/pp.jpg') }}"  alt="logo" width="120" height="80">
+                <div class="clearfix"></div>
+                </div>
+            </a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
@@ -63,6 +80,13 @@
                 @if (config('adminlte.register_url', 'register'))
                 @endif
             </div>
+
+            <hr/>
+
+            <div class="footer text-muted">
+                <center> <strong>Copyright © 2020 <a href="http://www.amanaseguros.co.mz/" class="text-white">Patas & Pelos</a>.</strong> All rights reserved.</center>
+            </div>
+
         </div>
         <!-- /.login-box-body -->
     </div><!-- /.login-box -->
