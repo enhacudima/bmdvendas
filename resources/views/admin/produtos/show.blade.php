@@ -95,6 +95,15 @@
 
                     </div>
             </div> 
+
+
+            <div class="row">
+                    <div class="from-group">
+                        <label>Stock minimo (unidade)</label>
+                        <input step="0.01" type="number" name="stock" id="stock" value="{{$produtos->stock}}" >
+                    </div>
+            </div> 
+
             <div class="row">
                 <div class="form-group">
                     <label>Imagem</label>

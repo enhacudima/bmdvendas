@@ -104,6 +104,8 @@ Route::get('clienteshow/{id}','ClienteController@clienteshow');
 Route::post('updatecliente','ClienteController@updatecliente');
 Route::get('searchcliente','ClienteController@searchcliente')->name('searchloanid');
 
+Route::get('get-produt','ProdutoController@getprodut');
+
 
 
 

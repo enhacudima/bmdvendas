@@ -79,9 +79,16 @@
             </div> 
 
             <div class="row">
+                    <div class="from-group">
+                        <label>Stock minimo (unidade)</label>
+                        <input step="0.01" type="number" name="stock" id="stock" value="{{old('stock')}}" >
+                    </div>
+            </div> 
+
+            <div class="row">
                 <div class="form-group">
                     <label>Imagem</label>
-                    <img src="{{asset('storage/product/default.jpeg')}}" style="width:200px; height:auto; clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;">
+                    <img src="{{asset('storage/product/default.jpg')}}" style="width:200px; height:auto; clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;">
                     <input type="file"  name="image">
                 </div>
             </div>
@@ -118,14 +125,16 @@
                 <th scope="col">#</th>
                 <th scope="col">Imagem</th>
                 <th scope="col">Nome</th>
-                <th scope="col"> Peso</th>
+                <th scope="col">Peso</th>
                 <th scope="col">Codigo do Produto</th>
                 <th scope="col">Codigo de Barras</th>
                 <th scope="col">Brand</th>
                 <th scope="col">Descrição</th>
                 <th scope="col">Tipo de Unidade de Medida</th>
                 <th scope="col">Unidade de Medida</th>
+                <th scope="col">Stock Minimo</th>
                 <th scope="col">Ultima atualização</th>
+                <th scope="col">Estado</th>
             </tr>
             </thead>
             <tbody>
@@ -133,7 +142,7 @@
             @foreach($produtos as $cil)
                 <tr>
                  <td>{{$cil->id}}</td>
-                 <td><img src="{{asset('storage/'.$cil->image)}}" style="width:150px; height:110px; clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
+                 <td><img src="{{asset('storage/'.$cil->image)}}" style="width:130px; height:110px; clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
                  <td> 
 
                     <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->id)}}">
@@ -147,7 +156,13 @@
                  <td>{{$cil->description}}</td>
                  <td>{{$cil->tipodeunidadedemedida}}</td>
                  <td>{{$cil->unidadedemedida}}</td>
+                 <td>{{$cil->stock}}</td>
                  <td>{{$cil->updated_at}}</td>
+                 @if($cil->status==1)
+                    <td><span class="label label-success">Activado</span></td>
+                 @else
+                    <td><span class="label label-warning">Desativado</span></td>
+                 @endif
                 </tr>
             @endforeach 
             @endif   
