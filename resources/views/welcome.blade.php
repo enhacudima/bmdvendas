@@ -50,11 +50,19 @@
 </head>
 
 <body>
+  <style type="text/css">
+    .responsive {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+    }
+
+  </style>
   <!-- Page Content
     ================================================== -->
   <!-- Hero -->
 
-  <section class="hero">
+  <section class="hero ">
     <div class="container text-center">
       <div class="row">
         <div class="col-md-12">
@@ -169,7 +177,7 @@
     <p>
       <!--This is the most powerful theme with thousands of options that you have never seen before.-->
     </p>
-    <img alt="Bell - A perfect theme" class="gadgets-img hidden-md-down" src=" {{ asset('imglogo/pp.jpg') }}">
+    <img alt="Bell - A perfect theme" class="gadgets-img hidden-md-down responsive" src=" {{ asset('imglogo/pp.jpg') }}">
   </div>
   <!-- /Parallax -->
   <!-- Features -->
@@ -656,7 +664,11 @@
                 Licensing information: https://bootstrapmade.com/license/
                 Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Bell
               -->
-             Designed by <a href="https://bootstrapmade.com/">Emidio Nhacudima</a>
+             Designed by <a href="malito:Nhacudimaemidio@gmail.com">Emidio Nhacudima</a> 
+              <div>
+              
+              <p><i class="fa fa-phone"></i> +258 84 079 320 5<br><i class="fa fa-phone"></i> +258 87 344 058 6</p>
+            </div>
             </div>
           </div>
 
