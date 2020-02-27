@@ -84,7 +84,7 @@
             <hr/>
 
             <div class="footer text-muted">
-                <center> <strong>Copyright © 2020 <a href="http://www.amanaseguros.co.mz/" class="text-white">Patas & Pelos</a>.</strong> All rights reserved.</center>
+                <center> <strong>Copyright © 2020 <a href="http://www.amanaseguros.co.mz/" class="text-white">Evidevi</a>.</strong> All rights reserved.</center>
             </div>
 
         </div>
