@@ -28,13 +28,13 @@
 
             <div class="panel-heading">
                 <h4>Lista de Animais
-                    <a href="{{ url('carcreate',$mesa_id) }}" class="btn btn-success btn-xs pull-right">Criar um novo animal</a>
+                    <a href="{{ url('carcreate',$mesa_id) }}" class="btn btn-success btn-xs pull-right">Criar um novo PET</a>
                 </h4>
             </div>
 
             <div class="panel-body">
 
-                
+            <div class="box-body table-responsive no-padding">      
             <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
                 <thead >
                 <tr>     
@@ -70,6 +70,7 @@
                 @endif   
                 </tbody>
             </table>
+            </div>
                 </div>
             </div>
         </div>
@@ -84,7 +85,7 @@
 
             <div class="panel-body">
 
-                
+            <div class="box-body table-responsive no-padding">     
             <table id="lista" class="table table-striped  table-hover" cellspacing="0" width="100%">
                 <thead >
                 <tr>     
@@ -128,6 +129,7 @@
                 @endif   
                 </tbody>
             </table>
+            </div>
                 </div>
             </div>
         </div>
