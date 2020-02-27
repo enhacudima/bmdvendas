@@ -20,11 +20,13 @@
     </div>
 
     <div class="panel-body">
+<div class="row">
+    
 
         <form id="myForm" name="myForm" action="{{url('/report_movimetos_filter')}}" method="post">
                 @csrf
                 {{ csrf_field() }}
-    <div class="">
+        <div class="">
         <div class="form-group col-sm-2">
                 <label >Data Inicio</label>
               
@@ -42,7 +44,7 @@
         </div>
 
         <div class="form-group  col-sm-2 col-sm-offset-1">
-            <label >Data
+           
             <label class="container">Data do Movimento
               <input type="radio" checked="checked" value="movimento" id="radio" name="radio">
               <span class="checkmark"></span>
@@ -50,13 +52,12 @@
             <label class="container">Data do Ajuste
               <input type="radio" value="ajuste" id="radio" name="radio">
               <span class="checkmark"></span>
-            </label>    
             </label>             
         </div>
         </div>
 
-        <div class="">
-        <p class="submit col">
+        <div class="form-group  col-sm-2 col-sm-offset-1">
+        <p class="submit">
             <strong>
             <button type="submit" class="btnEmidio btn btn-primary bord0" value="1" id="gravar">Atualizar </button>
             </strong>
@@ -71,7 +72,7 @@
 
     </form> 
 
-    
+  </div>  
 
     <div class="col-lg-12">
     <div class="panel panel-default">

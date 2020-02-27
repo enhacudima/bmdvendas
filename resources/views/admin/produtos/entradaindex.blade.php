@@ -136,7 +136,10 @@
                 <th scope="col">Preco Final</th>
                 <th scope="col">Criado em</th>
                 <th scope="col">atualizado em</th>
-                <th scope="col">Estado</th>
+                <th scope="col">Data Expiração</th>
+                <th scope="col">Fornecedor</th>
+                <th scope="col">Telefone Fornecedor</th>
+                <th scope="col">Email Fornecedor</th>
             </tr>
             </thead>
             <tbody>
@@ -166,6 +169,11 @@
                  @else
                     <td><span class="label label-warning">Desativado</span></td>
                  @endif
+
+                 <td>{{$cil->data_exp}}</td>
+                 <td>{{$cil->fornecedor}}</td>
+                 <td>{{$cil->fornecedor}}</td>
+                 <td>{{$cil->email_fornecedor}}</td>
                 </tr>
             @endforeach 
             @endif   
