@@ -59,65 +59,64 @@
     </head>
     <body>
         <div class="content">
-            <div class="">
-                <div class="center-block"><h2>Mesa: {{$mesa->name}}; Operador: {{ Auth::user()->name }}</h2> </div>
+            <div class="row">
+                <div class="col-md-12"  style="text-align: center">
+                    <div class="center-block"><b><h2>Sala: {{$mesa->name}}; Operador: {{ Auth::user()->name }}</h2></b></div>
+                </div>
             </div>
             <hr>
 
            
 
 
-            <div class="col-md-12">
+            
+            <div class="row "  style="text-align: center">
+                <div class="col-md-6">
+                <a class="btn btn-primary " href="{{ url('home') }}" style="width: 50%; " > Voltar</a> 
+                    
+                </div>
 
-                   <div class="row col-md-12">
-                    <div class="col-md-2">
-                    <a class="btn btn-primary " href="{{ url('home') }}" style="width: 100%;  margin-right: 10px"> Voltar</a> 
-                        
-                    </div>
-                    <div class="col-md-2">
-                    <a class="btn btn-danger " href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" style="width: 100%;"> Finalizar <i class="fa fa-arrow-circle-right"></i></a>
-                        
-                    </div>
+                <div class="col-md-6">
+                <a class="btn btn-danger " href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" style="width: 50%;"> Finalizar <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                    
+                </div>
 
-                   </div> 
+            </div>   
             
         
-                <hr>
-            <div class="row">
-            <div class="col-md-5" style="margin-top: 30px;margin-right: 40px">    
+            <hr>
 
-              <form id="demoform" action="#" method="post">
-                 {{ csrf_field() }}
-                 <input type="" name="formtype" value="venda" hidden="true">
-                 <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true">
-                <select multiple="multiple" size="10" name="duallistbox_demo1[]" title="duallistbox_demo1[]">
-                  @foreach($produtos as $key => $cil)
-                  <option value="{{$cil->id}}">{{$cil->name}} - {{$cil->preco_final}} Mtn</option>
-                  @endforeach
-                </select>
-                <br>
-                <button type="submit" class="btn btn-primary btn-block ">Adicionar no carrinho</button>
-              </form>
-            </div>
+            <div class="row "  style="text-align: center">
+                <div class="col-md-6">
+                    <form id="demoform" action="#" method="post" style="margin-left: 15px">
+                         <h3>Lista</h3>
+                         {{ csrf_field() }}
+                         <input type="" name="formtype" value="venda" hidden="true">
+                         <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true">
+                        <select multiple="multiple" size="20" name="duallistbox_demo1[]" title="duallistbox_demo1[]">
+                          @foreach($produtos as $key => $cil)
+                          <option value="{{$cil->id}}">{{$cil->name}} - {{$cil->preco_final}} Mtn</option>
+                          @endforeach
+                        </select>
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-block ">Adicionar no carrinho</button>
+                      </form> 
+                    </div>
 
-            <div class="col-md-6" style="margin-top: 55px">
-                <h3>Carrinho</h3>
-                <div class="row">
-                <form id="carrinhoform" action="#" method="POST">
+                <div class="col-md-6">
+                <form id="carrinhoform" action="#" method="POST" style="margin-right: 15px; margin-left: 15px">
+                    <h3>Carrinho</h3>
                     {{ csrf_field() }}
                         <div class="panel-body">
 
                             <div class="box-body table-responsive no-padding"> 
-                                    
-
-                            <div class="col-md-8 row input-group">
-
-                            </div> 
+  
 
                                 <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
                                     <thead >
                                     <tr>
-                                        <th scope="col">Descrição do Produto</th>
+                                        <th >Descrição do Produto</th>
                                         <th scope="col">Preço.(Mtn)</th>
                                         <th scope="col">Qua.t</th>
                                         <th scope="col">Total.(Mtn)</th>
@@ -128,10 +127,14 @@
                                     @if(isset($data_mesa))  
                                     @foreach($data_mesa as $key => $value)
                                         <tr>
-                                        <td style="width: 400px"> <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true"><input type="text" id="idbulk" name="idbulk" hidden="true" value="{{$value->identificador_de_bulk}}"><input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="{{$value->id}}"><input class="form-control" type="text" name="produt" id="produt"  disabled="" value="{{$value->name}}"></td> 
-                                        <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}"></td> 
-                                        <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}"></td> 
-                                        <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}"></td>
+                                        <td style="width: 400px"> 
+                                            <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true">
+                                            <input type="text" id="idbulk" name="idbulk" hidden="true" value="{{$value->identificador_de_bulk}}">
+                                            <input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="{{$value->id}}">
+                                            <input style="width: 250px" class="form-control" type="text" name="produt" id="produt"  disabled="" value="{{$value->name}}"></td> 
+                                        <td><input style="width: 100px" class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}"></td> 
+                                        <td><input style="width: 100px" class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}"></td> 
+                                        <td><input style="width: 100px"  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}"></td>
                                         <td><a type="submit"class="btn btn-danger btn-xs"  data-value="{{$value->id}}" id="delete" href="#">
                                                 <i class="fa fa-trash-o fa-lg" ></i> Delete
                                             </a>
@@ -152,17 +155,22 @@
                                           </tr>
                                       </tfoot>
                                 </table>
-                            </div>    
+                            </div>   
                             </div>
+                            <br>
 
-                @if ($data_mesa)
-                <button type="submit" class="row btn btn-primary btn-block " style="margin-top: 10px; width: 40%; max-width: 60%;margin-bottom: 10px">Atualizar <i class="fa fa-recycle" aria-hidden="true"></i></button>
-                @endif
+                            @if ($data_mesa)
+                            <button type="submit" class="btn btn-primary btn-block " style=" margin-bottom: 15px">Atualizar <i class="fa fa-recycle" aria-hidden="true"></i></button>
+                            @endif 
+
+
                 </form>
-            </div>
-            </div>
+                    
+                </div>
 
-            </div>
+            </div>  
+
+            
 
             <!--modal edite Mesa-->
         <div class="modal fade bd-example-modal-lg" id="ticket-edit-mesa-modal" tabindex="-1" role="dialog" aria-labelledby="ticket-edit-mesa-modal-Label">
@@ -419,7 +427,7 @@
                         </div>
                     </div>
         </div> 
-    </div>
+    
     
 
             <script>

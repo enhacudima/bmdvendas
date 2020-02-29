@@ -65,7 +65,9 @@ Route::post('savecredito','VendasController@savecredito');
 
 // relatorios 
 Route::get('report_produt','ReportController@reportMovimento');
+Route::get('report_stock_atual','ReportController@reportStockAtual');
 Route::post('report_movimetos_filter','ReportController@reportMovimentoFilter');
+Route::post('report_movimetos_filter_atual','ReportController@reportMovimentoFilterAtual');
 Route::post('report_inflow_filter','ReportController@reportInflowFilter');
 Route::post('report_produto_venda_filter','ReportController@reportProdutoVendaFilter');
 Route::post('report_auditar_filter','ReportController@reportAuditarFilter');
@@ -78,8 +80,8 @@ Route::get('pagamentocliente','ReportController@pagamentocliente');
 Route::post('report_vendacredito_filter','ReportController@vendascreditofiltre');
 Route::get('report_vendacar','ReportController@vendascar');
 Route::post('report_vendacar_filter','ReportController@vendascarfilter');
-
-
+Route::get('report_pagamento','ReportController@reportPagamento');
+Route::post('report_pagamentos_filter','ReportController@reportPagamentoFiltrar');
 
 
 

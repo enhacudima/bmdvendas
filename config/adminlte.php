@@ -161,6 +161,11 @@ return [
                                              'url'  => 'report_produt',
                                                     
                                             ],
+                                            [
+                                             'text'=> 'Stock Atual',
+                                             'url'  => 'report_stock_atual',
+                                                    
+                                            ],
                                             [ 
                                                 'text' => 'Vendas',
                                                 'submenu' =>[
@@ -168,7 +173,12 @@ return [
                                                                  'text'=> 'Inflow',
                                                                  'url'  => 'report_inflow',
                                                                         
-                                                                ],                                          
+                                                                ],   
+                                                                [
+                                                                 'text'=> 'Tipo de Pagamento',
+                                                                 'url'  => 'report_pagamento',
+                                                                        
+                                                                ],                                        
                                                                 [
                                                                  'text'=> 'Produtos',
                                                                  'url'  => 'report_produto_venda',
@@ -185,7 +195,7 @@ return [
                                                                         
                                                                 ],   
                                                                 [
-                                                                 'text'=> 'Detalhes Car ',
+                                                                 'text'=> 'Detalhes Banho ',
                                                                  'url'  => 'report_vendacar',
                                                                         
                                                                 ],                       

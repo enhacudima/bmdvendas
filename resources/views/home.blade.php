@@ -9,6 +9,8 @@
 @section('content')
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<div class="row">
+  
 
 	@if($mesa)
 		@foreach($mesa as $key => $cil)
@@ -63,7 +65,7 @@
         </div>
         @endforeach
     @endif
-
+</div>
 
         <!--modal edite Mesa-->
         <div class="modal fade bd-example-modal-lg" id="ticket-edit-mesa-modal" tabindex="-1" role="dialog" aria-labelledby="ticket-edit-mesa-modal-Label">

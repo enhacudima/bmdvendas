@@ -136,6 +136,7 @@
                 <th scope="col">Preco Final</th>
                 <th scope="col">Criado em</th>
                 <th scope="col">atualizado em</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Data Expiração</th>
                 <th scope="col">Fornecedor</th>
                 <th scope="col">Telefone Fornecedor</th>
