@@ -539,4 +539,17 @@ class VendasController extends Controller
     }
 
 
+public function factura($id){
+        $data_mesa=VendasTempMesa::where('mesa_id',$id)->whereNull('codigo_venda')
+          ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
+          ->join('produtos','produtos_entradas.produto_id','produtos.id')
+          ->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk')
+          ->orderBy('vendas_temp_mesa.created_at','desc')
+          ->get();
+
+
+          return view('documentos.factura', compact('data_mesa'));
+
+}
+
 }

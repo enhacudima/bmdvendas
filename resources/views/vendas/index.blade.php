@@ -71,12 +71,18 @@
 
             
             <div class="row "  style="text-align: center">
-                <div class="col-md-6">
-                <a class="btn btn-primary " href="{{ url('home') }}" style="width: 50%; " > Voltar</a> 
+                <div class="col-md-4">
+                <a class="btn btn-primary " href="{{ url('home') }}" style="width: 50%; " > <i class="fa fa-arrow-circle-left"></i> Voltar</a> 
                     
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
+                <a class="btn btn-success " href="{{ url('venda/factura/'.$mesa_id) }}" style="width: 50%; " target="_blanck"><i class="fa fa-list-ol" ></i> Factura</a> 
+                    
+                </div>
+
+
+                <div class="col-md-4">
                 <a class="btn btn-danger " href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" style="width: 50%;"> Finalizar <i class="fa fa-arrow-circle-right"></i>
                 </a>
                     
@@ -100,7 +106,7 @@
                           @endforeach
                         </select>
                         <br>
-                        <button type="submit" class="btn btn-primary btn-block ">Adicionar no carrinho</button>
+                        <button type="submit" class="btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i> Adicionar no carrinho</button>
                       </form> 
                     </div>
 
@@ -160,7 +166,7 @@
                             <br>
 
                             @if ($data_mesa)
-                            <button type="submit" class="btn btn-primary btn-block " style=" margin-bottom: 15px">Atualizar <i class="fa fa-recycle" aria-hidden="true"></i></button>
+                            <button type="submit" class="btn btn-primary btn-block " style=" margin-bottom: 15px"><i class="fa fa-hourglass-start" ></i> Atualizar</button>
                             @endif 
 
 
@@ -427,6 +433,8 @@
                         </div>
                     </div>
         </div> 
+
+        
     
     
 
