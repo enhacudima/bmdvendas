@@ -133,9 +133,17 @@ class ProdutoController extends Controller
       $file_name=$produtos->image;
       if (isset($request->image))
       {
-          Storage::delete('/public/'.$produtos->image);
-          $file_name='product/'.time() .'.'. $request->file('image')->getClientOriginalExtension();
-          $request->image->storeAs('public', $file_name); 
+
+        $newFilename=$request->file('image')->getClientOriginalName();
+
+          if ($produtos->image!="product/default.jpg") {
+              
+            Storage::delete('/public/'.$produtos->image);
+          }
+            $file_name='product/'.time() .'.'. $request->file('image')->getClientOriginalExtension();
+            $request->image->storeAs('public', $file_name); 
+          
+
           
       }
         $data=$request->except(['_token']);

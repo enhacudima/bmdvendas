@@ -3,7 +3,7 @@
 @section('title', ' | Report Movimentos Produtos')
 
 @section('content_header')
-    <h1>Settings</h1>
+    <h1>Report</h1>
 @stop
 
 @section('content')
@@ -77,6 +77,7 @@
         <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
             <thead >
             <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Tipo de Pagamento</th>
                 <th scope="col">Valor</th>
             </tr>
@@ -84,15 +85,18 @@
             <tbody>
             @if(isset($pagamentos))  
             @php($i=0)  
-            @foreach($pagamentos as $cil)
+            @foreach($pagamentos as $key => $cil)
             <tr>
+                 <td>{{$key+1}}</td>   
                  <td>{{$cil->fpagamento}}</td>
                  <td>{{number_format($cil->total_venda, 2, ".", "")}}</td>
-                   @php($i=$cil->total_venda+$i)
+                  
             </tr>
+             @php($i=$cil->total_venda+$i)
             @endforeach 
             @endif 
             <tr>
+                <td></td>
                 <td>Total:</td>
                 <td>{{number_format($i,2, ".", "")}} MTN</td>
             </tr>
