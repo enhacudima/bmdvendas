@@ -46,7 +46,7 @@ class ReportController extends Controller
             public function reportStockAtual()
     {   
         $movimentos=DB::table('produtos_entradas_view')
-                            ->join('produtos','produtos_entradas_view.id','produtos.id')
+                            ->join('produtos','produtos_entradas_view.produto_id','produtos.id')
                             ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
                             ->select('produtos.id','produtos.name','produtos.stock','produtos.image',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
                                     DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
@@ -118,7 +118,7 @@ class ReportController extends Controller
 
         $movimentos=DB::table('produtos_entradas_view')
                             ->whereBetween('produtos_entradas_view.created_at',[$inicio,$fim])
-                            ->join('produtos','produtos_entradas_view.id','produtos.id')
+                            ->join('produtos','produtos_entradas_view.produto_id','produtos.id')
                             ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
                             ->select('produtos.id','produtos.name','produtos.stock','produtos.image',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
                                     DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
@@ -132,7 +132,7 @@ class ReportController extends Controller
 
         $movimentos=DB::table('produtos_entradas_view')
                             ->whereBetween('produtos_ajustes_view.created_at',[$inicio,$fim])
-                            ->join('produtos','produtos_entradas_view.id','produtos.id')
+                            ->join('produtos','produtos_entradas_view.produto_id','produtos.id')
                             ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
                             ->select('produtos.id','produtos.name','produtos.stock','produtos.image',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
                                     DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))

@@ -104,7 +104,7 @@
                          <input name="identificador_de_bulk" id="identificador_de_bulk" class="identificador_de_bulk" hidden="true">
                         <select multiple="multiple" size="20" name="duallistbox_demo1[]" title="duallistbox_demo1[]">
                           @foreach($produtos as $key => $cil)
-                          <option value="{{$cil->id}}">{{$cil->name}} - {{$cil->preco_final}} Mtn</option>
+                          <option value="{{$cil->id}}"> {{$cil->name}} - {{$cil->preco_final}} Mtn Q - {{$cil->total_entrada-$cil->total_ajuste}}</option>
                           @endforeach
                         </select>
                         <br>

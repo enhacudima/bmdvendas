@@ -15,6 +15,7 @@ use App\ClienteVenda;
 use App\CarTemp;
 use App\Car;
 use App\CarVenda;
+use DB;
 
 
 class VendasController extends Controller
@@ -33,10 +34,23 @@ class VendasController extends Controller
     public function index($id)
     {
     	$mesa_id=$id;
+
+        $produtos=DB::table('produtos_entradas_view')
+              ->where('produtos_entradas_view.status','!=','0')
+              ->join('produtos','produtos_entradas_view.produto_id','produtos.id')
+              ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
+              ->select('produtos_entradas_view.id','produtos_entradas_view.name','produtos_entradas_view.preco_final',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
+                      DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
+              ->groupby('produtos_entradas_view.id','produtos_entradas_view.name','produtos_entradas_view.preco_final')
+              ->get();
+
+
+/*
         $produtos=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
                     ->select('produtos_entradas.*','produtos.name')
                     ->where('produtos_entradas.status','!=','0')
-                    ->get();
+                    ->get();*/
+
         $data_mesa=VendasTempMesa::where('mesa_id',$mesa_id)->whereNull('codigo_venda')
           		->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
           		->join('produtos','produtos_entradas.produto_id','produtos.id')
@@ -107,7 +121,7 @@ class VendasController extends Controller
             $identificador_de_bulk=$data['idbulk'];
 
           }else{
-            $identificador_de_bulk='mesa'.'_'.time();
+            $identificador_de_bulk='mesa'.'_'.time().(!Auth::guest()) ? Auth::user()->id : null;
           }
         	
         	$mesa_id=$data['mesa_id'];
@@ -326,7 +340,7 @@ class VendasController extends Controller
         	$detalhes=$data['detalhes'];
         	$referencia=$data['referencia'];
         	$valor=$data['valor'];
-        	$identificador_bulck='pagamento'.'_'.time();
+        	$identificador_bulck='pagamento'.'_'.time().(!Auth::guest()) ? Auth::user()->id : null;
         	$mesa_id=$data['mesa_id'];
         	$porpagar=$data['porpagar'];
         	$pago=$data['pago'];

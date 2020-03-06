@@ -33,7 +33,7 @@
                                         <option disabled selected ></option>
                                         @if(isset($clientes))
                                             @foreach($clientes as $data)
-                                                <option value="{{$data->id}}">{{$data->nome}}</option>
+                                                <option value="{{$data->id}}">{{$data->nome}} {{$data->apelido}}</option>
                                             @endforeach
                                         @endif
                                     </select>

@@ -36,7 +36,7 @@ class ClienteController extends Controller
             'nome'=>'required|min:3|max:50|string',
             'user_id'=>'required',
             'apelido'=>'required|min:3|max:50|string',
-            'endereco'=> 'required|min:5|max:100|string',
+            'endereco'=> 'required|min:5|max:255|string',
             'contacto1'=>'required|min:9|max:9|unique:cliente',
             'contacto2'=>'max:9',
             'email'=>'required|string|unique:cliente',

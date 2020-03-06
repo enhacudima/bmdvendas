@@ -26,7 +26,7 @@
                   @if($cil->description=="banho")
                   <h3 style="" ><a  href="{{url('carindex',$cil->id)}}" style="color: red">{{$cil->name}}</a></h3>
                   @elseif($cil->description=="consultorio")
-                  <h3 style="" ><a  href="{{url('carindex',$cil->id)}}" style="color: red">{{$cil->name}}</a></h3>
+                  <h3 style="" ><a  href="{{url('ficha-clinica',$cil->id)}}" style="color: red">{{$cil->name}}</a></h3>
                   @else
                   <h3 style="" ><a  href="{{url('vendasindex',$cil->id)}}" style="color: red">{{$cil->name}}</a></h3>
                   @endif
@@ -36,7 +36,7 @@
                   @if($cil->description=="banho")
                   <h3><a  href="{{url('carindex',$cil->id)}}" style="color: #FFFFFF">{{$cil->name}}</a></h3>
                   @elseif($cil->description=="consultorio")
-                  <h3><a  href="{{url('carindex',$cil->id)}}" style="color: #FFFFFF">{{$cil->name}}</a></h3>
+                  <h3><a  href="{{url('ficha-clinica',$cil->id)}}" style="color: #FFFFFF">{{$cil->name}}</a></h3>
                   @else
                   <h3><a  href="{{url('vendasindex',$cil->id)}}" style="color: #FFFFFF">{{$cil->name}}</a></h3>
                   @endif  

@@ -210,7 +210,11 @@ return [
                                                 [
                                                     'text'=>'Criar Cliente',
                                                     'url' =>'index_cliente',
-                                                ]    
+                                                ],
+                                                [
+                                                    'text'=>'Pacientes',
+                                                    'url' =>'paciente',
+                                                ]      
                                             ]
                             ],  
                         ],   
