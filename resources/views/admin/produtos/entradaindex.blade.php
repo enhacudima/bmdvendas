@@ -3,7 +3,7 @@
 @section('title', ' | Cadastro de Nova entrada de Produtos')
 
 @section('content_header')
-    <h1>Settings</h1>
+    <h1>Produto|Entrada</h1>
 @stop
 
 @section('content')
@@ -31,6 +31,7 @@
                     <div class="from-group col-lg-12">
                         <label>Produto</label>
                         <select name="produto_id" id="produto_id" class="form-control" value="{{old('produto')}}" required autofocus>
+                            <option selected value>Selecina..</option>
                             @if(isset($produtos))
                             @foreach($produtos as $cil)
                             <option value="{{$cil->id}}">{{$cil->name}}</option>
@@ -42,23 +43,57 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Quantidade</label>
-                        <input step="0.01" type="number" name="quantidade" id="quantidade" class="form-control" value="{{old('quantidade')}}" required autofocus>
+                        <input step="0.01" type="number" name="quantidade" id="quantidade" class="form-control quantidade" value="{{old('quantidade')}}" required autofocus>
                     </div>
             </div> 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Preço de Compra</label>
-                        <input step="0.01"  type="number" name="precodecompra" id="precodecompra" class="form-control" value="{{old('precodecompra')}}"  autofocus>
+                        <input step="0.01"  type="number" name="precodecompra" id="precodecompra" class="form-control precodecompra" value="{{old('precodecompra')}}" required autofocus>
                     </div>
             </div> 
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Margem (%)</label>
-                        <input step="0.01" type="number" name="margem_per" id="margem_per" class="form-control" value="{{old('margem_per')}}" required autofocus>
+                        <input step="0.01" type="number" name="margem_per" id="margem_per" class="form-control margem_per" value="{{old('margem_per')}}" required autofocus>
                     </div>
-            </div>       
+            </div> 
 
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Preço final</label>
+                        <input step="0.01" type="number"  id="final_p" class="form-control final_p"  required autofocus disabled="">
+                    </div>
+            </div>  
+
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Data Expiração</label>
+                        <input  type="date" name="data_exp"  class="form-control " value="{{old('data_exp')}}"  >
+                    </div>
+            </div> 
+
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Fornecedor</label>
+                        <input  type="text" name="fornecedor"  class="form-control " value="{{old('fornecedor')}}"  >
+                    </div>
+            </div> 
+
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Telefone Fornecedor</label>
+                        <input  type="number" name="telefone"  class="form-control " value="{{old('telefone')}}"  >
+                    </div>
+            </div> 
+
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Email Fornecedor</label>
+                        <input  type="Email" name="email_fornecedor"  class="form-control " value="{{old('email_fornecedor')}}"  >
+                    </div>
+            </div> 
 
             <div class="row">
 
@@ -91,7 +126,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Produto</th>
-                <th scope="col">Lot</th>
+                <th scope="col">Codigo</th>
                 <th scope="col">Quantidade</th>
                 <th scope="col">Preço da compra</th>
                 <th scope="col">Margem (%)</th>
@@ -102,6 +137,10 @@
                 <th scope="col">Criado em</th>
                 <th scope="col">atualizado em</th>
                 <th scope="col">Estado</th>
+                <th scope="col">Data Expiração</th>
+                <th scope="col">Fornecedor</th>
+                <th scope="col">Telefone Fornecedor</th>
+                <th scope="col">Email Fornecedor</th>
             </tr>
             </thead>
             <tbody>
@@ -113,7 +152,7 @@
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
                  </a>
                 </td>
-                <td>             <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@lotshow', $cil->id)}}">
+                <td>             <a class="btn btn btn-primary btn-xs" href="{{action('ProdutoController@lotshow', $cil->id)}}">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->lot}}
                  </a>
                 </td>  
@@ -126,11 +165,16 @@
                  <td>{{number_format($cil->preco_final, 2, ".", "")}} Mt</td>
                  <td>{{$cil->created_at}}</td>
                  <td>{{$cil->updated_at}}</td>
-                 @if ($cil->status==0)
-                 <td>Desativado</td>
+                 @if($cil->status==1)
+                    <td><span class="label label-success">Activado</span></td>
                  @else
-                 <td>Ativo</td>
+                    <td><span class="label label-warning">Desativado</span></td>
                  @endif
+
+                 <td>{{$cil->data_exp}}</td>
+                 <td>{{$cil->fornecedor}}</td>
+                 <td>{{$cil->fornecedor}}</td>
+                 <td>{{$cil->email_fornecedor}}</td>
                 </tr>
             @endforeach 
             @endif   
@@ -143,6 +187,8 @@
 </div>
 
 </div>
+
+<input type="hidden" id="unidadedemedida">
 
 @stop
 @section('js')
@@ -178,6 +224,87 @@
 
         } );
     } );
+    </script>
+
+    <script>
+    $('#produto_id').on('change',function(){
+    var id = $(this).val();    
+    if(id){
+            $.ajax({
+               type:"GET",
+               url:"{{url('get-produt')}}?id="+id,
+               success:function(res){               
+                if(res){
+                    var unidadedemedida =res;
+                    $('#unidadedemedida').val(res);
+                }else{
+                   var unidadedemedida='';
+                }
+               }
+            });
+        }else{
+             var unidadedemedida='';
+        }
+            
+       });
+
+                        
+
+
+    $('#margem_per').keyup(function(){
+        console.log(unidadedemedida);
+
+        var quantidade =   parseFloat($('#quantidade').val());
+        var precodecompra =  parseFloat($('#precodecompra').val());
+        var margem_per = parseFloat($('#margem_per').val());
+        var unidadedemedida = parseFloat($('#unidadedemedida').val());
+     
+        $custo_unitario=(precodecompra/quantidade/unidadedemedida);
+        $margem=$custo_unitario*(margem_per/100);
+        $preco_final=$custo_unitario+$margem;
+
+      $('#final_p').val(roundN($preco_final,2)); 
+
+    });
+
+
+    $('#quantidade').keyup(function(){
+        console.log(unidadedemedida);
+
+        var quantidade =   parseFloat($('#quantidade').val());
+        var precodecompra =  parseFloat($('#precodecompra').val());
+        var margem_per = parseFloat($('#margem_per').val());
+        var unidadedemedida = parseFloat($('#unidadedemedida').val());
+     
+        $custo_unitario=(precodecompra/quantidade/unidadedemedida);
+        $margem=$custo_unitario*(margem_per/100);
+        $preco_final=$custo_unitario+$margem;
+
+         $('#final_p').val(roundN($preco_final,2)); 
+
+    });
+
+
+    $('#precodecompra').keyup(function(){
+        console.log(unidadedemedida);
+
+        var quantidade =   parseFloat($('#quantidade').val());
+        var precodecompra =  parseFloat($('#precodecompra').val());
+        var margem_per = parseFloat($('#margem_per').val());
+        var unidadedemedida = parseFloat($('#unidadedemedida').val());
+     
+        $custo_unitario=(precodecompra/quantidade/unidadedemedida);
+        $margem=$custo_unitario*(margem_per/100);
+        $preco_final=$custo_unitario+$margem;
+
+       $('#final_p').val(roundN($preco_final,2)); 
+
+    });
+
+    function roundN(num,n){
+      return parseFloat(Math.round(num * Math.pow(10, n)) /Math.pow(10,n)).toFixed(n);
+    }
+        
     </script>
 
 

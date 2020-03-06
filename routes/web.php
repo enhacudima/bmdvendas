@@ -111,6 +111,7 @@ Route::get('get-produt','ProdutoController@getprodut');
 Route::get('venda/factura/{id}','VendasController@factura');
 Route::get('vendas/find/bulck','VendasController@findbulck');
 
+
 //Cliente
 Route::get('index_cliente','ClienteController@indexcliente');
 Route::post('storcliente','ClienteController@storcliente');
@@ -121,7 +122,4 @@ Route::get('searchcliente','ClienteController@searchcliente')->name('searchloani
 //Ficha de pacientes
 Route::resource('ficha-clinica', 'FichaPacienteController');
 Route::resource('paciente', 'PacienteController');
-
-
-
 

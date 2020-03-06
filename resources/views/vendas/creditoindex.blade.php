@@ -56,34 +56,35 @@
     </head>
     <body>
         <div class="content">
-            <div class="">
-                <div class="center-block"><h2>Mesa: {{$mesa->name}}; Operador: {{ Auth::user()->name }}</h2> </div>
+            <div class="row">
+                <div class="col-md-12"  style="text-align: center">
+                    <div class="center-block"><b><h2>Sala: {{$mesa->name}}; Operador: {{ Auth::user()->name }}</h2></b></div>
+                </div>
             </div>
             <hr>
 
-           
+            <div class="row "  style="text-align: center">
+                <div class="col-md-6">
+                <a class="btn btn-primary " href="{{ url()->previous() }}" style="width: 50%; " ><i class="fa fa-arrow-circle-left"></i> Voltar</a> 
+                    
+                </div>
 
+                <div class="col-md-6">
+                <a class="btn btn-danger " href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" style="width: 50%;"> Finalizar <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                    
+                </div>
 
-            <div class="col-md-12">
-
-                   <div class="row col-md-12">
-                    <div class="col-md-2">
-                    <a class="btn btn-primary " href="{{ url()->previous() }}" style="width: 100%;  margin-right: 10px"> Voltar</a> 
-                        
-                    </div>
-                    <div class="col-md-2">
-                    <a class="btn btn-danger " href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" style="width: 100%;"> Finalizar <i class="fa fa-arrow-circle-right"></i></a>
-                        
-                    </div>
-
-                   </div> 
+            </div>   
             
         
-                <hr>
+            <hr>
+
+
             <div class="row">
 <!--havia dual box-->
 
-            <div class="col-md-12 " style="margin-top: 55px; margin-left: 20%">
+            <div class="col-md-12 " style="margin-top: 55px; margin-left: 25%">
                 <h3>Carrinho</h3>
                 <div class="row">
                 <form id="carrinhoform" action="#" method="POST">
@@ -95,7 +96,7 @@
                             <div class="input-group control-group increment" style="margin-bottom: 10px" >
                               <input type="text"  id="loanidshow"  name="loanidshow" class="form-control" placeholder="Pesquisar Nome, contact" required autofocus >
                               <div class="input-group-btn" > 
-                                <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus" ></i>+ Add</button>
+                                <a class="btn btn-success" href="{{url('index_cliente')}}" target="_blanck">+ Add</a>
                               </div>
                               
                             </div>
@@ -116,10 +117,15 @@
                                     @if(isset($data_mesa))  
                                     @foreach($data_mesa as $key => $value)
                                         <tr>
-                                        <td style="width: 400px"> <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true"><input type="text" id="idbulk" name="idbulk" hidden="true" value="{{$value->identificador_de_bulk}}"><input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="{{$value->id}}"><input class="form-control" type="text" name="produt" id="produt"  disabled="" value="{{$value->name}}"></td> 
-                                        <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}"></td> 
-                                        <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}"></td> 
-                                        <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}"></td>
+                                        <td style="width: 400px"> 
+                                            <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true">
+                                            <input type="text" id="idbulk" name="idbulk" hidden="true" value="{{$value->identificador_de_bulk}}">
+                                            <input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="{{$value->id}}">
+                                            <input style="width: 250px" class="form-control" type="text" name="produt" id="produt"  disabled="" value="{{$value->name}}">
+                                        </td> 
+                                        <td><input style="width: 100px" class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}"></td> 
+                                        <td><input style="width: 100px" class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}"></td> 
+                                        <td><input style="width: 100px" class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}"></td>
                                         <td><a type="submit"class="btn btn-danger btn-xs"  data-value="{{$value->id}}" id="delete" href="#">
                                                 <i class="fa fa-trash-o fa-lg" ></i> Delete
                                             </a>
@@ -144,14 +150,14 @@
                             </div>
 
                 @if ($data_mesa)
-                <button type="submit" class="row btn btn-primary btn-block " style="margin-top: 10px; width: 40%; max-width: 60%;margin-bottom: 10px">Atualizar <i class="fa fa-recycle" aria-hidden="true"></i></button>
+                <button type="submit" class="row btn btn-primary btn-block " style="margin-top: 10px; width: 40%; max-width: 60%;margin-bottom: 10px"><i class="fa fa-hourglass-start" ></i> Atualizar</button>
                 @endif
                 </form>
             </div>
             </div>
 
             </div>
-
+        </div>
             <!--modal edite Mesa-->
         <div class="modal fade bd-example-modal-lg" id="ticket-edit-mesa-modal" tabindex="-1" role="dialog" aria-labelledby="ticket-edit-mesa-modal-Label">
             <div class="modal-dialog modal-lg" role="document">
@@ -405,7 +411,7 @@
                         </div>
                     </div>
         </div> 
-    </div>
+    
     
 
 
@@ -571,6 +577,8 @@
                     var _valor=[];
 
 
+
+
                     for (var i = 0; i < fpagamento.length; i++) {
                         _fpagamento.push($(fpagamento).eq(i).val());
                         _detalhes.push($(detalhes).eq(i).val())
@@ -579,9 +587,17 @@
                         
                     }
 
+                    
+
+           
+                if (!_cliente) {
+                   swal("Cliente não verificado!", "Verifica se existe um cliente selecionado, ou pesquise pelos nomes dos clientes aptos à contrair credito.", "error");
+                }else{
 
                 if (confirm("Tens a certeza que pretendes Efectuar o credito : " + $porpagar + "?"))
-                {   
+                {  
+
+
 
                  
                 
@@ -633,7 +649,7 @@
                 });
                      swal("Credito efectuado com sucesso","Tome atenção porque este cliente tem mas um  credito adicional", "success")
                 }//end confirmation
-
+                }
 
                 });
             </script>

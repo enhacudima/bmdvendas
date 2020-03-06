@@ -102,7 +102,14 @@ class VendasController extends Controller
         {
         	$request->except('_token');	
         	$data=$request->all();
-        	$identificador_de_bulk='mesa'.'_'.time();
+
+          if (isset($data['idbulk'])) {
+            $identificador_de_bulk=$data['idbulk'];
+
+          }else{
+            $identificador_de_bulk='mesa'.'_'.time();
+          }
+        	
         	$mesa_id=$data['mesa_id'];
            if ($request->formtype=="car") {
             $car_temp=CarTemp::find($data['car_id']);
@@ -214,7 +221,7 @@ class VendasController extends Controller
     {
     	if($request->ajax())
     	{
-    		$request->except('_token');	
+    		  $request->except('_token');	
         	$data=$request->all();
         	$idbulk=$data['mesa_id'];
         	$quantidade = $data['quantidade'];
@@ -252,7 +259,7 @@ class VendasController extends Controller
             $data_mesa=VendasTempMesa::where('mesa_id',$data['mesa_id'])->whereNull('codigo_venda')
               ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
-              ->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk')
+              ->select('vendas_temp_mesa.mesa_id','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk')
               ->orderBy('vendas_temp_mesa.created_at','desc')
               ->get();
 
@@ -261,9 +268,9 @@ class VendasController extends Controller
 
           	foreach ($data_mesa as $key => $value) {
           		$output.=
-          			              '
+          			'
                 <tr>
-                  <td  style="width: 400px"> <input type="text" id="idbulk" name="idbulk" hidden="true" value="'.$value->identificador_de_bulk.'"><input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="'.$value->id.'"><input class="form-control" type="text" name="produt" id="produt"  disabled="" value="'.$value->name.'"></td> 
+                  <td  style="width: 400px">  <input type="" name="mesa_id" value="'.$value->mesa_id.'" hidden="true"> <input type="text" id="idbulk" name="idbulk" hidden="true" value="'.$value->identificador_de_bulk.'"><input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="'.$value->id.'"><input class="form-control" type="text" name="produt" id="produt"  disabled="" value="'.$value->name.'"></td> 
                   <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="'.$value->preco_final.'"></td> 
                   <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="'.$value->quantidade.'"></td> 
                   <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="'.$value->quantidade * $value->preco_final.'"></td>
@@ -538,5 +545,29 @@ class VendasController extends Controller
         }
     }
 
+
+public function factura($id){
+        $data_mesa=VendasTempMesa::where('mesa_id',$id)->whereNull('codigo_venda')
+          ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
+          ->join('produtos','produtos_entradas.produto_id','produtos.id')
+          ->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk')
+          ->orderBy('vendas_temp_mesa.created_at','desc')
+          ->get();
+
+          
+
+
+          return view('documentos.factura', compact('data_mesa'));
+
+}
+
+public function findbulck(Request $request)
+{
+  $id=$request->mesa_id;
+
+  $data_mesa=VendasTempMesa::where('mesa_id',$id)->whereNull('codigo_venda')->first();
+
+  return \Response::json($data_mesa); 
+}
 
 }

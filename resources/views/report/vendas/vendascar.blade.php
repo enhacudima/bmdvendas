@@ -15,7 +15,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Report Venda a credito
+        <h4>Report Banho
         </h4>
     </div>
 
@@ -43,7 +43,7 @@
 
         </div>
 
-        <div class="">
+        <div class="form-group  col-sm-2  "><br>
         <p class="submit col">
             <strong>
             <button type="submit" class="btnEmidio btn btn-primary bord0" value="1" id="gravar">Atualizar </button>
@@ -65,7 +65,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Vendas a Credito
+        <h4>Vendas
         </h4>
     </div>
 
@@ -78,7 +78,7 @@
                 <th scope="col">Nome</th>
                 <th scope="col">Apelido</th>
                 <th scope="col">Contacto</th>
-                <th scope="col">Matricula</th>
+                <th scope="col">Caderneta</th>
                 <th scope="col">Data</th>
                 <th scope="col">Produto</th>
                 <th scope="col">Quantidade</th>

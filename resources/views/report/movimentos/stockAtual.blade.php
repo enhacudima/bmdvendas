@@ -23,7 +23,7 @@
 <div class="row">
     
 
-        <form id="myForm" name="myForm" action="{{url('/report_movimetos_filter')}}" method="post">
+        <form id="myForm" name="myForm" action="{{url('/report_movimetos_filter_atual')}}" method="post">
                 @csrf
                 {{ csrf_field() }}
         <div class="">
@@ -89,14 +89,11 @@
             <thead >
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Image</th>
                 <th scope="col">Produto</th>
-                <th scope="col">Lot Entradas</th>
-                <th scope="col">Lot Ajuste</th>
-                <th scope="col">Preço Únitario</th>
                 <th scope="col">Total Entrada (unidade)</th>
-                <th scope="col">Total Ajuste (unidade)</th>
-                <th scope="col">Variance (unidade)</th>
-                <th scope="col">Valor</th>
+                <th scope="col">Total Saida (unidade)</th>
+                <th scope="col">Saldo (unidade)</th>
             </tr>
             </thead>
             <tbody>
@@ -105,31 +102,24 @@
             @foreach($movimentos as $cil)
                 <tr>
                  <td>{{$cil->id}}</td>
-                 <td>             <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->id)}}">
-                    <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
-                 </a>
+                 <td><img src="{{asset('storage/'.$cil->image)}}" style="width:130px; height:110px; clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
+                 <td>             
+                    <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->id)}}">
+                        <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
+                    </a>
                 </td>
-                <td>{{$cil->entrada_lot}}</td> 
-                <td>{{$cil->lot}}</td> 
-                <td>{{$cil->entrada_preco}}MTN</td> 
                 <td>{{$cil->total_entrada}}</td>
                 <td>{{$cil->total_ajuste}}</td>
-                <td>{{$cil->total_entrada - $cil->total_ajuste}}</td>
-                <td>{{number_format($cil->entrada_preco * $cil->total_ajuste, 2, ".", "")}}</td>
-                @php($i=$cil->entrada_preco * $cil->total_ajuste+$i)
+                @if($cil->stock >= ($cil->total_entrada - $cil->total_ajuste))
+                <td> 
+                 <a class="btn btn btn-danger btn-xs" >
+                     {{$cil->total_entrada - $cil->total_ajuste}}
+                 </a></td>
+                @else
+                 <td>{{$cil->total_entrada - $cil->total_ajuste}}</td>
+                @endif
                 </tr>
             @endforeach 
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Total:</td>
-                    <td>{{number_format($i, 2, ".", "")}} MTN</td>
-                </tr>
             @endif   
             </tbody>
         </table>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Car;
 use App\CarTemp;
+use App\VendasTempMesa;
 
 class CarController extends Controller
 {
@@ -113,11 +114,20 @@ class CarController extends Controller
           $data=$request->all();
 
           $linha_id=$data['linha_id'];
+          $mesa_id=$data['mesa_id'];
+          $data_mesa=VendasTempMesa::where('mesa_id',$mesa_id)->whereNull('codigo_venda')->first();
 
-          CarTemp::where('id',$linha_id)->delete();
+          if (isset($data_mesa)) {
+              $status=false;
+          }else{
+            CarTemp::where('id',$linha_id)->delete();
+             $status=true;
+          }
+
+          
 
     
-        return;
+        return \Response::json($status);
 
           
         }

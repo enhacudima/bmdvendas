@@ -3,7 +3,7 @@
 @section('title', ' | Report Movimentos Produtos')
 
 @section('content_header')
-    <h1>Settings</h1>
+    <h1>Report</h1>
 @stop
 
 @section('content')
@@ -15,7 +15,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Report Ajuste de Produto
+        <h4>Report Tipo de Pagamento
         </h4>
     </div>
 
@@ -23,7 +23,7 @@
 <div class="row">
     
 
-        <form id="myForm" name="myForm" action="{{url('/report_movimetos_filter')}}" method="post">
+        <form id="myForm" name="myForm" action="{{url('/report_pagamentos_filter')}}" method="post">
                 @csrf
                 {{ csrf_field() }}
         <div class="">
@@ -43,17 +43,6 @@
 
         </div>
 
-        <div class="form-group  col-sm-2 col-sm-offset-1">
-           
-            <label class="container">Data do Movimento
-              <input type="radio" checked="checked" value="movimento" id="radio" name="radio">
-              <span class="checkmark"></span>
-            </label>
-            <label class="container">Data do Ajuste
-              <input type="radio" value="ajuste" id="radio" name="radio">
-              <span class="checkmark"></span>
-            </label>             
-        </div>
         </div>
 
         <div class="form-group  col-sm-2 col-sm-offset-1">
@@ -78,7 +67,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Lista de ajustes
+        <h4>Resumo de Pagamentos por Tipo
         </h4>
     </div>
 
@@ -88,49 +77,31 @@
         <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
             <thead >
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Produto</th>
-                <th scope="col">Lot Entradas</th>
-                <th scope="col">Lot Ajuste</th>
-                <th scope="col">Preço Únitario</th>
-                <th scope="col">Total Entrada (unidade)</th>
-                <th scope="col">Total Ajuste (unidade)</th>
-                <th scope="col">Variance (unidade)</th>
+                <th scope="col">ID</th>
+                <th scope="col">Tipo de Pagamento</th>
                 <th scope="col">Valor</th>
             </tr>
             </thead>
             <tbody>
-            @if(isset($movimentos))  
+            @if(isset($pagamentos))  
             @php($i=0)  
-            @foreach($movimentos as $cil)
-                <tr>
-                 <td>{{$cil->id}}</td>
-                 <td>             <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->id)}}">
-                    <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
-                 </a>
-                </td>
-                <td>{{$cil->entrada_lot}}</td> 
-                <td>{{$cil->lot}}</td> 
-                <td>{{$cil->entrada_preco}}MTN</td> 
-                <td>{{$cil->total_entrada}}</td>
-                <td>{{$cil->total_ajuste}}</td>
-                <td>{{$cil->total_entrada - $cil->total_ajuste}}</td>
-                <td>{{number_format($cil->entrada_preco * $cil->total_ajuste, 2, ".", "")}}</td>
-                @php($i=$cil->entrada_preco * $cil->total_ajuste+$i)
-                </tr>
+            @foreach($pagamentos as $key => $cil)
+            <tr>
+                 <td>{{$key+1}}</td>   
+                 <td>{{$cil->fpagamento}}</td>
+                 <td>{{number_format($cil->total_venda, 2, ".", "")}}</td>
+                  
+            </tr>
+             @php($i=$cil->total_venda+$i)
             @endforeach 
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Total:</td>
-                    <td>{{number_format($i, 2, ".", "")}} MTN</td>
-                </tr>
-            @endif   
+            @endif 
+            <tr>
+                <td></td>
+                <td>Total:</td>
+                <td>{{number_format($i,2, ".", "")}} MTN</td>
+            </tr>
+
+
             </tbody>
         </table>
     </div>    

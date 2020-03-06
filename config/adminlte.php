@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'title' => 'Petas & Pelos',
+    'title' => '',
 
-    'title_prefix' => 'Petas&Pelos',
+    'title_prefix' => 'Pelos & Patas',
 
     'title_postfix' => '',
 
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'collapse_sidebar' => true,
+    'collapse_sidebar' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -109,16 +109,15 @@ return [
 
     'menu' => [
         'MAIN NAVIGATION',
+        [  
+            'text' => 'Home',
+            'icon' => 'home',
+            'url'  => 'home',
+        ],
         [
             'text'    => 'Menu',
             'icon'    => 'heartbeat',
-            'submenu' => [
-                [
-                    'text' => 'Home',
-                    'icon' => 'home',
-                    'url'  => 'home',
-                ],
-            ],
+            'url'     => '#',  
         ],
         'Configuração',
         [
@@ -161,6 +160,11 @@ return [
                                              'url'  => 'report_produt',
                                                     
                                             ],
+                                            [
+                                             'text'=> 'Stock Atual',
+                                             'url'  => 'report_stock_atual',
+                                                    
+                                            ],
                                             [ 
                                                 'text' => 'Vendas',
                                                 'submenu' =>[
@@ -168,7 +172,12 @@ return [
                                                                  'text'=> 'Inflow',
                                                                  'url'  => 'report_inflow',
                                                                         
-                                                                ],                                          
+                                                                ],   
+                                                                [
+                                                                 'text'=> 'Tipo de Pagamento',
+                                                                 'url'  => 'report_pagamento',
+                                                                        
+                                                                ],                                        
                                                                 [
                                                                  'text'=> 'Produtos',
                                                                  'url'  => 'report_produto_venda',
@@ -185,7 +194,7 @@ return [
                                                                         
                                                                 ],   
                                                                 [
-                                                                 'text'=> 'Detalhes Car ',
+                                                                 'text'=> 'Detalhes Banho ',
                                                                  'url'  => 'report_vendacar',
                                                                         
                                                                 ],                       

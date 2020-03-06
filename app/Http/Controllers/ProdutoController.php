@@ -7,6 +7,9 @@ use App\Produtos;
 use App\Entradas;
 use App\Ajustes;
 use DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ProdutoController extends Controller
 {
@@ -48,17 +51,31 @@ class ProdutoController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required|min:3',
-            'codigoproduto'=>'required',
-            'codigobarra'=>'required|max:192',
+            'name'=>'required|min:3|unique:produtos,name|max:192',
+            'codigoproduto'=>'required|max:192|unique:produtos,codigoproduto',
+            'codigobarra'=>'required|max:192|unique:produtos,codigobarra',
             'brand'=>'required|max:192',
             'description'=>'required|string|max:192',
             'tipodeunidadedemedida'=>'required|string|max:192',
-            'unidadedemedida'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+            'unidadedemedida'=>'required|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'stock'=>'required|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'peso'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000'
 
         ]);
 
-        Produtos::create($request->all());
+      $file_name="product/default.jpg";
+      if (isset($request->image))
+      {
+          $file_name='product/'.time() .'.'. $request->file('image')->getClientOriginalExtension();
+          $request->image->storeAs('public', $file_name); 
+          
+      }
+        $data=$request->all();
+        $data['image']=$file_name;
+        
+        
+        Produtos::create($data);
 
         return back()->with('success','Successfully Added to List');
     }
@@ -99,21 +116,41 @@ class ProdutoController extends Controller
 
         $produtos=request()->except(['_token']);
             $this->validate($request, [
-            'name'=>'required|min:3',
-            'codigoproduto'=>'required',
-            'codigobarra'=>'required|max:192',
-            'brand'=>'required|max:192',
-            'description'=>'required|string|max:192',
-            'tipodeunidadedemedida'=>'required|string|max:192',
-            'unidadedemedida'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+            'name'=>['nullable','min:3','max:192',Rule::unique('produtos','name')->ignore($id,'id')],
+            'codigoproduto'=>['required','max:192',Rule::unique('produtos','codigoproduto')->ignore($id,'id')],
+            'codigobarra'=>['nullable','max:192',Rule::unique('produtos','codigobarra')->ignore($id,'id')],
+            'brand'=>'nullable|max:192',
+            'description'=>'nullable|string|max:192',
+            'tipodeunidadedemedida'=>'nullable|string|max:192',
+            'unidadedemedida'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'peso'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'stock'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
             'status'=>'required',
 
         ]);
+      $produtos=Produtos::find($id);
+      $file_name=$produtos->image;
+      if (isset($request->image))
+      {
 
+        $newFilename=$request->file('image')->getClientOriginalName();
 
+          if ($produtos->image!="product/default.jpg") {
+              
+            Storage::delete('/public/'.$produtos->image);
+          }
+            $file_name='product/'.time() .'.'. $request->file('image')->getClientOriginalExtension();
+            $request->image->storeAs('public', $file_name); 
+          
+
+          
+      }
+        $data=$request->except(['_token']);
+        $data['image']=$file_name;
         
         Produtos::where('id',$id)
-                ->update($produtos);
+                ->update($data);
 
         return back()->with('success','Successfully Updated');
         
@@ -133,7 +170,7 @@ class ProdutoController extends Controller
     }
 
     public function entradaindex(){
-        $produtos=Produtos::all();
+        $produtos=Produtos::all()->where('status',1);
         $entradas=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
                             ->select('produtos_entradas.*','produtos.name')
                             ->get();
@@ -142,10 +179,23 @@ class ProdutoController extends Controller
 
     public function entradastore(Request $request)
     {
+        
+        $this->validate($request,[
+          'produto_id'=>'required',
+          'quantidade'=>'required',
+          'precodecompra'=>'required|numeric',
+          'margem_per'=>'required|numeric',
+          'quantidade'=>'required|numeric',
+          'data_exp'=>'nullable|date',
+          'fornecedor'=>'nullable|string|max:255',
+          'telefone'=>'nullable|numeric',
+          'email_fornecedor'=>'nullable|email',
+
+        ]);
         $produto=Produtos::find($request->produto_id);
         $entrada= new Entradas;
         $entrada->produto_id=$request->produto_id;
-        $entrada->lot="Produt-Lot-".time();
+        $entrada->lot=time();
         $entrada->quantidade=$request->quantidade;
         $entrada->precodecompra=$request->precodecompra;
         $entrada->margem_per=$request->margem_per;
@@ -155,7 +205,12 @@ class ProdutoController extends Controller
         $entrada->margem=$entrada->custo_unitario*($request->margem_per/100);
         $entrada->preco_final=$entrada->custo_unitario+$entrada->margem;
 
-       // dd($entrada);
+        
+        $entrada->data_exp=$request->data_exp;
+        $entrada->fornecedor=$request->fornecedor;
+        $entrada->telefone=$request->telefone;
+        $entrada->email_fornecedor=$request->email_fornecedor;
+
         $entrada->save();
 
         return back()->with('success','Successfully Added');
@@ -214,14 +269,27 @@ class ProdutoController extends Controller
     {   
         $produtos=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
                             ->where('produtos_entradas.id',$id)
-                            ->select('produtos_entradas.*','produtos.name')
+                            ->select('produtos_entradas.*','produtos.name','produtos.unidadedemedida')
                             ->get();
-       //dd($produtos[0]->status);
+
         return view('admin.Produtos.entradashow',compact('produtos'));
     }
 
     public function loteupdate (Request $request)
     {   
+        $this->validate($request,[
+          'produto_id'=>'required',
+          'quantidade'=>'required',
+          'precodecompra'=>'required|numeric',
+          'margem_per'=>'required|numeric',
+          'quantidade'=>'required|numeric',
+          'data_exp'=>'nullable|date',
+          'fornecedor'=>'nullable|string|max:255',
+          'telefone'=>'nullable|numeric',
+          'email_fornecedor'=>'nullable|email',
+
+        ]);
+
         $produto=Produtos::find($request->produto_id);
         $entrada= new Entradas;
         $quantidade=$entrada->quantidade=$request->quantidade;
@@ -234,20 +302,24 @@ class ProdutoController extends Controller
         $preco_final=$entrada->preco_final=$entrada->custo_unitario+$entrada->margem;
         $status=$entrada->status=$request->status;
 
+        $data_exp=$request->data_exp;
+        $fornecedor=$request->fornecedor;
+        $telefone=$request->telefone;
+        $email_fornecedor=$request->email_fornecedor;
 
         $temp_name=Entradas::where('produto_id',$request->produto_id)->get();
-        //dd($status);
+        
         $ver=0;
         if ($status==1) 
         {
             foreach ($temp_name as $value) {
-                //dd($value->status);
+                
             if ($value->status==1) { 
-                //dd($value->status);
+                
                 $ver=$value->status;
             }    
             }
-            //dd($ver);
+            
             if ($ver==1){
             return back()->with('error','Não pode activar mas de 1 produto com mesmo nome');
                 };
@@ -267,9 +339,13 @@ class ProdutoController extends Controller
                         'margem'=>$margem,
                         'preco_final'=>$preco_final,
                         'status'=>$status,
+                        'data_exp'=>$data_exp,
+                        'fornecedor'=>$fornecedor,
+                        'telefone'=>$telefone,
+                        'email_fornecedor'=>$email_fornecedor,
                     ]);
 
-        return $this->entradaindex()->with('success','Successfully update');
+        return back()->with('success','Successfully update');
 
         
 
@@ -277,5 +353,11 @@ class ProdutoController extends Controller
 
 
 
+    }
+    public function getprodut(Request $request)
+    {
+        $produto = Produtos::find($request->id);
+
+        return response()->json($produto->unidadedemedida);
     }
 }

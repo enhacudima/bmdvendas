@@ -15,6 +15,7 @@ use App\Car;
 use App\ClienteVenda;
 use App\Cliente;
 use App\VendasTempMesa;
+use App\vendas;
 
 class ReportController extends Controller
 {
@@ -41,6 +42,21 @@ class ReportController extends Controller
                             
         return view('report.movimentos.report',compact('movimentos'));
     }
+
+            public function reportStockAtual()
+    {   
+        $movimentos=DB::table('produtos_entradas_view')
+                            ->join('produtos','produtos_entradas_view.id','produtos.id')
+                            ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
+                            ->select('produtos.id','produtos.name','produtos.stock','produtos.image',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
+                                    DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
+                            ->groupby('produtos.name','produtos.id','produtos.stock','produtos.image')
+                            ->get();
+                     
+                            
+        return view('report.movimentos.stockAtual',compact('movimentos'));
+    }
+
 
     public function reportMovimentoFilter(Request $request)
     {
@@ -85,7 +101,74 @@ class ReportController extends Controller
 
     }
 
+        public function reportMovimentoFilterAtual(Request $request)
+    {
+        $data=$request->all();
+        $this->validate($request, [
+            'radio'=>'required',
+            'inicio'=>'required',
+            'fim'=>'required',
+            ]);
+      $inicio=Carbon::parse($request->inicio);
+      $fim=Carbon::parse($request->fim)->addHours(23)->addMinutes(59)->addSecond(59);
+      $radio=$request->radio;
 
+
+        if ($radio=="movimento") {
+
+        $movimentos=DB::table('produtos_entradas_view')
+                            ->whereBetween('produtos_entradas_view.created_at',[$inicio,$fim])
+                            ->join('produtos','produtos_entradas_view.id','produtos.id')
+                            ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
+                            ->select('produtos.id','produtos.name','produtos.stock','produtos.image',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
+                                    DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
+                            ->groupby('produtos.name','produtos.id','produtos.stock','produtos.image')
+                            ->get();
+                     
+                            
+        return view('report.movimentos.stockAtual',compact('movimentos'));
+            
+        }elseif ($radio=="ajuste") {
+
+        $movimentos=DB::table('produtos_entradas_view')
+                            ->whereBetween('produtos_ajustes_view.created_at',[$inicio,$fim])
+                            ->join('produtos','produtos_entradas_view.id','produtos.id')
+                            ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
+                            ->select('produtos.id','produtos.name','produtos.stock','produtos.image',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
+                                    DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
+                            ->groupby('produtos.name','produtos.id','produtos.stock','produtos.image')
+                            ->get();
+                     
+                            
+        return view('report.movimentos.stockAtual',compact('movimentos'));
+        }
+
+    }
+
+    public function reportPagamento()
+    {
+        $pagamentos=Vendas::select('fpagamento',DB::raw('Sum(valor) as total_venda'))->groupby('fpagamento')->get();
+
+
+        return view('report.vendas.pagamento',compact('pagamentos'));
+    }
+
+    public function reportPagamentoFiltrar(Request $request)
+    {
+
+        $data=$request->all();
+        $this->validate($request, [
+            'inicio'=>'required',
+            'fim'=>'required',
+            ]);
+
+          $inicio=Carbon::parse($request->inicio);
+          $fim=Carbon::parse($request->fim)->addHours(23)->addMinutes(59)->addSecond(59);
+
+
+      $pagamentos=Vendas::whereBetween('created_at',[$inicio,$fim])->select('fpagamento',DB::raw('Sum(valor) as total_venda'))->groupby('fpagamento')->get();  
+      return view('report.vendas.pagamento',compact('pagamentos')); 
+    }
 
     public function reportInflow()
     {
@@ -102,6 +185,8 @@ class ReportController extends Controller
                          
         return view('report.vendas.inflow',compact('movimentos'));
     }
+
+
 
     public function reportInflowFilter(Request $request)
     {

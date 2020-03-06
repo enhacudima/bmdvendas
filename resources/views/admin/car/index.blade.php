@@ -28,13 +28,13 @@
 
             <div class="panel-heading">
                 <h4>Lista de Animais
-                    <a href="{{ url('carcreate',$mesa_id) }}" class="btn btn-success btn-xs pull-right">Criar um novo animal</a>
+                    <a href="{{ url('carcreate',$mesa_id) }}" class="btn btn-success btn-xs pull-right">Criar um novo PET</a>
                 </h4>
             </div>
 
             <div class="panel-body">
 
-                
+            <div class="box-body table-responsive no-padding">      
             <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
                 <thead >
                 <tr>     
@@ -70,6 +70,7 @@
                 @endif   
                 </tbody>
             </table>
+            </div>
                 </div>
             </div>
         </div>
@@ -84,7 +85,7 @@
 
             <div class="panel-body">
 
-                
+            <div class="box-body table-responsive no-padding">     
             <table id="lista" class="table table-striped  table-hover" cellspacing="0" width="100%">
                 <thead >
                 <tr>     
@@ -120,7 +121,7 @@
                         </a>
                      </td>
                     <td><a type="submit"class="btn btn-danger btn-xs"  data-value="{{$cil->id}}" id="delete" href="#">
-                            <i class="fa fa-trash-o fa-lg" ></i> Apagar
+                            <i class="fa fa-trash-o fa-lg" ></i>
                         </a>
                     </td>
                     </tr>
@@ -128,6 +129,7 @@
                 @endif   
                 </tbody>
             </table>
+            </div>
                 </div>
             </div>
         </div>
@@ -202,18 +204,23 @@ $(document).ready(function(){
 
                     $value=$(this).data("value");
                     //alert($value);
-                    console.log($value);
                 if (confirm("Clique 'Ok' para eliminar o carro"))
                 {
                   $.ajax({
                   url: "{{URL('carapagalinha')}}",
                   type:'post',
-                  data: {linha_id:$value, _token: '{{csrf_token()}}'},
+                  data: {linha_id:$value, _token: '{{csrf_token()}}',mesa_id:'{{$mesa_id}}'},
 
                   success: function(data) {
+                    console.log(data);
+                    if (data==false) {
+                        swal("Erro na eliminação!", "Você não pode remover este iten antes de efectuar pagamento da conta", "error");
+                    }else{
+                        swal("Carro eliminado com Sucesso!", "Você eliminou um carro da lista", "success");
+                        location.reload(); 
+                    }
                     
-                    swal("Carro eliminado com Sucesso!", "Você eliminou um carro da lista", "success");
-                    location.reload();
+
                        
 
 
