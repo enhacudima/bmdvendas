@@ -111,6 +111,17 @@ Route::get('get-produt','ProdutoController@getprodut');
 Route::get('venda/factura/{id}','VendasController@factura');
 Route::get('vendas/find/bulck','VendasController@findbulck');
 
+//Cliente
+Route::get('index_cliente','ClienteController@indexcliente');
+Route::post('storcliente','ClienteController@storcliente');
+Route::get('clienteshow/{id}','ClienteController@clienteshow');
+Route::post('updatecliente','ClienteController@updatecliente');
+Route::get('searchcliente','ClienteController@searchcliente')->name('searchloanid');
+
+//Ficha de pacientes
+Route::resource('ficha-clinica', 'FichaPacienteController');
+Route::resource('paciente', 'PacienteController');
+
 
 
 
