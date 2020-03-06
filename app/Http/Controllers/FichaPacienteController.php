@@ -14,7 +14,9 @@ class FichaPacienteController extends Controller
      */
     public function index()
     {
-        //
+
+        $fichas_clinicas = ficha_paciente::get();;
+        return view('admin.ficha_clinica.index',compact(['fichas_clinicas']));
     }
 
     /**
@@ -24,7 +26,8 @@ class FichaPacienteController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('admin.ficha_clinica.create');
     }
 
     /**

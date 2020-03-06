@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ficha_paciente extends Model
 {
-    protected $table = 'ficha_paciente';
+    protected $table = 'fichas_clinicas';
     protected $guarded =array();
 
     public $primaryKey = 'id';

@@ -15,57 +15,96 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Novo cliente
+        <h4>Novo paciente
         </h4>
     </div>
 
     <div class="panel-body">
         <div class="col-lg-3">
-                        <form method="post" action="{{url('storcliente')}}" autocomplete="Active" accept-charset="UTF-8" >
+                        <form method="post" action="{{route('paciente.store')}}" autocomplete="Active" accept-charset="UTF-8" >
                             {{ csrf_field() }}
 
                             <input   name="user_id" type="hidden" id="user_id" value="{{ Auth::user()->id }}" required autofocus>
+
+                            <div class="row">
+                                <div class="from-group col-lg-12">
+                                    <label>Cliente</label>
+                                    <select name="cliente_id" id="cliente_id" class="form-control" value="{{old('cliente_id')}}" required autofocus>
+                                        <option disabled selected ></option>
+                                        @if(isset($clientes))
+                                            @foreach($clientes as $data)
+                                                <option value="{{$data->id}}">{{$data->nome}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="row">
                                     <div class="from-group col-lg-12">
-                                        <label>Nome</label>
+                                        <label>Nome do paciente</label>
                                         <input type="text" name="nome" id="nome" class="form-control" value="{{old('nome')}}" required autofocus>
                                     </div>
                             </div>
-                            <div class="row">
-                                    <div class="from-group col-lg-12">
-                                        <label>Apelido</label>
-                                        <input type="text" name="apelido" id="apelido" class="form-control" value="{{old('apelido')}}" required autofocus>
-                                    </div>
-                            </div>         
 
                             <div class="row">
                                     <div class="from-group col-lg-12">
-                                        <label>Morada</label>
-                                        <input type="text" name="endereco" id="endereco" class="form-control" value="{{old('endereco')}}" required autofocus placeholder="Provincia/Cidade,bairro">
+                                        <label>Especie</label>
+                                        <select name="especie" id="especie" class="form-control" value="{{old('especie')}}" required autofocus>
+                                            <option disabled selected ></option>
+                                            @if(isset($especies))
+                                                @foreach($especies as $data)
+                                                    <option value="{{$data->nome}}">{{$data->nome}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                             </div>
 
                             <div class="row">
                                     <div class="from-group col-lg-12">
-                                        <label>Contacto 1</label>
-                                        <input type="number" name="contacto1" id="contacto1" class="form-control" value="{{old('contacto1')}}" required autofocus placeholder="Ex: 84*******">
+                                        <label>Raça</label>
+                                        <select name="raca" id="raca" class="form-control" value="{{old('raca')}}" required autofocus>
+                                            <option disabled selected ></option>
+                                            @if(isset($racas))
+                                                @foreach($racas as $data)
+                                                    <option value="{{$data->nome}}">{{$data->nome}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                             </div>
 
                             <div class="row">
                                 <div class="from-group col-lg-12">
-                                    <label>Contacto 2</label>
-                                    <input type="number" name="contacto2" id="contacto2" class="form-control" value="{{old('contacto2')}}"  autofocus placeholder="Ex: 86*******">
+                                    <label>Sexo</label>
+                                    <select name="sexo" id="sexo" class="form-control" value="{{old('sexo')}}" required autofocus>
+                                        <option disabled selected ></option>
+                                        <option value="M">Macho</option>
+                                        <option value="F">Fémia</option>
+                                        <option value="O">Outro</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="from-group col-lg-12">
-                                    <label>Email</label>
-                                    <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}"  autofocus placeholder="Ex: 86*******">
+                                    <label>Idade</label>
+                                    <input type="number" name="idade" id="idade" class="form-control" value="{{old('idade')}}"  autofocus>
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="from-group col-lg-12">
+                                    <label>Pelagem</label>
+                                    <select name="pelagem" id="pelagem" class="form-control" value="{{old('pelagem')}}" required autofocus>
+                                        <option disabled selected ></option>
+                                        <option value="branca">Branca</option>
+                                        <option value="castanha">Castanha</option>
+                                        <option value="preta">Preta</option>
+                                    </select>
+                                </div>
+                            </div>
 
 
                             <div class="row">
@@ -86,7 +125,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Lista de Clientes
+        <h4>Lista de pacientes
         </h4>
     </div>
 
@@ -97,30 +136,32 @@
         <thead >
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Apelido</th>
-            <th scope="col">Morada</th>
-            <th scope="col">Contacto 1</th>
-            <th scope="col">Contacto 2</th>
-            <th scope="col">Email</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Paciente</th>
+            <th scope="col">Especie</th>
+            <th scope="col">Raça</th>
+            <th scope="col">Sexo</th>
+            <th scope="col">Idade</th>
+            <th scope="col">Pelagem</th>
             <th scope="col">Data de atualização</th>
         </tr>
         </thead>
         <tbody>
-        @if(isset($cliente))    
-        @foreach($cliente as $cil)
+        @if(isset($pacientes))
+        @foreach($pacientes as $cil)
             <tr>
              <td>{{$cil->id}}</td>
-             <td>             
-                <a class="btn btn btn-success btn-xs" href="{{action('ClienteController@clienteshow', $cil->id)}}">
+             <td>{{$cil->cliente_id}}</td>
+             <td>
+                <a class="btn btn btn-success btn-xs" href="{{route('paciente.edit', $cil->id)}}">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->nome}}
                 </a>
-            </td> 
-             <td>{{$cil->apelido}}</td>
-             <td>{{$cil->endereco}}</td>
-             <td>{{$cil->contacto1}}</td>
-             <td>{{$cil->contacto2}}</td>
-             <td>{{$cil->email}}</td>
+            </td>
+             <td>{{$cil->especie}}</td>
+             <td>{{$cil->raca}}</td>
+             <td>{{$cil->sexo}}</td>
+             <td>{{$cil->idade}}</td>
+             <td>{{$cil->pelagem}}</td>
              <td>{{$cil->updated_at}}</td>
             </tr>
         @endforeach 
