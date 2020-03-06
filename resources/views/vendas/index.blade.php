@@ -98,8 +98,10 @@
                     <form id="demoform" action="#" method="post" style="margin-left: 15px">
                          <h3>Lista</h3>
                          {{ csrf_field() }}
-                         <input type="" name="formtype" value="venda" hidden="true">
-                         <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true">
+
+                         <input type="" name="formtype" id="formtype" value="venda" hidden="true">
+                         <input type="" name="mesa_id" id="mesa_id" value="{{$mesa_id}}" hidden="true">
+                         <input name="identificador_de_bulk" id="identificador_de_bulk" class="identificador_de_bulk" hidden="true">
                         <select multiple="multiple" size="20" name="duallistbox_demo1[]" title="duallistbox_demo1[]">
                           @foreach($produtos as $key => $cil)
                           <option value="{{$cil->id}}">{{$cil->name}} - {{$cil->preco_final}} Mtn</option>
@@ -174,7 +176,8 @@
                     
                 </div>
 
-            </div>  
+            </div>
+        </div>  
 
             
 
@@ -435,24 +438,63 @@
         </div> 
 
         
-    
-    
+
+        <script type="text/javascript">
+            $(document).ready(function (){
+                $mesa_id=$('#mesa_id').val();
+                $formtype=$('#formtype').val();
+                $.ajax({
+                    url:"{{url('vendas/find/bulck')}}",
+                    type:'Get',
+                    data:{formtype:$formtype,mesa_id:$mesa_id},
+                    success: function(data){
+
+                        $('.identificador_de_bulk').val(data.identificador_de_bulk);
+                    },
+                    error: function (error){
+                        console.log(error);
+                    }
+                });
+
+
+            }
+        );
+            function getIdBulck(){
+                $mesa_id=$('#mesa_id').val();
+                $formtype=$('#formtype').val();
+                $.ajax({
+                    url:"{{url('vendas/find/bulck')}}",
+                    type:'Get',
+                    data:{formtype:$formtype,mesa_id:$mesa_id},
+                    success: function(data){
+
+                        $('.identificador_de_bulk').val(data.identificador_de_bulk);
+                    },
+                    error: function (error){
+                        console.log(error);
+                    }
+                });
+
+            }
+
+
+        </script>
+
 
             <script>
 
               var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
               $("#demoform").submit(function(e) {
                 e.preventDefault();
-
-                console.log($('[name="duallistbox_demo1[]"]').val());
                 $dados=($('[name="duallistbox_demo1[]"]').val());
                 $mesa_id=($('[name="mesa_id"]').val());
                 $formtype=($('[name="formtype"]').val());
+                $idbulk=($('[name="identificador_de_bulk"]').val());
 
                 $.ajax({
                   url: "{{URL('saveselection')}}",
                   type:'POST',
-                  data: {dados:$dados,mesa_id:$mesa_id,formtype:$formtype},
+                  data: {dados:$dados,mesa_id:$mesa_id,formtype:$formtype,idbulk:$idbulk},
                   success: function(data) {
                         $('#reclatodas > tbody') .html(data);
 
@@ -466,7 +508,10 @@
                                 _total=parseFloat(__total)+parseFloat(_total);
                              }
                             //alert(parseFloat(_total))
-                                $(".total").val(_total);
+                            $(".total").val(_total);
+                            getIdBulck();
+
+
 
 
                         

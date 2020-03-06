@@ -65,7 +65,7 @@
 
             <div class="row "  style="text-align: center">
                 <div class="col-md-6">
-                <a class="btn btn-primary " href="{{ url()->previous() }}" style="width: 50%; " > Voltar</a> 
+                <a class="btn btn-primary " href="{{ url()->previous() }}" style="width: 50%; " ><i class="fa fa-arrow-circle-left"></i> Voltar</a> 
                     
                 </div>
 
@@ -150,7 +150,7 @@
                             </div>
 
                 @if ($data_mesa)
-                <button type="submit" class="row btn btn-primary btn-block " style="margin-top: 10px; width: 40%; max-width: 60%;margin-bottom: 10px">Atualizar <i class="fa fa-recycle" aria-hidden="true"></i></button>
+                <button type="submit" class="row btn btn-primary btn-block " style="margin-top: 10px; width: 40%; max-width: 60%;margin-bottom: 10px"><i class="fa fa-hourglass-start" ></i> Atualizar</button>
                 @endif
                 </form>
             </div>
@@ -577,6 +577,8 @@
                     var _valor=[];
 
 
+
+
                     for (var i = 0; i < fpagamento.length; i++) {
                         _fpagamento.push($(fpagamento).eq(i).val());
                         _detalhes.push($(detalhes).eq(i).val())
@@ -585,9 +587,17 @@
                         
                     }
 
+                    
+
+           
+                if (!_cliente) {
+                   swal("Cliente não verificado!", "Verifica se existe um cliente selecionado, ou pesquise pelos nomes dos clientes aptos à contrair credito.", "error");
+                }else{
 
                 if (confirm("Tens a certeza que pretendes Efectuar o credito : " + $porpagar + "?"))
-                {   
+                {  
+
+
 
                  
                 
@@ -639,7 +649,7 @@
                 });
                      swal("Credito efectuado com sucesso","Tome atenção porque este cliente tem mas um  credito adicional", "success")
                 }//end confirmation
-
+                }
 
                 });
             </script>

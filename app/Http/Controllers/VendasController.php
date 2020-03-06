@@ -102,7 +102,14 @@ class VendasController extends Controller
         {
         	$request->except('_token');	
         	$data=$request->all();
-        	$identificador_de_bulk='mesa'.'_'.time();
+
+          if (isset($data['idbulk'])) {
+            $identificador_de_bulk=$data['idbulk'];
+
+          }else{
+            $identificador_de_bulk='mesa'.'_'.time();
+          }
+        	
         	$mesa_id=$data['mesa_id'];
            if ($request->formtype=="car") {
             $car_temp=CarTemp::find($data['car_id']);
@@ -547,9 +554,20 @@ public function factura($id){
           ->orderBy('vendas_temp_mesa.created_at','desc')
           ->get();
 
+          
+
 
           return view('documentos.factura', compact('data_mesa'));
 
+}
+
+public function findbulck(Request $request)
+{
+  $id=$request->mesa_id;
+
+  $data_mesa=VendasTempMesa::where('mesa_id',$id)->whereNull('codigo_venda')->first();
+
+  return \Response::json($data_mesa); 
 }
 
 }

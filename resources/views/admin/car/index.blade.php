@@ -121,7 +121,7 @@
                         </a>
                      </td>
                     <td><a type="submit"class="btn btn-danger btn-xs"  data-value="{{$cil->id}}" id="delete" href="#">
-                            <i class="fa fa-trash-o fa-lg" ></i> Apagar
+                            <i class="fa fa-trash-o fa-lg" ></i>
                         </a>
                     </td>
                     </tr>
@@ -204,18 +204,23 @@ $(document).ready(function(){
 
                     $value=$(this).data("value");
                     //alert($value);
-                    console.log($value);
                 if (confirm("Clique 'Ok' para eliminar o carro"))
                 {
                   $.ajax({
                   url: "{{URL('carapagalinha')}}",
                   type:'post',
-                  data: {linha_id:$value, _token: '{{csrf_token()}}'},
+                  data: {linha_id:$value, _token: '{{csrf_token()}}',mesa_id:'{{$mesa_id}}'},
 
                   success: function(data) {
+                    console.log(data);
+                    if (data==false) {
+                        swal("Erro na eliminação!", "Você não pode remover este iten antes de efectuar pagamento da conta", "error");
+                    }else{
+                        swal("Carro eliminado com Sucesso!", "Você eliminou um carro da lista", "success");
+                        location.reload(); 
+                    }
                     
-                    swal("Carro eliminado com Sucesso!", "Você eliminou um carro da lista", "success");
-                    location.reload();
+
                        
 
 

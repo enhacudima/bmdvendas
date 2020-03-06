@@ -109,6 +109,7 @@ Route::get('searchcliente','ClienteController@searchcliente')->name('searchloani
 Route::get('get-produt','ProdutoController@getprodut');
 
 Route::get('venda/factura/{id}','VendasController@factura');
+Route::get('vendas/find/bulck','VendasController@findbulck');
 
 
 
