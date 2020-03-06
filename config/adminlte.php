@@ -109,16 +109,15 @@ return [
 
     'menu' => [
         'MAIN NAVIGATION',
+        [  
+            'text' => 'Home',
+            'icon' => 'home',
+            'url'  => 'home',
+        ],
         [
             'text'    => 'Menu',
             'icon'    => 'heartbeat',
-            'submenu' => [
-                [
-                    'text' => 'Home',
-                    'icon' => 'home',
-                    'url'  => 'home',
-                ],
-            ],
+            'url'     => '#',  
         ],
         'Configuração',
         [
