@@ -119,7 +119,7 @@ return [
             'icon'    => 'heartbeat',
             'url'     => '#',  
         ],
-        'Configuração',
+        'Administração',
         [
             'text'       => 'And Report',
             'icon'       => 'th-large',

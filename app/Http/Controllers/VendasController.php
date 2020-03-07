@@ -39,9 +39,9 @@ class VendasController extends Controller
               ->where('produtos_entradas_view.status','!=','0')
               ->join('produtos','produtos_entradas_view.produto_id','produtos.id')
               ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
-              ->select('produtos_entradas_view.id','produtos_entradas_view.name','produtos_entradas_view.preco_final',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
+              ->select('produtos_entradas_view.id','produtos_entradas_view.name','produtos_entradas_view.preco_final','produtos_entradas_view.codigoproduto',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
                       DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
-              ->groupby('produtos_entradas_view.id','produtos_entradas_view.name','produtos_entradas_view.preco_final')
+              ->groupby('produtos_entradas_view.id','produtos_entradas_view.name','produtos_entradas_view.preco_final','produtos_entradas_view.codigoproduto')
               ->get();
 
 

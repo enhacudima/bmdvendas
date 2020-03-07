@@ -77,7 +77,7 @@
         <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
             <thead >
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col">#</th>
                 <th scope="col">Tipo de Pagamento</th>
                 <th scope="col">Valor</th>
             </tr>
