@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Anamnese;
 use App\ficha_paciente;
+use App\Paciente;
 use Illuminate\Http\Request;
 
 class FichaPacienteController extends Controller
@@ -26,8 +28,8 @@ class FichaPacienteController extends Controller
      */
     public function create()
     {
-
-        return view('admin.ficha_clinica.create');
+        $pacientes = Paciente::all();
+        return view('admin.ficha_clinica.create', compact('pacientes'));
     }
 
     /**
@@ -38,7 +40,29 @@ class FichaPacienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->all();
+        /*
+        $this->validate($request, [
+            'nome'=>'required|min:3|max:50|string',
+            'user_id'=>'required',
+            'cliente_id'=>'required',
+            'especie'=> 'required|string',
+            'raca'=>'required',
+            'sexo'=>'required',
+            'idade'=>'required',
+            'pelagem'=>'required|string',
+        ]);
+*/
+
+        if($data['anamnese'])
+        Anamnese::create([
+            'paciente_id' => $data['paciente_id'],
+            'data' => $data['d_anamnese'],
+            'anamnese' => $data['anamnese'],
+            'user_id' => $data['user_id']
+        ]);
+
+        return back()->with('success','Successfully Added to List');
     }
 
     /**

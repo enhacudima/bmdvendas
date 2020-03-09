@@ -113,7 +113,7 @@ Route::get('vendas/find/bulck','VendasController@findbulck');
 
 
 //Ficha de pacientes
-Route::get('ficha-clinica/{id}','FichaPacienteController@index');
+//Route::get('ficha-clinica/{id}','FichaPacienteController@index');
 Route::resource('ficha-clinica', 'FichaPacienteController');
 Route::resource('paciente', 'PacienteController');
 

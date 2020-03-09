@@ -4,6 +4,11 @@
 
 @section('content_header')
     <h1>Settings</h1>
+    <style>
+        div > h3{
+            font-weight: 600;
+        }
+    </style>
 @stop
 
 @section('content')
@@ -26,10 +31,22 @@
 
 
                 <input   name="user_id" type="hidden" id="user_id" value="{{ Auth::user()->id }}" required autofocus>
-                <div class="row">
-                    <strong>
+                <div class="row" style="padding-top: 20px;">
+
+                    <div class="from-group col-md-2">
+                        <label>Paciente</label>
+                        <select name="paciente_id" id="paciente_id" class="form-control" value="{{old('paciente_id')}}" required autofocus>
+                            <option disabled selected ></option>
+                            @if(isset($pacientes))
+                                @foreach($pacientes as $data)
+                                    <option value="{{$data->id}}">{{$data->nome}}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 30px;">
                         <h3>Anamnese</h3>
-                    </strong>
                     <hr>
 
 
@@ -41,7 +58,7 @@
 
                 <div class="row" style="padding-top: 20px">
                     <div class="from-group col-md-4">
-                        <label>Sinais clinicos</label>
+                        <label>Anamnese</label>
                         <textarea rows="3" name="anamnese" id="anamnese"  class="form-control" value="{{old('anamnese')}}" autofocus></textarea>
                     </div>
                 </div>
@@ -52,9 +69,7 @@
                 <div class="row">
 
                     <div style="padding-top: 30px;">
-                        <strong>
                             <h3>Sinais clínicos</h3>
-                        </strong>
                         <hr>
                     </div>
 
@@ -76,9 +91,7 @@
                 <div class="row">
 
                     <div style="padding-top: 30px;">
-                        <strong>
                             <h3>Exames clínicos</h3>
-                        </strong>
                         <hr>
                     </div>
 
@@ -101,9 +114,7 @@
                 <div class="row">
 
                     <div style="padding-top: 30px;">
-                        <strong>
                             <h3>Diagnóstico presuntivo</h3>
-                        </strong>
                         <hr>
                     </div>
 
@@ -134,9 +145,7 @@
                 <div class="row">
 
                     <div style="padding-top: 30px;">
-                        <strong>
                             <h3>Observações</h3>
-                        </strong>
                         <hr>
                     </div>
 
