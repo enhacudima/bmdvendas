@@ -117,3 +117,6 @@ Route::get('ficha-clinica/{id}','FichaPacienteController@index');
 Route::resource('ficha-clinica', 'FichaPacienteController');
 Route::resource('paciente', 'PacienteController');
 
+//venda
+Route::get('getstocktovenda','VendasController@getstocktovenda');
+

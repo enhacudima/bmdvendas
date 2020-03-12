@@ -103,9 +103,9 @@
                          <input type="" name="mesa_id" id="mesa_id" value="{{$mesa_id}}" hidden="true">
                          <input name="identificador_de_bulk" id="identificador_de_bulk" class="identificador_de_bulk" hidden="true">
                         <select multiple="multiple" size="20" name="duallistbox_demo1[]" title="duallistbox_demo1[]">
-                          @foreach($produtos as $key => $cil)
-                          <option value="{{$cil->id}}">{{$cil->codigoproduto}} - {{$cil->name}} - {{$cil->preco_final}} Mtn Q - {{$cil->total_entrada-$cil->total_ajuste}}</option>
-                          @endforeach
+                              @foreach($produtos as $key => $cil)
+                              <option value="{{$cil->id}}">{{$cil->codigoproduto}} - {{$cil->name}} - {{$cil->entrada_preco}} Mtn Q - ({{$cil->total_entrada-$cil->total_saida}})</option>
+                              @endforeach
                         </select>
                         <br>
                         <button type="submit" class="btn btn-primary btn-block "><i class="fa fa-shopping-cart"></i> Adicionar no carrinho</button>
@@ -438,6 +438,29 @@
         </div> 
 
         
+        <script type="text/javascript">
+           /*  $(document).ready(function (){
+                $.ajax({
+                   type:"GET",
+                   url:"{{url('getstocktovenda')}}",
+                   success:function(res){  
+
+                       if (res) {
+                        $("#selectProdut").empty();
+                        $.each(res,function(key,value){
+                             
+                            $(".selectProdut").append('<option value="'+value.id+'">"'+value.codigoproduto+'" - "'+value.name+'" - "'+value.entrada_preco+'" Mtn Q - ("'+value.total_entrada-value.total_saida+'")</option>');
+                        });
+                   
+                    }else{
+                       $("#pessoa_contacto_state_id").empty();
+                    }
+                   }
+                });
+
+             });*/
+        </script>
+
 
         <script type="text/javascript">
             $(document).ready(function (){

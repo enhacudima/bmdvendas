@@ -31,26 +31,15 @@ class ReportController extends Controller
     
         public function reportMovimento()
     {   
-        $movimentos=DB::table('produtos_entradas_view')
-                            ->join('produtos','produtos_entradas_view.id','produtos.id')
-                            ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
-                            ->select('produtos.id','produtos.name','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot','produtos_entradas_view.entrada_preco',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
-                                    DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
-                            ->groupby('produtos_ajustes_view.lot','produtos.name','produtos.id','produtos_entradas_view.entrada_lot','entrada_preco')
-                            ->get();
-                     
+      $movimentos=DB::table('produtos_venda_view')->get();
+         
                             
         return view('report.movimentos.report',compact('movimentos'));
     }
 
             public function reportStockAtual()
     {   
-        $movimentos=DB::table('produtos_entradas_view')
-                            ->join('produtos','produtos_entradas_view.produto_id','produtos.id')
-                            ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
-                            ->select('produtos.id','produtos.name','produtos.stock','produtos.image',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
-                                    DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
-                            ->groupby('produtos.name','produtos.id','produtos.stock','produtos.image')
+        $movimentos=DB::table('saldo_atual_view')
                             ->get();
                      
                             
@@ -73,19 +62,13 @@ class ReportController extends Controller
 
     	if ($radio=="movimento") {
 
-    		        $movimentos=DB::table('produtos_entradas_view')
-    		        		->whereBetween('produtos_entradas_view.created_at',[$inicio,$fim])
-                            ->join('produtos','produtos_entradas_view.id','produtos.id')
-                            ->leftjoin('produtos_ajustes_view','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot')
-                            ->select('produtos.id','produtos.name','produtos_entradas_view.entrada_lot','produtos_ajustes_view.lot','produtos_entradas_view.entrada_preco',DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
-                                    DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
-                            ->groupby('produtos_ajustes_view.lot','produtos.name','produtos.id','produtos_entradas_view.entrada_lot','entrada_preco')
-                            ->get();
+        $movimentos=DB::table('produtos_venda_view')->whereBetween('created_at',[$inicio,$fim])->get();
                      
                             
         return view('report.movimentos.report',compact('movimentos'));
     		
     	}elseif ($radio=="ajuste") {
+         return "Esta função foi desabilitada pelo adiministrador";
     		    	$movimentos=DB::table('produtos_entradas_view')
     		        		->whereBetween('produtos_ajustes_view.created_at',[$inicio,$fim])
                             ->join('produtos','produtos_entradas_view.id','produtos.id')
@@ -330,7 +313,11 @@ class ReportController extends Controller
     public function vendascredito ()
     {
 
-    $venda=ClienteVenda::join('cliente','cliente_venda.cliente_id','cliente.id')->join('users','cliente_venda.user_id','users.id')->join('venda_troco','cliente_venda.codigo_venda','venda_troco.codigo_venda')->select('cliente.name as cname','cliente.name as clname','cliente.contacto1','cliente.contacto2','cliente_venda.created_at','users.name as uname','cliente_venda.codigo_venda', 'venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')->get();
+    $venda=ClienteVenda::join('cliente','cliente_venda.cliente_id','cliente.id')
+        ->join('users','cliente_venda.user_id','users.id')
+        ->join('venda_troco','cliente_venda.codigo_venda','venda_troco.codigo_venda')
+        ->select('cliente.nome as cname','cliente.apelido as clname','cliente.contacto1','cliente.contacto2','cliente_venda.created_at','users.name as uname','cliente_venda.codigo_venda', 'venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')
+        ->get();
 
 
 

@@ -22,7 +22,7 @@
     <div class="panel-body">
 <div class="row">
     
-
+<!--
         <form id="myForm" name="myForm" action="{{url('/report_movimetos_filter_atual')}}" method="post">
                 @csrf
                 {{ csrf_field() }}
@@ -71,6 +71,7 @@
 
 
     </form> 
+-->
 
   </div>  
 
@@ -91,9 +92,11 @@
                 <th scope="col">#</th>
                 <th scope="col">Image</th>
                 <th scope="col">Produto</th>
-                <th scope="col">Total Entrada (unidade)</th>
-                <th scope="col">Total Saida (unidade)</th>
-                <th scope="col">Saldo (unidade)</th>
+                <th scope="col">Codigo</th>
+                <th scope="col">Saldo min</th>
+                <th scope="col">Entrada</th>
+                <th scope="col">Saida</th>
+                <th scope="col">Saldo</th>
             </tr>
             </thead>
             <tbody>
@@ -108,15 +111,17 @@
                         <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
                     </a>
                 </td>
+                <td>{{$cil->codigoproduto}}</td>
+                <td>{{$cil->stock}}</td>
                 <td>{{$cil->total_entrada}}</td>
-                <td>{{$cil->total_ajuste}}</td>
-                @if($cil->stock >= ($cil->total_entrada - $cil->total_ajuste))
+                <td>{{$cil->total_saida}}</td>
+                @if($cil->stock >= ($cil->saldo))
                 <td> 
                  <a class="btn btn btn-danger btn-xs" >
-                     {{$cil->total_entrada - $cil->total_ajuste}}
+                     {{$cil->saldo}}
                  </a></td>
                 @else
-                 <td>{{$cil->total_entrada - $cil->total_ajuste}}</td>
+                 <td>{{$cil->saldo}}</td>
                 @endif
                 </tr>
             @endforeach 
