@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="icon" type="image/png" href="{{URL::asset('imglogo/logoClinica.png')}}"/>
 
         <title>Pelos&Patas | Vendas</title>
 
