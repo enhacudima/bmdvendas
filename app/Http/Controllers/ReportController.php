@@ -15,7 +15,7 @@ use App\Car;
 use App\ClienteVenda;
 use App\Cliente;
 use App\VendasTempMesa;
-use App\vendas;
+use App\Vendas;
 
 class ReportController extends Controller
 {
