@@ -309,7 +309,7 @@
         var unidadedemedida = parseFloat($('#unidadedemedida').val());
      
         var E2=custo_unitario;
-        var B2=quantidade;
+        var B2=quantidade*unidadedemedida;
         var C2=precodecompra;
 
         $preco_final=(((E2*B2)-C2)/C2)*100;
