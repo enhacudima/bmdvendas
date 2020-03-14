@@ -42,7 +42,7 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Quantidade</label>
-                        <input type="number" name="quantidade" id="quantidade" class="form-control quantidade" value="{{$produtos[0]->quantidade}}" required autofocus>
+                        <input step="any" type="number"  name="quantidade" id="quantidade" class="form-control quantidade" value="{{$produtos[0]->quantidade}}" required autofocus>
                     </div>
             </div> 
             <div class="row">
@@ -55,14 +55,14 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Margem (%)</label>
-                        <input type="number" name="margem_per" id="margem_per" class="form-control" value="{{$produtos[0]->margem_per}}" required autofocus>
+                        <input  step="any" type="number" name="margem_per" id="margem_per" class="form-control" value="{{$produtos[0]->margem_per}}" required autofocus>
                     </div>
             </div> 
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Preço final</label>
-                        <input step="0.01" type="number"  id="final_p" class="form-control final_p"  required autofocus disabled="">
+                        <input step="any" type="number"   id="final_p" class="form-control final_p" value="{{$produtos[0]->final_p}}" required autofocus >
                     </div>
             </div>
 
@@ -223,6 +223,24 @@
        $('#final_p').val(roundN($preco_final,2)); 
 
     });
+
+    $('#final_p').keyup(function(){
+        
+        var quantidade =   parseFloat($('#quantidade').val());
+        var precodecompra =  parseFloat($('#precodecompra').val());
+        var custo_unitario = parseFloat($('#final_p').val());
+        var unidadedemedida = parseFloat($('#unidadedemedida').val());
+     
+        var E2=custo_unitario;
+        var B2=quantidade;
+        var C2=precodecompra;
+
+        $preco_final=(((E2*B2)-C2)/C2)*100;
+
+       $('#margem_per').val(roundN($preco_final,5)); 
+
+    });
+
 
     function roundN(num,n){
       return parseFloat(Math.round(num * Math.pow(10, n)) /Math.pow(10,n)).toFixed(n);

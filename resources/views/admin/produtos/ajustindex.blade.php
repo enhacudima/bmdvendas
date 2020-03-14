@@ -52,7 +52,7 @@
                     </div>
                     <div class="from-group col-lg-6">
                         <label>Quantidade unit</label>
-                        <input step="0.01" type="number" name="quantidade_unidade" id="quantidade_unidade" class="form-control" value="{{old('quantidade_unidade')}}" required autofocus>
+                        <input step="any" type="number"  name="quantidade_unidade" id="quantidade_unidade" class="form-control" value="{{old('quantidade_unidade')}}" required autofocus>
                     </div>
                 </div>
 
