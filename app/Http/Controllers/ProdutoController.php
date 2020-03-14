@@ -272,7 +272,7 @@ class ProdutoController extends Controller
                             ->select('produtos_entradas.*','produtos.name','produtos.unidadedemedida')
                             ->get();
 
-        return view('admin.Produtos.entradashow',compact('produtos'));
+        return view('admin.produtos.entradashow',compact('produtos'));
     }
 
     public function loteupdate (Request $request)
