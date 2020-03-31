@@ -119,6 +119,16 @@ return [
             'icon'    => 'heartbeat',
             'url'     => '#',  
         ],
+        [
+            'text'    => 'Eventos',
+            'icon'    => 'calendar',
+            'url'     => 'calendario',  
+        ],
+        [
+            'text'        => 'Email',
+            'url'         => 'email/all',
+            'icon'        => 'envelope-open',
+        ],
         'Administração',
         [
             'text'       => 'And Report',

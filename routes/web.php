@@ -15,22 +15,30 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/clear-cache-all', function() {
+
+    Artisan::call('cache:clear');
+    dd("Cache Clear All");
+
+});
 
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+
 
 
 //route admin
 //Route::get('admin', ['middleware' => 'admin', 'uses' => 'AdminController@index']);
+Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function(){
 
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
+Voyager::routes();
+
 });
+Route::group(['middleware' => ['auth']], function(){
 
+Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('mesa','MesaController');
 Route::get('criarmesa','MesaController@index');
 Route::post('storemesa','MesaController@store');
@@ -84,8 +92,6 @@ Route::get('report_pagamento','ReportController@reportPagamento');
 Route::post('report_pagamentos_filter','ReportController@reportPagamentoFiltrar');
 
 
-
-
 Route::post('apagalinha','VendasController@apagalinha');
 
 //car wash
@@ -120,3 +126,27 @@ Route::resource('paciente', 'PacienteController');
 //venda
 Route::get('getstocktovenda','VendasController@getstocktovenda');
 
+//calendario
+Route::get('calendario','CalendarioController@index')->name('calendario');
+
+Route::post('calendario','CalendarioController@addEvent')->name('calendario.add');
+
+Route::get('calendario/detalhes/{id}','CalendarioController@show');
+
+Route::post('calendario/detalhes/update/{id}','CalendarioController@edit');
+
+Route::get('calendario/delete/{id}','CalendarioController@destroy');
+
+//email
+Route::get('email', 'EmailController@index');
+Route::get('email/all', 'EmailController@all');
+Route::get('email/allsource', 'EmailController@allsource');
+
+Route::get('emailtry/{id}', 'EmailController@try');
+
+Route::post('enviaremail', 'EmailController@enviaremail');
+
+
+//fim das rotas 
+});
+//todas rotas devem ser definidas acima 
