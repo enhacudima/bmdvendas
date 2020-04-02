@@ -51,13 +51,13 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="form-group">
-                <input class="form-control" placeholder="To:"  id="to" name="to"  required>
+                <input class="form-control" placeholder="To:"  id="to" name="to" value="{{$data->email}}"  required>
               </div>
               <div class="form-group">
-                <input class="form-control" placeholder="Subject:" id="assunto" name="assunto" required>
+                <input class="form-control" placeholder="Subject:" id="assunto" name="assunto" value="{{$data->subject}}"  required>
               </div>
               <div class="form-group">
-                <input class="form-control" type="text" id="name_cliente" name="name_cliente" placeholder="Name: "  required>
+                <input class="form-control" type="text" id="name_cliente" name="name_cliente" placeholder="Name:" value="{{$data->name}}"  required>
               </div>
               <div class="form-group">
                <textarea id="message" class="textarea" name="message" placeholder="Escreva aqui o seu email..." style="height:200px;height: 100px;">{!!old('subject')!!}</textarea>

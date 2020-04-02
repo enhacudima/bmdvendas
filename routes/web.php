@@ -146,6 +146,24 @@ Route::get('emailtry/{id}', 'EmailController@try');
 
 Route::post('enviaremail', 'EmailController@enviaremail');
 
+//home contact form 
+Route::resource('contactFormData','ContactFormController');
+Route::post('contactFormData/store','ContactFormController@store');
+
+//email inbox
+Route::get('email/inbox','EmailController@inbox');
+Route::get('email/inboxData','EmailController@inboxData');
+Route::get('email/read/{id}','EmailController@read');
+Route::get('email/reply/{id}','EmailController@reply');
+
+//report dowload
+Route::get('report/index','ReportExtratController@index');
+Route::get('report/new','ReportExtratController@new');
+Route::resource('meusficheiros','ReportExtratController');
+Route::get('meusficheiros/deletefile/{file}','ReportExtratController@deletefile');
+Route::get('meusficheiros/all/deletefile','ReportExtratController@alldeletefile');
+Route::get('file/download/{filename}', 'FileDownloadController@index')->name('file/download');
+Route::post('report/filtro','ReportExtratController@filtro');
 
 //fim das rotas 
 });

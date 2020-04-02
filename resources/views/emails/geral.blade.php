@@ -2,7 +2,7 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
+    <title>Pelos e Patas</title>
     <style>
       /* -------------------------------------
           GLOBAL RESETS
@@ -316,7 +316,7 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <p><img src="http://www.amanaseguros.co.mz/img/logo.png" alt="logo" height="60" width="100"></p>
+                        <p><img src="https://www.pataspelos.com/imglogo/pp.jpg" alt="logo" height="60" width="100"></p>
                         <p>{{$data['name_cliente']}},</p>
                         <p>{!!$data['message']!!}</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
@@ -326,7 +326,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="http://www.amanaseguros.co.mz/" target="_blank">Visite a Nossa pagina</a> </td>
+                                      <td> <a href="https://www.pataspelos.com/" target="_blank">Visite a Nossa pagina</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -334,7 +334,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <p>Amana Correctores e Consultores de Seguros, SA.</p>
+                        <p>Clínica veterinária Pelos & Patas.</p>
                       </td>
                     </tr>
                   </table>
@@ -350,13 +350,13 @@
               <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Av. Fernão Magalhães, Nᵒ 932 – R/C</span>
-                    <br> Contacte-nos <a href="mailto:info@amanaseguros.co.mz">info@amanaseguros.co.mz</a>.
+                    <span class="apple-link">Bairro do Zimpeto, Av. de Moçambique, Maputo - Moçambique.</span>
+                    <br> Contacte-nos <a href="mailto:pelosepatas@gmail.com">pelosepatas@gmail.com</a>.
                   </td>
                 </tr>
                 <tr>
                   <td class="content-block powered-by">
-                    Powered by <a href="http://www.amanaseguros.co.mz/">Amana</a>.
+                    Powered by <a href="https://www.pataspelos.com/">Evidevi</a>.
                   </td>
                 </tr>
               </table>

@@ -31,6 +31,6 @@ class Geral extends Mailable
     public function build()
     {
         $data=$this->data;
-        return $this->subject($this->data['assunto'])->from('info@amanaseguros.co.mz','AMANA SEGUROS')->replyTo('noreply@amanaseguros.co.mz', 'Amana Seguros')->view('emails.geral',compact(['data']));
+        return $this->subject($this->data['assunto'])->from('info@pataspelos.com','Pelos & Patas')->replyTo('pelosepatas@gmail.com', 'Pelos & Patas')->view('emails.geral',compact(['data']));
     }
 }

@@ -128,7 +128,28 @@ return [
             'text'        => 'Email',
             'url'         => 'email/all',
             'icon'        => 'envelope-open',
+        ],        
+        [
+            
+            'text'        => 'Relatórios',
+            'url'         => 'report/index',
+            'icon'        => 'bar-chart',
+            'submenu'     => [
+                [
+                    'text'  => 'My Reports',
+                    'url'   => 'report/index',
+                    'icon'  => 'warning',
+
+                ],
+                [
+                    'text'  => 'New Report',
+                    'url'   => 'report/new',
+                    'icon'  => 'file-text-o',
+
+                ],
+            ]
         ],
+
         'Administração',
         [
             'text'       => 'And Report',

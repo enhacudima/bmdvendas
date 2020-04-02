@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', ' | Email')
+@section('title', ' | Inbox')
 
 @section('content_header')
 <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa fa-fw fa-arrow-left"></i></a>
@@ -24,8 +24,8 @@
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#"><i class="fa fa-envelope-o"></i> ALL<span class="label label-danger pull-right">{{$sent+$drafts}}</span></a></li>
-                <li class=""><a href="{{url('email/inbox')}}"><i class="fa fa-inbox"></i> Inbox <span class="label label-info pull-right">{{$inbox}}</span></a></li>
+                <li class=""><a href="{{url('email/all')}}"><i class="fa fa-envelope-o"></i> ALL<span class="label label-danger pull-right">{{$sent+$drafts}}</span></a></li>
+                <li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox <span class="label label-info pull-right">{{$inbox}}</span></a></li>
                 <li class=""><a href="#"><i class="fa fa-envelope-o"></i> Sent<span class="label label-warning pull-right">{{$sent}}</span></a></li>
                 <li><a href="#"><i class="fa fa-file-text-o"></i> Drafts <span class="label label-primary pull-right">{{$drafts}}</span></a></li>
                 <li><a href="#"><i class="fa fa-filter"></i> Junk </a>
@@ -42,7 +42,7 @@
         <div class="col-md-9">
           <div class="box box-danger">
             <div class="box-header with-border">
-              <h3 class="box-title">Sent</h3>
+              <h3 class="box-title">Inbox</h3>
               <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
@@ -94,31 +94,36 @@
             "aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
             "iDisplayLength": 25,
             "order": [[1, "desc"]],
-            "ajax": "{{ url('email/allsource') }}",
+            "ajax": "{{ url('email/inboxData') }}",
             "columns": [
                 {
                     "class":          "details-control",
                     "orderable":      false,
                     "data":           null,
                     "defaultContent": "",
-                    'name':'assunto'
+                    'name':'id'
                 },
-                { "data": "name",'name':'users.name' },
+                { "data": "name"},
                                 {
                   data: null,
                   render: function ( data, type, row ) {
-                    return '<b>'+data.name_cliente+'</b> - '+data.assunto+'';
+                    return '<b>'+data.cell+'</b> - '+data.subject+'';
                   },
-                  'name':'name_cliente'
+                  'name':'subject'
                 },
                 { "data": "created_at" },
                 { "data": "time" },
                 {
                   data: null,
                   render: function ( data, type, row ) {
-                    return '<a  href="{{url(url("emailtry/"))}}/'+data.id+'" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></a>';
+
+                    if (data.read_or_not==1) {
+                    return '<a  href="{{url(url("email/read"))}}/'+data.id+'" class="btn btn-default btn-sm"><i class="fa fa-check"></i></a>'+'<a  href="{{url(url("email/reply"))}}/'+data.id+'" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></a>';
+                    }else{
+                    return '<a  href="{{url(url("email/read"))}}/'+data.id+'" class="btn btn-default btn-sm"><i class="fa fa-times"></i></a>';
+                    }
                   },
-                  'name':'assunto'
+                  'name':'id'
                 }
             ],
             "rowCallback": function (row, data) {
@@ -178,13 +183,13 @@
     });
 
     function format(d) {
-        if (d.status==1) {
+        if (d.read_or_not==1) {
           $sta='<span class="label label-warning pull-right">Não processado</span>'
         }else{
           $sta='<span class="label label-primary pull-right">Processado</span>'
         }
         $m=jQuery('<div />').html(d.message).text();
-        $messagem = 'Para: ' + d.name_cliente +' - ' + d.to+ '<br>'+$sta+ '<br>' +$m+'<br>';
+        $messagem = $sta+ '<br>' +$m+'<br>';
         return $messagem;
     }
 

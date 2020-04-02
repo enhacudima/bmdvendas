@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8">    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <link rel="icon" type="image/png" href="{{URL::asset('imglogo/logoClinica.png')}}"/>
   <title>Pelos & Patas|Clinica Veterinária</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -616,27 +618,28 @@
 
         <div class="col-lg-5 col-md-8">
           <div class="form">
-            <div id="sendmessage">Your message has been sent. Thank you!</div>
+            <div id="sendmessage">A sua messagem foi enviada com sucesso. Obrigado!</div>
             <div id="errormessage"></div>
-            <form action="" method="post" role="form" class="contactForm">
+            <form class="contactForm"  role="form" method="POST" id="contactForm"  enctype="multipart/form-data">
+              @csrf
               <div class="form-group">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Seu Nome" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                <input type="text" name="name" class="form-control" id="name" placeholder="Seu Nome" data-rule="minlen:3" data-msg="Por favor itroduza 3 caracteres no minimo!!" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <input type="number" class="form-control" name="email" id="cell" placeholder="Seu Contacto" data-rule="minlen:9"  data-msg="Please enter a valid cell" />
+                <input type="number" class="form-control" name="cell" id="cell" placeholder="Seu Contacto" data-rule="minlen:9"  data-msg="Por favor introduza telefone valido (Ex: 84111111)!!" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Seu Email" data-rule="email" data-msg="Please enter a valid email" />
+                <input type="email" class="form-control" name="email" id="email" placeholder="Seu Email" data-rule="email" data-msg="Por favor introduza email valido!!" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Assunto" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Assunto" data-rule="minlen:8" data-msg="Por favor o seu assuntpo deve conter pelo menos 8 caracteres!!" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Messagem"></textarea>
+                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Por favor escreva algo para nóS!! " placeholder="Messagem"></textarea>
                 <div class="validation"></div>
               </div>
               <div class="text-center"><button type="submit">Enviar Mensagem</button></div>

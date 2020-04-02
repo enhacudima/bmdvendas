@@ -98,6 +98,7 @@ class CalendarioController extends Controller
         $event->cor=$request->cor;
         $event->data_inicio=$request->data_inicio;
         $event->data_final=$request->data_final;
+        $event->concluido=$request->concluido;
         $event->save();
 
 
