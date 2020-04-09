@@ -48,7 +48,7 @@
                     @if($value->status)
                     <td><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> Processando..</td>
                     @else
-                    <td><a class="fa fa-cloud-download " aria-hidden="true" href="{{url('admin/file/download',$value->filename)}}" target="_blank"> Baixar</a> <a class="fa fa-trash-o " aria-hidden="true" href="{{url('admin/meusficheiros/deletefile',$value->filename)}}" > Eliminar</a> </td>
+                    <td><a class="fa fa-cloud-download " aria-hidden="true" href="{{url('file/download',$value->filename)}}" target="_blank"> Baixar</a> <a class="fa fa-trash-o " aria-hidden="true" href="{{url('meusficheiros/deletefile',$value->filename)}}" > Eliminar</a> </td>
                     @endif
                 </tr>
 

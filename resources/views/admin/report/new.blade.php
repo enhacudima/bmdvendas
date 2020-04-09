@@ -8,9 +8,9 @@
 @stop
 
 @section('content')
-@include('notification')
         
-    @foreach($data as $report)    
+    @foreach($data as $report) 
+
         <div class="col-md-4">
           <div class="box box-default collapsed-box box-solid">
             <div class="box-header with-border">
@@ -24,12 +24,13 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <form role="form" method="POST" action="{{ url('admin/report/filtro')}}" enctype="multipart/form-data">
+                <form role="form" method="POST" action="{{ url('report/filtro')}}" enctype="multipart/form-data">
                      @csrf
-                    <input name="type" value="rep_clientes_view" type="hidden">
+                    <input name="type" value="{{$report->table_name}}" type="hidden">
                     <select class="form-control" name="filtro">
-                        <option value="created_at" selected>Data de Criacao</option>
-                        <option value="updated_at"> Data de Atualizacao</option>
+                        @foreach($report->filtros as $filtro)
+                            <option value="{{$filtro->value}}">{{$filtro->name}}</option>
+                        @endforeach
                     </select>
                     <br/>
                     <div class="row">

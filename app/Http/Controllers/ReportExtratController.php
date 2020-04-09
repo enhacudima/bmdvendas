@@ -12,6 +12,7 @@ use App\Exports\RelatorioExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Jobs\NotifyUserOfCompletedExport;
 use File;
+use App\ReportNew;
 
 
 class ReportExtratController extends Controller
@@ -69,8 +70,7 @@ class ReportExtratController extends Controller
 
     public function new ()
     {   //$this->authorize('report');
-        $data=DB::table("report_new")->get();
-        
+        $data=ReportNew::get();
         return view('admin.report.new', compact('data'));
     }
 
