@@ -56,9 +56,10 @@
       <div class="row invoice-info">
 
         <div class="col-sm-4 invoice-col">
-        <address>
+          <address>
             <br>
-             <b> Data Limite Pagamento:</b> {{\Carbon\Carbon::now()->adddays(7)->format('d-m-Y')}}<br><br /> 
+              <b> Cliente:</b> {{$cliente->nome}} {{$cliente->apelido}}<br/> 
+              <b> Data Limite Pagamento:</b> {{\Carbon\Carbon::now()->adddays(7)->format('d-m-Y')}}<br>
           </address>
         </div>
         <div class="col-sm-4 invoice-col">

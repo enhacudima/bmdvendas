@@ -236,7 +236,7 @@ class VendasController extends Controller
                   <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="'.$value->preco_final.'"></td> 
                   <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="'.$value->quantidade.'"></td> 
                   <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="'.$value->quantidade * $value->preco_final.'"></td>
-                  <td><a type="submit"class="btn btn-danger btn-xs"  data-value="'.$value->id.'" id="delete" href="#">
+                  <td><a type="submit"class="btn btn-block btn-danger btn-flat"  data-value="'.$value->id.'" id="delete" href="#">
                     <i class="fa fa-trash-o fa-lg" ></i> Delete </a>
                   </td>
 
@@ -309,7 +309,7 @@ class VendasController extends Controller
                   <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="'.$value->preco_final.'"></td> 
                   <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="'.$value->quantidade.'"></td> 
                   <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="'.$value->quantidade * $value->preco_final.'"></td>
-                  <td><a type="submit"class="btn btn-danger btn-xs"  data-value="'.$value->id.'" id="delete" href="#">
+                  <td><a type="submit"class="btn btn-block btn-danger btn-flat"  data-value="'.$value->id.'" id="delete" href="#">
                     <i class="fa fa-trash-o fa-lg" ></i> Delete </a>
                   </td>
 
@@ -370,7 +370,8 @@ class VendasController extends Controller
           $formtype=$data['formtype'];
           $user_id = (!Auth::guest()) ? Auth::user()->id : null ;//user_id  
 
-          if ($formtype=='credito') {//verficação se a venda é credito ou não
+
+          if (isset($data['cliente'])) {//verficação se a venda é credito ou não
             $cliente=$data['cliente'];
 
             $ClienteVenda= new ClienteVenda();
@@ -564,7 +565,7 @@ class VendasController extends Controller
                   <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="'.$value->preco_final.'"></td> 
                   <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="'.$value->quantidade.'"></td> 
                   <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="'.$value->quantidade * $value->preco_final.'"></td>
-                  <td><a type="submit"class="btn btn-danger btn-xs"  data-value="'.$value->id.'" id="delete" href="#">
+                  <td><a type="submit"class="btn btn-block btn-danger btn-flat"  data-value="'.$value->id.'" id="delete" href="#">
                     <i class="fa fa-trash-o fa-lg" ></i> Delete </a>
                   </td>
 
@@ -582,18 +583,15 @@ class VendasController extends Controller
 
 
 public function factura($id){
-        $data_mesa=VendasTempMesa::where('mesa_id',$id)->whereNull('codigo_venda')
+        $data_mesa=VendasTempMesa::where('identificador_de_bulk',$id)
           ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
           ->join('produtos','produtos_entradas.produto_id','produtos.id')
-          ->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk')
+          ->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk','vendas_temp_mesa.codigo_venda')
           ->orderBy('vendas_temp_mesa.created_at','desc')
           ->get();
-
-          
-
-
-          return view('documentos.factura', compact('data_mesa'));
-
+        $cliente=DB::table('cliente_venda')->where('codigo_venda',$data_mesa[0]->codigo_venda)->join('cliente','cliente.id','cliente_venda.cliente_id')->first();
+        
+          return view('documentos.factura', compact('data_mesa','cliente'));
 }
 
 public function findbulck(Request $request)

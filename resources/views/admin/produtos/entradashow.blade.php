@@ -62,7 +62,7 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Preço final</label>
-                        <input step="any" type="number"   id="final_p" class="form-control final_p" value="{{$produtos[0]->final_p}}" required autofocus >
+                        <input step="any" type="number"   id="preco_final" class="form-control final_p" value="{{$produtos[0]->preco_final}}" required autofocus >
                     </div>
             </div>
 

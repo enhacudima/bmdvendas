@@ -80,13 +80,13 @@ class ClienteController extends Controller
  
             // search loan  by loanid or nuit
             $clientes = Cliente::where('contacto1', 'LIKE', '%' . $term .'%')
-            				->where('credito', 'sim')
                             ->orWhere('contacto2', 'LIKE', '%' . $term .'%')
-                            ->orwhere('name','LIKE','%'.$term.'%')
+                            ->orwhere('nome','LIKE','%'.$term.'%')
+                            ->orwhere('apelido','LIKE','%'.$term.'%')
                             ->get();
  
             foreach ($clientes as $cliente) {
-                $cliente->label   = $cliente->name.' '.$cliente->sname . ' (' . $cliente->contacto1 .' & '.$cliente->contacto2. ')';
+                $cliente->label   = $cliente->nome.' '.$cliente->apelido . ' (' . $cliente->contacto1 .')';
             }
  
             return $clientes;

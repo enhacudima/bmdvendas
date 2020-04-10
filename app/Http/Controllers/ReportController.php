@@ -315,6 +315,7 @@ class ReportController extends Controller
 
     $venda=ClienteVenda::join('cliente','cliente_venda.cliente_id','cliente.id')
         ->join('users','cliente_venda.user_id','users.id')
+        ->where('form_type','credito')
         ->join('venda_troco','cliente_venda.codigo_venda','venda_troco.codigo_venda')
         ->select('cliente.nome as cname','cliente.apelido as clname','cliente.contacto1','cliente.contacto2','cliente_venda.created_at','users.name as uname','cliente_venda.codigo_venda', 'venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')
         ->get();
