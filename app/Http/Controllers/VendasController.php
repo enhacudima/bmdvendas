@@ -16,6 +16,7 @@ use App\CarTemp;
 use App\Car;
 use App\CarVenda;
 use DB;
+use App\Cliente;
 
 
 class VendasController extends Controller
@@ -61,7 +62,12 @@ class VendasController extends Controller
         $mesa=Mesa::find($mesa_id);  		           
 
          return view('vendas.index', compact('produtos','mesa_id','data_mesa','mesa'));           
-    }    
+    }  
+
+    public function produtosStock(){
+      $produtos=DB::table('produtos_venda_view')->where('produto_status',1)->where('status',1)->get();
+      return response()->json($produtos);
+    }  
 
     public function carindex($car_id, $mesa_id, $user_id)
     {
@@ -454,12 +460,23 @@ class VendasController extends Controller
             $mesa->status=1;
             $mesa->save();
 
-
-
-
-
+            return response()->json($identificador_bulck);
     		
     	}
+    }
+    function ultimaVenda($pagamento){
+      $itens=VendasTempMesa::where('vendas_temp_mesa.codigo_venda',$pagamento)
+              ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
+              ->join('produtos','produtos_entradas.produto_id','produtos.id')
+              ->leftjoin('cliente_venda','cliente_venda.codigo_venda','vendas_temp_mesa.codigo_venda')
+              ->leftjoin('cliente','cliente.id','cliente_venda.cliente_id')
+              ->select('produtos.codigoproduto','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk','cliente.nome','cliente.apelido','vendas_temp_mesa.codigo_venda')
+              ->orderBy('vendas_temp_mesa.created_at','desc')
+              ->get();
+      $trocos=VendasTroco::where('codigo_venda',$pagamento)->first();   
+
+          $pdf = app('dompdf.wrapper')->loadView('documentos.recipt', compact('itens','trocos'));
+          return $pdf->stream('invoice.pdf');
     }
 
 
@@ -474,7 +491,8 @@ class VendasController extends Controller
           $referencia=$data['referencia'];
           $valor=$data['valor'];
           $identificador_bulck=$data['codigo_venda'];
-          $mesa_id=0;
+          $olldVenda=Vendas::where('identificador_bulck',$identificador_bulck)->first();
+          $mesa_id=$olldVenda->mesa_id;
           $porpagar=$data['porpagar'];
           $pago=$data['pago'];
           $ppago=$data['ppago'];
@@ -573,8 +591,13 @@ class VendasController extends Controller
 
               ';  
             }
-            
 
+        
+            if (!isset($data_mesa[0])) {
+              $mesa=Mesa::find($mesa_id->mesa_id);
+              $mesa->status=1;
+              $mesa->save();
+            }
           
 
           return response($output);
@@ -594,6 +617,19 @@ public function factura($id){
           return view('documentos.factura', compact('data_mesa','cliente'));
 }
 
+public function facturaVenda($id, $cliente){
+        $data_mesa=VendasTempMesa::where('identificador_de_bulk',$id)
+          ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
+          ->join('produtos','produtos_entradas.produto_id','produtos.id')
+          ->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk','vendas_temp_mesa.codigo_venda')
+          ->orderBy('vendas_temp_mesa.created_at','desc')
+          ->get();
+        $cliente=DB::table('cliente')->find($cliente);
+
+        
+          return view('documentos.factura', compact('data_mesa','cliente'));
+}
+
 public function findbulck(Request $request)
 {
   $id=$request->mesa_id;
@@ -603,4 +639,8 @@ public function findbulck(Request $request)
   return \Response::json($data_mesa); 
 }
 
+public function ultimas(){
+ $data=VendasTempMesa::select('vendas_temp_mesa.*','venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')->join('venda_troco','venda_troco.codigo_venda','vendas_temp_mesa.codigo_venda')->where('vendas_temp_mesa.codigo_venda','!=',null)->limit(10)->orderBy('vendas_temp_mesa.created_at','desc')->get();
+ return response()->json($data); 
+}
 }

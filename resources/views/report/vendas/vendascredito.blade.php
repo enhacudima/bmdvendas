@@ -590,11 +590,11 @@
 
         </script> 
 
-                    <script type="text/javascript">
+        <script type="text/javascript">
                 
             $(document).ready(function(){
 
-                $('.valor').change(function(){
+                $('.valor').keyup(function(){
 
                      var total=$('[name="valor[]"]')
                      var __total=[];
@@ -622,6 +622,7 @@
 
                     });
             });
+            
             </script>
 
 

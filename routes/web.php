@@ -64,7 +64,7 @@ Route::get('saveselection','VendasController@saveselection');
 Route::get('getmesatem','VendasController@getmesatem');
 Route::post('atualizarvendatemp','VendasController@atualizarvendatemp');
 Route::post('efectuarpagamento','VendasController@efectuarpagamento');
-Route::post('efectuarpagamentocredito','VendasController@efectuarpagamentocredito');
+Route::post('efectuarpagamentocredito','VendasController@venda/facturacredito');
 Route::post('efectuarcredito','VendasController@efectuarcredito');
 Route::get('listapedidos','VendasController@listapedidos');
 Route::get('creditarvenda','VendasController@creditarvenda');
@@ -114,8 +114,10 @@ Route::get('searchcliente','ClienteController@searchcliente')->name('searchloani
 
 Route::get('get-produt','ProdutoController@getprodut');
 
+Route::get('venda/facturaVenda/{id}/{cliente}','VendasController@facturaVenda');
 Route::get('venda/factura/{id}','VendasController@factura');
 Route::get('vendas/find/bulck','VendasController@findbulck');
+Route::get('vendas/produtos/stock','VendasController@produtosStock');
 
 
 //Ficha de pacientes
@@ -164,6 +166,11 @@ Route::get('meusficheiros/deletefile/{file}','ReportExtratController@deletefile'
 Route::get('meusficheiros/all/deletefile','ReportExtratController@alldeletefile');
 Route::get('file/download/{filename}', 'FileDownloadController@index')->name('file/download');
 Route::post('report/filtro','ReportExtratController@filtro');
+
+//Recipt
+Route::get('vendas/ultima/{id}','VendasController@ultimaVenda');
+Route::get('vendas/ultima/print/{id}','VendasController@ultimaPrint');
+Route::get('vendas/ultimas/vendas','VendasController@ultimas');
 
 //fim das rotas 
 });

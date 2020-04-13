@@ -46,11 +46,14 @@
                  <input type="" name="formtype" id="formtype" value="venda" hidden="true">
                  <input type="" name="mesa_id" id="mesa_id" value="{{$mesa_id}}" hidden="true">
                  <input name="identificador_de_bulk" id="identificador_de_bulk" class="identificador_de_bulk" hidden="true">
-                    <select multiple="multiple" size="20" name="duallistbox_demo1[]" title="duallistbox_demo1[]">
-                          @foreach($produtos as $key => $cil)
+                 <div id="ListProduct">
+                    <select multiple="multiple" size="20" name="duallistbox_demo1[]" title="duallistbox_demo1[]" class="produtos_stok">
+                          <!--@foreach($produtos as $key => $cil)
                           <option value="{{$cil->id}}">{{$cil->codigoproduto}} - {{$cil->name}} - {{$cil->entrada_preco}} Mtn Q - ({{$cil->total_entrada-$cil->total_saida}})</option>
-                          @endforeach
+                          @endforeach-->
                     </select>
+                     
+                 </div>
                 <br>
                 <button type="submit" class="btn btn-block btn-primary btn-flat"><i class="fa fa-shopping-cart"></i> Adicionar no carrinho</button>
               </form> 
@@ -157,10 +160,11 @@
         <!-- form start -->
           <div class="box-body">
             <div class="form-group">
-              <p class="help-block">Iva:    17%</p>
-              <p class="help-block">Total de Vendas:</p>
-              <p class="help-block" style="background: #00ff1f40">Sub Total:</p>
-              <h3 style="border:1px dotted"><i class="fa fa-usd" aria-hidden="true"></i> Total <input style="color: red" type="text"  class="total form-control" value="0" name="sum" id="sum" disabled="" /></div></h3>
+              <p class="help-block">Iva:    <span data-toggle="tooltip" class="badge bg-green">17%</span></p>
+              <p class="help-block">Total IVA:    <span data-toggle="tooltip" class="badge bg-yellow " id="spanTotalVendas" ></p>
+              <p class="help-block" style="background: #00ff1f40">Sub Total:    <span data-toggle="tooltip" class="badge bg-yellow " id="spanTotal" ></span></p>
+              <h3 style="border:1px dotted"><i class="fa fa-usd" aria-hidden="true"></i> Total <input style="color: red" type="text"  class="total form-control" value="0" name="sum" id="sum" disabled="" /></h3>
+            </div>
           </div>
           <!-- /.box-body -->
 
@@ -180,6 +184,26 @@
         
         </div>  
 
+        <div class="box box-primary">
+        <div class="box-header with-border">
+            <h5 class="box-title">Ultimas Vendas</h5>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+          <div class="box-body">
+            <div class="ultimas_vendas">
+                
+            </div>
+          </div>
+          <!-- /.box-body -->
+
+          <div class="box-footer">
+            
+          </div>
+        
+        </div> 
+
+</div>
         <!--modal edite Mesa-->
         <div class="modal fade bd-example-modal-lg" id="ticket-edit-mesa-modal" tabindex="-1" role="dialog" aria-labelledby="ticket-edit-mesa-modal-Label">
             <div class="modal-dialog modal-lg" role="document">
@@ -442,7 +466,7 @@
         </div> 
 
      
- </div>
+ 
 <!--scripts-->
         
         <script type="text/javascript">
@@ -471,6 +495,8 @@
 
         <script type="text/javascript">
             $(document).ready(function (){
+                produtoStock();
+                ultimasvendas();
                 $mesa_id=$('#mesa_id').val();
                 $formtype=$('#formtype').val();
                 $.ajax({
@@ -481,7 +507,13 @@
 
                         $('.identificador_de_bulk').val(data.identificador_de_bulk);
                         var link = document.getElementById("factura");
-                        var url="{{ url('venda/factura/') }}"+'/'+data.identificador_de_bulk;
+                        var _cliente=($('[id="cliente"]').val()); 
+                        if(_cliente){
+                        var url="{{ url('venda/facturaVenda/') }}"+'/'+data.identificador_de_bulk+'/'+_cliente;   
+                        }else{
+                        var url="{{ url('venda/factura/') }}"+'/'+data.identificador_de_bulk;    
+                        }
+                        
                         link.setAttribute("href", url);
                     },
                     error: function (error){
@@ -516,7 +548,7 @@
 
             <script>
 
-              var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
+              
               $("#demoform").submit(function(e) {
                 e.preventDefault();
                 $dados=($('[name="duallistbox_demo1[]"]').val());
@@ -542,7 +574,11 @@
                              }
                             //alert(parseFloat(_total))
                             $(".total").val(_total);
+                            
+                            document.getElementById("spanTotal").innerHTML=_total-(_total*0.17);
+                            document.getElementById("spanTotalVendas").innerHTML=_total*0.17;
                             getIdBulck();
+                            //produtoStock();
 
 
 
@@ -606,6 +642,9 @@
                              }
                             //alert(parseFloat(_total))
                                 $(".total").val(_total);
+                                document.getElementById("spanTotal").innerHTML=_total-(_total*0.17);
+                                document.getElementById("spanTotalVendas").innerHTML=_total*0.17;
+                                //produtoStock()
 
                         
 
@@ -635,6 +674,9 @@
                  }
                 //alert(parseFloat(_total))
                     $(".total").val(_total);
+                    document.getElementById("spanTotal").innerHTML=_total-(_total*0.17);
+                    document.getElementById("spanTotalVendas").innerHTML=_total*0.17;
+                    //produtoStock()
                  });
 
                
@@ -645,7 +687,7 @@
                 
             $(document).ready(function(){
 
-                $('.valor').change(function(){
+                $('.valor').keyup(function(){
 
                      var total=$('[name="valor[]"]')
                      var __total=[];
@@ -760,7 +802,9 @@
                              }
                             //alert(parseFloat(_total))
                                 $(".total").val(_total);
-
+                                document.getElementById("spanTotal").innerHTML=_total-(_total*0.17);
+                                document.getElementById("spanTotalVendas").innerHTML=_total*0.17;
+                                //produtoStock();
                                 swal("Pagamento Aceito com Sucesso!", "Você adicionou um pagamento", "success");
 
 
@@ -860,7 +904,9 @@
                              }
                             //alert(parseFloat(_total))
                                 $(".total").val(_total);
-
+                                document.getElementById("spanTotal").innerHTML=_total-(_total*0.17);
+                                document.getElementById("spanTotalVendas").innerHTML=_total*0.17;
+                                //produtoStock();
                                 swal("Pagamento Aceito com Sucesso!", "Você adicionou um pagamento a credito com sucesso", "success");
 
 
@@ -913,7 +959,9 @@
                              }
                             //alert(parseFloat(_total))
                                 $(".total").val(_total);
-                       
+                                document.getElementById("spanTotal").innerHTML=_total-(_total*0.17);
+                                document.getElementById("spanTotalVendas").innerHTML=_total*0.17;
+                                //produtoStock();
 
 
                 }}
@@ -957,6 +1005,17 @@
                         $('input[name="loanidshow"]').val(ui.item.label);
                         $('input[name="cliente"]').val(ui.item.id);
                         document.getElementById("creditar").disabled = false;
+                        //set id cliente on link
+                        var identificador_de_bulk = $('.identificador_de_bulk').val();
+                        var link = document.getElementById("factura");
+                        var _cliente=($('[name="cliente"]').val());
+                        if(_cliente){
+                        var url="{{ url('venda/facturaVenda/') }}"+'/'+identificador_de_bulk+'/'+_cliente;   
+                        }else{
+                        var url="{{ url('venda/factura/') }}"+'/'+identificador_de_bulk;    
+                        }
+                        
+                        link.setAttribute("href", url);
                         //console.log( ui.item.LoanID ); 
                     }
                 });
@@ -971,5 +1030,38 @@
                 function tipoVendaCash(){
                    $('#formtypePagamento').val('venda');
                 }
+            </script>
+
+            <script type="text/javascript">
+
+            function produtoStock(){
+
+                 $.ajax({
+                  url: "{{URL('vendas/produtos/stock')}}",
+                  type:'get',
+                  success: function(data) {
+                   //$('select[name="duallistbox_demo1[]_helper2"]').empty();
+                    $.each(data, function (key, value) {
+                        $(".produtos_stok").append('<option value="'+value.id+'">'+value.codigoproduto+' - '+value.name+' - '+value.entrada_preco+' Mtn, Qt: '+(value.total_entrada-value.total_saida)+'</option>');  
+                    });
+                    var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
+
+
+
+                }});
+            }
+            </script>
+            <script type="text/javascript">
+                function ultimasvendas(){
+                $.ajax({
+                    url:"{{url('vendas/ultimas/vendas')}}",
+                    type:'get',
+                    success:function(data){
+                        $(".ultimas_vendas").empty();
+                        $.each(data, function (key, value) {
+                            $(".ultimas_vendas").append('<row>'+value.created_at+'  <a class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima")}}'+'/'+value.codigo_venda+'"> <i class="fa fa-info-circle" aria-hidden="true"></i>    </a>    '+' <a class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima/print")}}'+'/'+value.codigo_venda+'">    <i class="fa fa-print" aria-hidden="true"></i>  </a>'+' <span data-toggle="tooltip" title="'+value.total_venda+'" class="badge bg-yellow " > Total</span> '+' <span data-toggle="tooltip" title="'+value.total_pago+'" class="badge bg-yellow " > Pago </span> '+' <span data-toggle="tooltip" title="'+value.total_porpagar+'" class="badge bg-yellow " > Por Pagar </span> '+' <span data-toggle="tooltip"  title="'+value.total_troco+'" class="badge bg-yellow " > Troco</span> '+'</row> <br/>');  
+                        });  
+                    }
+                })}
             </script>
 @stop

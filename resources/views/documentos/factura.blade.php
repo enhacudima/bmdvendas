@@ -31,6 +31,8 @@
             Fixo: (+258) 82 150 003 1<br>
             Email: pelosepatas@gmail.com<br>
             Maputo, Moçambique
+            <br>
+            Operador: {{Auth::user()->name}}
           </address>
         </div>
         <!-- /.col -->
@@ -42,7 +44,7 @@
         <div class="col-sm-4 invoice-col">
           <b><img src="{{ asset('imglogo/pp.jpg') }}"   alt="logo" width="200" height="100"></b><br>  
           <br>
-          <b>&emsp;&emsp;&emsp;&emsp;Factura Nᵒ  #</b>
+          <b>&emsp;&emsp;&emsp;&emsp;Factura Nᵒ  {{$data_mesa[0]->identificador_de_bulk}}</b>
           
         </div>
         <!-- /.col -->
@@ -58,7 +60,7 @@
         <div class="col-sm-4 invoice-col">
           <address>
             <br>
-              <b> Cliente:</b> {{$cliente->nome}} {{$cliente->apelido}}<br/> 
+              <b> Cliente:</b> @if(isset($cliente)){{$cliente->nome}} {{$cliente->apelido}}@endif<br/> 
               <b> Data Limite Pagamento:</b> {{\Carbon\Carbon::now()->adddays(7)->format('d-m-Y')}}<br>
           </address>
         </div>
