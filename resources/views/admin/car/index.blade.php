@@ -62,7 +62,7 @@
                      <td> 
 
                         <a class="btn btn btn-success btn-xs"   href="{{url('cartemp', [$cil->id,$mesa_id,Auth::user()->id])}}">
-                             Espera >>
+                             Espera <i class="fa fa-chevron-right" aria-hidden="true"></i>
                         </a>
                      </td>
                     </tr>
@@ -94,7 +94,6 @@
                     <th scope="col">Contacto</th>
                     <th scope="col">Animal</th>
                     <th scope="col">Data</th>
-                    <th scope="col">Notificar</th>
                     <th scope="col">Venda</th>
                     <th scope="col">Eliminar</th>
                 </tr>
@@ -108,12 +107,7 @@
                      <td>{{$cil->contacto1}} {{$cil->contacto2}}</td>
                      <td>{{$cil->marca}}</td>
                      <td>{{$cil->updated_at->diffForHumans()}}</td>
-                     <td> 
-
-                        <a class="btn btn btn-success btn-xs"   href="{{url('cartemp', [$cil->id,$mesa_id,Auth::user()->id])}}">
-                            SMS
-                        </a>
-                     </td> 
+ 
                      <td> 
 
                         <a class="btn btn btn-success btn-xs"   href="{{url('carvendasindex', [$cil->id,$mesa_id,Auth::user()->id])}}">
