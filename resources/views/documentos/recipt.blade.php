@@ -56,6 +56,7 @@ Estrada Nacional EN1
 Cell: (+258) 84 150 003 1<br>
 Fixo: (+258) 82 150 003 1<br>
 Email: pelosepatas@gmail.com<br>
+Nuit:<br>
 <br />
 Date: {{ date('d-M-Y') }}
 Estado: Pago

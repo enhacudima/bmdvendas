@@ -464,7 +464,7 @@ class VendasController extends Controller
     		
     	}
     }
-    function ultimaVenda($pagamento){
+    public function ultimaVenda($pagamento){
       $itens=VendasTempMesa::where('vendas_temp_mesa.codigo_venda',$pagamento)
               ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
@@ -479,6 +479,20 @@ class VendasController extends Controller
           return $pdf->stream('invoice.pdf');
     }
 
+    public function ultimaPrint($pagamento){
+      $itens=VendasTempMesa::where('vendas_temp_mesa.codigo_venda',$pagamento)
+              ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
+              ->join('produtos','produtos_entradas.produto_id','produtos.id')
+              ->leftjoin('cliente_venda','cliente_venda.codigo_venda','vendas_temp_mesa.codigo_venda')
+              ->leftjoin('cliente','cliente.id','cliente_venda.cliente_id')
+              ->select('produtos.codigoproduto','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk','cliente.nome','cliente.apelido','vendas_temp_mesa.codigo_venda')
+              ->orderBy('vendas_temp_mesa.created_at','desc')
+              ->get();
+      $trocos=VendasTroco::where('codigo_venda',$pagamento)->first();   
+
+          $pdf = app('dompdf.wrapper')->loadView('documentos.recipt_print', compact('itens','trocos'));
+          return $pdf->stream('invoice.pdf');
+    }
 
 
     public function efectuarpagamentocredito(Request $request)

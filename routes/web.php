@@ -172,6 +172,11 @@ Route::get('vendas/ultima/{id}','VendasController@ultimaVenda');
 Route::get('vendas/ultima/print/{id}','VendasController@ultimaPrint');
 Route::get('vendas/ultimas/vendas','VendasController@ultimas');
 
+//dashboard
+Route::get('chart-line', 'ChartController@chartLine');
+Route::get('chart-line-ajax', 'ChartController@chartLineAjax');
+Route::get('chart-line-ajax-api2', 'ChartController@chartLineAjax2');
+
 //fim das rotas 
 });
 //todas rotas devem ser definidas acima 

@@ -3,25 +3,29 @@
 @section('title', ' | Cadastro de Produtos')
 
 @section('content_header')
-    <h1>Produtos</h1>
+    <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ url('home') }}"><i class="fa fa-home"></i> Home</a></li>
+        <li class="">Produtos</li>
+        <li class="active">Cadastro</li>
+    </ol>
 @stop
 
 @section('content')
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
-<div class="">
-    <div class="">
-    <div class="panel panel-default">
-
-    <div class="panel-heading">
-        <h4>Lista
-        </h4>
-    </div>
-
-    <div class="panel-body">
-        <div class="col-lg-3">
-        <form method="post" action="{{url('storeproduto')}}" autocomplete="Active" accept-charset="UTF-8" enctype="multipart/form-data">
+<!--model-->
+<div class="modal fade bd-example-modal-lg" id="modal-default"  tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Novo produto</h4>
+      </div>
+      
+        <form method="post" action="{{url('storeproduto')}}" autocomplete="Active" accept-charset="UTF-8" enctype="multipart/form-data" style="margin:15px">
+            <div class="modal-body">
             {{ csrf_field() }}
 
             <input   name="idusuario" type="hidden" id="idusuario" value="{{ Auth::user()->id }}" required autofocus>
@@ -92,27 +96,29 @@
                     <input type="file"  name="image">
                 </div>
             </div>
-         
-            <div class="row">
-
-                <div class="from-group text-right col-md-12">
-                     <label></label>
-                    <input class="btn btn-primary" type="submit" value="Submeter">
-                </div>
-            </div>   
-                
-           
-        </form>
+          
         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
 
     </div>
-    
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 
-    <div class="col-lg-9">
+
+   
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Lista de Produtos
+        <h4><button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
+                Novo produto
+              </button>
         </h4>
     </div>
 
@@ -142,7 +148,7 @@
             @foreach($produtos as $cil)
                 <tr>
                  <td>{{$cil->id}}</td>
-                 <td><img src="{{asset('storage/'.$cil->image)}}" style="width:130px; height:110px; clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
+                 <td><img src="{{asset('storage/'.$cil->image)}}" style="width:80px;  clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
                  <td> 
 
                     <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->id)}}">
@@ -171,10 +177,7 @@
     </div>    
         </div>
     </div>
-</div>
-</div>
 
-</div>
 @stop
 
 @section('js')

@@ -115,9 +115,9 @@ return [
             'url'  => 'home',
         ],
         [
-            'text'    => 'Menu',
+            'text'    => 'Dashboard',
             'icon'    => 'heartbeat',
-            'url'     => '#',  
+            'url'     => 'chart-line',  
         ],
         [
             'text'   => 'Clientes',
