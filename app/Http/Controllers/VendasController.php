@@ -42,17 +42,6 @@ class VendasController extends Controller
     {
     	$mesa_id=$id;
 
-
-         //$produtos=DB::table('produtos_venda_view')->where('produto_status',1)->where('status',1)->get();
-               
-
-
-/*
-        $produtos=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
-                    ->select('produtos_entradas.*','produtos.name')
-                    ->where('produtos_entradas.status','!=','0')
-                    ->get();*/
-
         $data_mesa=VendasTempMesa::where('mesa_id',$mesa_id)->whereNull('codigo_venda')
           		->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
           		->join('produtos','produtos_entradas.produto_id','produtos.id')
@@ -78,10 +67,7 @@ class VendasController extends Controller
         $car_=  $car_name->id; 
 
       $produtos=DB::table('produtos_venda_view')->where('produto_status',1)->where('status',1)->get();
-        /*$produtos=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
-                    ->select('produtos_entradas.*','produtos.name')
-                    ->where('produtos_entradas.status','!=','0')
-                    ->get();*/
+
         $data_mesa=VendasTempMesa::where('mesa_id',$mesa_id)->whereNull('codigo_venda')->where('vendas_temp_mesa.car_id',$car_)
               ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
@@ -215,8 +201,6 @@ class VendasController extends Controller
 
           	}
 
-          	$output="";
-
             if ($request->formtype=="car") {
             
           	$data_mesa=VendasTempMesa::where('mesa_id',$data['mesa_id'])->whereNull('codigo_venda')->where('vendas_temp_mesa.car_id',$car_)
@@ -233,27 +217,7 @@ class VendasController extends Controller
               ->orderBy('vendas_temp_mesa.created_at','desc')
               ->get();
             }
-
-          	foreach ($data_mesa as $key => $value) {
-          		$output.=
-              '
-                <tr>
-                  <td  style="width: 400px"> <input type="text" id="idbulk" name="idbulk" hidden="true" value="'.$value->identificador_de_bulk.'"><input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="'.$value->id.'"><input class="form-control" type="text" name="produt" id="produt"  disabled="" value="'.$value->name.'"></td> 
-                  <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="'.$value->preco_final.'"></td> 
-                  <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="'.$value->quantidade.'"></td> 
-                  <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="'.$value->quantidade * $value->preco_final.'"></td>
-                  <td><a type="submit"class="btn btn-block btn-danger btn-flat"  data-value="'.$value->id.'" id="delete" href="#">
-                    <i class="fa fa-trash-o fa-lg" ></i> Delete </a>
-                  </td>
-
-                </tr>
-
-              ';	
-          	}
-          	
-
-          
-
+            $output=$this->dataMesaTemp($data_mesa);
           return response($output);
         }
     }
@@ -282,10 +246,6 @@ class VendasController extends Controller
 	      		$produtos->save();
           	}
 
-
-
-        	$output="";
-
           if ($request->formtype=="car") {
             
           	$data_mesa=VendasTempMesa::where('mesa_id',$data['mesa_id'])->whereNull('codigo_venda')->where('vendas_temp_mesa.car_id',$car_)
@@ -306,24 +266,7 @@ class VendasController extends Controller
 
 
             }
-
-          	foreach ($data_mesa as $key => $value) {
-          		$output.=
-          			'
-                <tr>
-                  <td  style="width: 400px">  <input type="" name="mesa_id" value="'.$value->mesa_id.'" hidden="true"> <input type="text" id="idbulk" name="idbulk" hidden="true" value="'.$value->identificador_de_bulk.'"><input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="'.$value->id.'"><input class="form-control" type="text" name="produt" id="produt"  disabled="" value="'.$value->name.'"></td> 
-                  <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="'.$value->preco_final.'"></td> 
-                  <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="'.$value->quantidade.'"></td> 
-                  <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="'.$value->quantidade * $value->preco_final.'"></td>
-                  <td><a type="submit"class="btn btn-block btn-danger btn-flat"  data-value="'.$value->id.'" id="delete" href="#">
-                    <i class="fa fa-trash-o fa-lg" ></i> Delete </a>
-                  </td>
-
-                </tr>
-
-              ';
-          	}
-
+            $output=$this->dataMesaTemp($data_mesa);
           	 return response($output);
     	}
     }
@@ -587,26 +530,9 @@ class VendasController extends Controller
               ->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk')
               ->orderBy('vendas_temp_mesa.created_at','desc')
               ->get();
-            }  
+            } 
+            $output=$this->dataMesaTemp($data_mesa);
 
-            foreach ($data_mesa as $key => $value) {
-              $output.=
-              '
-                <tr>
-                  <td  style="width: 400px"> <input type="text" id="idbulk" name="idbulk" hidden="true" value="'.$value->identificador_de_bulk.'"><input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="'.$value->id.'"><input class="form-control" type="text" name="produt" id="produt"  disabled="" value="'.$value->name.'"></td> 
-                  <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="'.$value->preco_final.'"></td> 
-                  <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="'.$value->quantidade.'"></td> 
-                  <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="'.$value->quantidade * $value->preco_final.'"></td>
-                  <td><a type="submit"class="btn btn-block btn-danger btn-flat"  data-value="'.$value->id.'" id="delete" href="#">
-                    <i class="fa fa-trash-o fa-lg" ></i> Delete </a>
-                  </td>
-
-                </tr>
-
-              ';  
-            }
-
-        
             if (!isset($data_mesa[0])) {
               $mesa=Mesa::find($mesa_id->mesa_id);
               $mesa->status=1;
@@ -657,4 +583,27 @@ public function ultimas(){
  $data=VendasTempMesa::select('vendas_temp_mesa.*','venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')->join('venda_troco','venda_troco.codigo_venda','vendas_temp_mesa.codigo_venda')->where('vendas_temp_mesa.codigo_venda','!=',null)->limit(10)->orderBy('vendas_temp_mesa.created_at','desc')->get();
  return response()->json($data); 
 }
+
+function dataMesaTemp($data_mesa){
+  $output="";
+    foreach ($data_mesa as $key => $value) {
+    $output.=
+    '
+      <tr>
+        <td  style="width: 400px"> <input type="text" id="idbulk" name="idbulk" hidden="true" value="'.$value->identificador_de_bulk.'"><input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="'.$value->id.'"><input class="form-control" type="text" name="produt" id="produt"  disabled="" value="'.$value->name.'"></td> 
+        <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="'.$value->preco_final.'"></td> 
+        <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="'.$value->quantidade.'"></td> 
+        <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="'.$value->quantidade * $value->preco_final.'"></td>
+        <td><a type="submit"class="btn btn-block btn-danger btn-flat"  data-value="'.$value->id.'" id="delete" href="#">
+          <i class="fa fa-trash-o fa-lg" ></i> Delete </a>
+        </td>
+
+      </tr>
+
+    ';  
+  }
+
+  return $output;
+}
+
 }
