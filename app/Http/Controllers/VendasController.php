@@ -43,7 +43,7 @@ class VendasController extends Controller
     	$mesa_id=$id;
 
 
-         $produtos=DB::table('produtos_venda_view')->where('produto_status',1)->where('status',1)->get();
+         //$produtos=DB::table('produtos_venda_view')->where('produto_status',1)->where('status',1)->get();
                
 
 
@@ -61,7 +61,7 @@ class VendasController extends Controller
           		->get(); 
         $mesa=Mesa::find($mesa_id);  		           
 
-         return view('vendas.index', compact('produtos','mesa_id','data_mesa','mesa'));           
+         return view('vendas.index', compact('mesa_id','data_mesa','mesa'));           
     }  
 
     public function produtosStock(){

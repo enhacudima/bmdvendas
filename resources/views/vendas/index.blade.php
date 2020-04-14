@@ -48,9 +48,7 @@
                  <input name="identificador_de_bulk" id="identificador_de_bulk" class="identificador_de_bulk" hidden="true">
                  <div id="ListProduct">
                     <select multiple="multiple" size="20" name="duallistbox_demo1[]" title="duallistbox_demo1[]" class="produtos_stok">
-                          <!--@foreach($produtos as $key => $cil)
-                          <option value="{{$cil->id}}">{{$cil->codigoproduto}} - {{$cil->name}} - {{$cil->entrada_preco}} Mtn Q - ({{$cil->total_entrada-$cil->total_saida}})</option>
-                          @endforeach-->
+
                     </select>
                      
                  </div>
@@ -1042,7 +1040,7 @@
                   success: function(data) {
                    //$('select[name="duallistbox_demo1[]_helper2"]').empty();
                     $.each(data, function (key, value) {
-                        $(".produtos_stok").append('<option value="'+value.id+'">'+value.codigoproduto+' - '+value.name+' - '+value.entrada_preco+' Mtn, Qt: '+(value.total_entrada-value.total_saida)+'</option>');  
+                        $(".produtos_stok").append('<option value="'+value.id+'">'+value.codigoproduto+' - '+value.name+' - '+Number(value.entrada_preco).toFixed(2)+' Mtn, Qt: '+(value.total_entrada-value.total_saida)+'</option>');  
                     });
                     var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
 
