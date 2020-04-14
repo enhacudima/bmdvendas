@@ -25,7 +25,9 @@ Route::get('/clear-cache-all', function() {
 
 Auth::routes();
 
-
+//home contact form 
+Route::resource('contactFormData','ContactFormController');
+Route::post('contactFormData/store','ContactFormController@store');
 
 
 
@@ -148,9 +150,6 @@ Route::get('emailtry/{id}', 'EmailController@try');
 
 Route::post('enviaremail', 'EmailController@enviaremail');
 
-//home contact form 
-Route::resource('contactFormData','ContactFormController');
-Route::post('contactFormData/store','ContactFormController@store');
 
 //email inbox
 Route::get('email/inbox','EmailController@inbox');
