@@ -93,7 +93,7 @@
                                             <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true">
                                             <input type="text" id="idbulk" name="idbulk" hidden="true" value="{{$value->identificador_de_bulk}}">
                                             <input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="{{$value->id}}">
-                                            <input style="width: 250px" class="form-control" type="text" name="produt" id="produt"  disabled="" value="{{$value->name }}"></td> 
+                                            <input style="width: 250px" class="form-control" type="text" name="produt" id="produt"  disabled="" value="{{$value->name}} "></td> 
                                         <td><input style="width: 100px" class="form-control " step="any" type="number"  name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}"></td> 
                                         <td><input style="width: 100px" class="form-control" step="any" type="number"  name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}"></td> 
                                         <td><input style="width: 100px"  class="form-control" step="any" type="number"  name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}"></td>
