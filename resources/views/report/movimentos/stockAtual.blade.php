@@ -105,7 +105,7 @@
             @foreach($movimentos as $cil)
                 <tr>
                  <td>{{$cil->id}}</td>
-                 <td><img src="{{asset('storage/'.$cil->image)}}" style="width:130px; height:110px; clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
+                 <td><img src="{{asset('storage/'.$cil->image)}}" style="width:80px;  clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
                  <td>             
                     <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->id)}}">
                         <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
