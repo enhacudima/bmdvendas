@@ -122,7 +122,7 @@
                     <td><span class="label label-warning">Desativado</span></td>
                  @endif
                 
-                <td>{{number_format($cil->entrada_preco * $cil->total_saida, 2, ".", "")}}MTN</td> 
+                <td>{{number_format($cil->entrada_preco, 2, ".", "")}}MTN</td> 
                 <td>{{$cil->total_entrada}}</td>
                 <td>{{$cil->total_saida}}</td>
                 <td>{{$cil->total_entrada - $cil->total_saida}}</td>
