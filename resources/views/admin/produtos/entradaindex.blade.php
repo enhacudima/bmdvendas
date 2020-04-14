@@ -163,7 +163,7 @@
                 </td>  
                  <td>{{$cil->quantidade}}</td>
                  <td>{{$cil->precodecompra}} Mt</td>
-                 <td>{{$cil->margem_per}} %</td>
+                 <td>{{number_format($cil->margem_per, 2, ".", "")}} %</td>
                  <td>{{$cil->quantidade_unitaria}}</td>
                  <td>{{number_format($cil->custo_unitario, 2, ".", "")}} Mt</td>
                  <td>{{number_format($cil->margem, 2, ".", "")}} Mt</td>
