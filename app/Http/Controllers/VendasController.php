@@ -580,7 +580,13 @@ public function findbulck(Request $request)
 }
 
 public function ultimas(){
- $data=VendasTempMesa::select('vendas_temp_mesa.*','venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')->join('venda_troco','venda_troco.codigo_venda','vendas_temp_mesa.codigo_venda')->where('vendas_temp_mesa.codigo_venda','!=',null)->limit(10)->orderBy('vendas_temp_mesa.created_at','desc')->get();
+ $data=VendasTempMesa::select('vendas_temp_mesa.*','venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')
+  ->join('venda_troco','venda_troco.codigo_venda','vendas_temp_mesa.codigo_venda')
+  ->where('vendas_temp_mesa.codigo_venda','!=',null)
+  ->limit(10)
+  ->groupby('vendas_temp_mesa.codigo_venda')
+  ->orderBy('vendas_temp_mesa.created_at','desc')
+  ->get();
  return response()->json($data); 
 }
 
