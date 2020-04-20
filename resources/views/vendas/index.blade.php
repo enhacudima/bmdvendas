@@ -28,32 +28,44 @@
         
  <div class="col-md-8">
     <div class="row">
-          <div class="box box-default collapsed-box">
+          <div class="box box-default ">
             <div class="box-header with-border">
               <center><h3 class="box-title"><strong><i class="fa fa-fw fa-shopping-bag"></i> Produtos </strong></h3></center>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
               </div>
               <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <form id="demoform" action="#" method="post" style="margin: 5px">
-                 {{ csrf_field() }}
+                <div class="input-group">
+                    <input type="text" class="form-control" id="find_produtos_stock" placeholder="Pesquise pelo produto">
+                    <div class="input-group-addon">
+                      <i class="fa fa-search"></i>
+                    </div>
+                  </div>
+                  <hr>
+                  <!--inputs-->
 
                  <input type="" name="formtype" id="formtype" value="venda" hidden="true">
                  <input type="" name="mesa_id" id="mesa_id" value="{{$mesa_id}}" hidden="true">
                  <input name="identificador_de_bulk" id="identificador_de_bulk" class="identificador_de_bulk" hidden="true">
-                 <div id="ListProduct">
-                    <select multiple="multiple" size="20" name="duallistbox_demo1[]" title="duallistbox_demo1[]" class="produtos_stok">
+                 <!--end-->
+                <table id="produtosVenda" class="table table-striped  table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <th width="20%">Image</th>
+                        <th width="70%">Detalhes</th>
+                        <th width="10%">Ação</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
 
-                    </select>
-                     
-                 </div>
-                <br>
-                <button type="submit" class="btn btn-block btn-primary btn-flat"><i class="fa fa-shopping-cart"></i> Adicionar no carrinho</button>
+                <form id="demoform" action="#" method="post" style="margin: 5px">
+                 {{ csrf_field() }}
               </form> 
             </div>
             <!-- /.box-body -->
@@ -127,7 +139,8 @@
     </div>
      
  </div>
- <div class="col-md-4">
+
+<div class="col-md-4">
         <div class="box box-primary">
         <div class="box-header with-border">
             <h5 class="box-title">Cliente</h5>
@@ -158,9 +171,9 @@
         <!-- form start -->
           <div class="box-body">
             <div class="form-group">
-              <p class="help-block">Iva:    <span data-toggle="tooltip" class="badge bg-green">17%</span></p>
+              <p class="help-block">Iva:    <span data-toggle="tooltip" class="badge bg-blue">17%</span></p>
               <p class="help-block">Total IVA:    <span data-toggle="tooltip" class="badge bg-yellow " id="spanTotalVendas" ></p>
-              <p class="help-block" style="background: #00ff1f40">Sub Total:    <span data-toggle="tooltip" class="badge bg-yellow " id="spanTotal" ></span></p>
+              <p class="help-block" style="background: #00ff1f40">Sub Total:    <span data-toggle="tooltip" class="badge bg-green " id="spanTotal" ></span></p>
               <h3 style="border:1px dotted"><i class="fa fa-usd" aria-hidden="true"></i> Total <input style="color: red" type="text"  class="total form-control" value="0" name="sum" id="sum" disabled="" /></h3>
             </div>
           </div>
@@ -189,10 +202,24 @@
         <!-- /.box-header -->
         <!-- form start -->
           <div class="box-body">
-            <div class="ultimas_vendas">
-                
-            </div>
-          </div>
+                <div class="box-body table-responsive no-padding"> 
+                    <table id="ultimasVendasTables" class="table table-striped  table-hover" cellspacing="0" width="100%">
+                        <thead>
+                            <th>Hora</th>
+                            <th>Total</th>
+                            <th>Pago</th>
+                            <th width="13%">A Pagar</th>
+                            <th>Troco</th>
+                            <th>Informação</th>
+                            <th>Imprimir</th>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                        
+                    </table>
+               </div>
+           </div>
           <!-- /.box-body -->
 
           <div class="box-footer">
@@ -202,6 +229,7 @@
         </div> 
 
 </div>
+
         <!--modal edite Mesa-->
         <div class="modal fade bd-example-modal-lg" id="ticket-edit-mesa-modal" tabindex="-1" role="dialog" aria-labelledby="ticket-edit-mesa-modal-Label">
             <div class="modal-dialog modal-lg" role="document">
@@ -464,36 +492,11 @@
         </div> 
 
      
- 
-<!--scripts-->
-        
-        <script type="text/javascript">
-           /*  $(document).ready(function (){
-                $.ajax({
-                   type:"GET",
-                   url:"{{url('getstocktovenda')}}",
-                   success:function(res){  
-
-                       if (res) {
-                        $("#selectProdut").empty();
-                        $.each(res,function(key,value){
-                             
-                            $(".selectProdut").append('<option value="'+value.id+'">"'+value.codigoproduto+'" - "'+value.name+'" - "'+value.entrada_preco+'" Mtn Q - ("'+value.total_entrada-value.total_saida+'")</option>');
-                        });
-                   
-                    }else{
-                       $("#pessoa_contacto_state_id").empty();
-                    }
-                   }
-                });
-
-             });*/
-        </script>
 
 
         <script type="text/javascript">
+            var jqxhr = {abort: function () {}};
             $(document).ready(function (){
-                produtoStock();
                 ultimasvendas();
                 $mesa_id=$('#mesa_id').val();
                 $formtype=$('#formtype').val();
@@ -547,9 +550,7 @@
             <script>
 
               
-              $("#demoform").submit(function(e) {
-                e.preventDefault();
-                $dados=($('[name="duallistbox_demo1[]"]').val());
+              function produtostockadd($id) {
                 $mesa_id=($('[name="mesa_id"]').val());
                 $formtype=($('[name="formtype"]').val());
                 $idbulk=($('[name="identificador_de_bulk"]').val());
@@ -557,7 +558,7 @@
                 $.ajax({
                   url: "{{URL('saveselection')}}",
                   type:'POST',
-                  data: {dados:$dados,mesa_id:$mesa_id,formtype:$formtype,idbulk:$idbulk},
+                  data: {produt_id:$id,mesa_id:$mesa_id,formtype:$formtype,idbulk:$idbulk},
                   success: function(data) {
                         $('#reclatodas > tbody') .html(data);
 
@@ -576,20 +577,9 @@
                             document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
                             document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                             getIdBulck();
-                            //produtoStock();
-
-
-
-
-                        
-
-
-                    //alert(data);
-
-
                   }});
                 return false;
-              });
+              };
             </script>
             <script type="text/javascript">
                 $.ajaxSetup({
@@ -1032,23 +1022,23 @@
             </script>
 
             <script type="text/javascript">
-
-            function produtoStock(){
-
-                 $.ajax({
+            $(document).ready(function(){   
+            $('#find_produtos_stock').keyup(function(){
+                var value = $('#find_produtos_stock').val();
+                 
+                jqxhr.abort();
+                jqxhr =$.ajax({
                   url: "{{URL('vendas/produtos/stock')}}",
                   type:'get',
+                  data: {key:value},
                   success: function(data) {
-                   //$('select[name="duallistbox_demo1[]_helper2"]').empty();
-                    $.each(data, function (key, value) {
-                        $(".produtos_stok").append('<option value="'+value.id+'">'+value.codigoproduto+' - '+value.name+' - '+Number(value.entrada_preco).toFixed(2)+' Mtn, Qt: '+(value.total_entrada-value.total_saida)+'</option>');  
-                    });
-                    var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
+                    $('#produtosVenda > tbody') .html(data);
 
 
 
                 }});
-            }
+            }); 
+            }) 
             </script>
             <script type="text/javascript">
                 function ultimasvendas(){
@@ -1057,9 +1047,11 @@
                     type:'get',
                     success:function(data){
                         $(".ultimas_vendas").empty();
+                         var corpo=[];
                         $.each(data, function (key, value) {
-                            $(".ultimas_vendas").append('<row>'+value.created_at+'  <a class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima")}}'+'/'+value.codigo_venda+'"> <i class="fa fa-info-circle" aria-hidden="true"></i>    </a>    '+' <a target="_blanck" class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima/print")}}'+'/'+value.codigo_venda+'">    <i class="fa fa-print" aria-hidden="true"></i>  </a>'+' <span data-toggle="tooltip" title="'+value.total_venda+'" class="badge bg-yellow " > Total</span> '+' <span data-toggle="tooltip" title="'+value.total_pago+'" class="badge bg-yellow " > Pago </span> '+' <span data-toggle="tooltip" title="'+value.total_porpagar+'" class="badge bg-yellow " > Por Pagar </span> '+' <span data-toggle="tooltip"  title="'+value.total_troco+'" class="badge bg-yellow " > Troco</span> '+'</row> <br/>');  
-                        });  
+                             corpo[key]='<tr><td>'+value.created_at+'</td><td> <span data-toggle="tooltip" title="'+value.total_venda+'" class="badge bg-yellow " > '+value.total_venda+'</span></td><td><span data-toggle="tooltip" title="'+value.total_pago+'" class="badge bg-yellow " > '+value.total_pago+' </span> </td><td><span data-toggle="tooltip" title="'+value.total_porpagar+'" class="badge bg-yellow " > '+value.total_porpagar+' </span> </td><td><span data-toggle="tooltip"  title="'+value.total_troco+'" class="badge bg-yellow " > '+value.total_troco+'</span></td><td><a class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima")}}'+'/'+value.codigo_venda+'"> <i class="fa fa-info-circle" aria-hidden="true"></i></a></td><td><a target="_blanck" class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima/print")}}'+'/'+value.codigo_venda+'"><i class="fa fa-print" aria-hidden="true"></i>  </a></td></tr>';
+                        });
+                        $('#ultimasVendasTables > tbody') .html(corpo);  
                     }
                 })}
             </script>

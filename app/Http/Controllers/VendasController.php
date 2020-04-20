@@ -53,9 +53,40 @@ class VendasController extends Controller
          return view('vendas.index', compact('mesa_id','data_mesa','mesa'));           
     }  
 
-    public function produtosStock(){
-      $produtos=DB::table('produtos_venda_view')->where('produto_status',1)->where('status',1)->get();
-      return response()->json($produtos);
+    public function produtosStock(Request $request){
+      $term=$request->key;
+      $produtos=DB::table('produtos_venda_view')
+      ->where('status',1)
+      ->where('produto_status',1)
+      ->Where(function($query) use ($term){
+          $query->orwhere('codigoproduto','like','%'.$term.'%')
+                ->orwhere('name','like','%'.$term.'%')
+                ->orwhere('entrada_preco','like','%'.$term.'%');
+      })
+      ->get();
+
+      $output='';
+
+      if ($term==null) {
+        return response()->json($output);
+      }
+
+      
+      $url=\URL::to('storage').'/';
+      foreach ($produtos as $key => $value) {
+        $output.='<tr><td><img src="'.$url.$value->image.'" style="width:85px;  clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
+        <td>
+        <b>Nome:</b> '.$value->name.'<br>
+        <b>Codigo:</b> '.$value->codigoproduto.'<br>
+        <b>Preço: '.$value->entrada_preco.'</b><br>
+        <b>Em Stock:</b> '.($value->total_entrada-$value->total_saida).'
+        </td>
+        <td>
+        <button  class="btn btn-block btn-success btn-flat" onclick="produtostockadd('.$value->id.')" style="" value="'.$value->id.'"><i class="fa fa-shopping-cart"></i></button>
+        </td>
+        </tr>';
+      }
+      return response()->json($output);
     }  
 
     public function carindex($car_id, $mesa_id, $user_id)
@@ -146,6 +177,7 @@ class VendasController extends Controller
 
         	$mesa=Mesa::find($mesa_id);
         	$mesa->status=0;
+          $mesa->idusuario=Auth::user()->id;
         	$mesa->save();
 
           if ($request->formtype=="car") {
@@ -161,8 +193,9 @@ class VendasController extends Controller
           }
 
          
-          	foreach ($data['dados'] as $key => $value) {
-             //verficando duplicados  
+          	/*foreach ($data['dados'] as $key => $value) {*/
+             //verficando duplicados 
+            $value=$data['produt_id']; 
             if ($request->formtype=="car") {
             $duplicate=VendasTempMesa::where('produto_id',$value)
                                       ->where('mesa_id',$data['mesa_id'])
@@ -199,7 +232,7 @@ class VendasController extends Controller
             }  
 
 
-          	}
+          	/*}*/
 
             if ($request->formtype=="car") {
             
@@ -207,14 +240,14 @@ class VendasController extends Controller
           		->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
           		->join('produtos','produtos_entradas.produto_id','produtos.id')
           		->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk')
-          		->orderBy('vendas_temp_mesa.created_at','desc')
+          		->orderBy('vendas_temp_mesa.created_at','asc')
           		->get();            
             }else{
             $data_mesa=VendasTempMesa::where('mesa_id',$data['mesa_id'])->whereNull('codigo_venda')
               ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
               ->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk')
-              ->orderBy('vendas_temp_mesa.created_at','desc')
+              ->orderBy('vendas_temp_mesa.created_at','asc')
               ->get();
             }
             $output=$this->dataMesaTemp($data_mesa);
@@ -401,6 +434,7 @@ class VendasController extends Controller
 
             $mesa=Mesa::find($mesa_id);
             $mesa->status=1;
+            $mesa->idusuario=Auth::user()->id;
             $mesa->save();
 
             return response()->json($identificador_bulck);
@@ -583,7 +617,7 @@ public function ultimas(){
  $data=VendasTempMesa::select('vendas_temp_mesa.*','venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')
   ->join('venda_troco','venda_troco.codigo_venda','vendas_temp_mesa.codigo_venda')
   ->where('vendas_temp_mesa.codigo_venda','!=',null)
-  ->limit(10)
+  ->limit(4)
   ->groupby('vendas_temp_mesa.codigo_venda')
   ->orderBy('vendas_temp_mesa.created_at','desc')
   ->get();
