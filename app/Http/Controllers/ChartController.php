@@ -13,20 +13,30 @@ class ChartController extends Controller
      *
      * @var array
      */
+    public $months=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    public $days;
+
+
+    function daysMonth ()
+    {
+        for ($i=0; $i <=30 ; $i++) { 
+            $days[$i]=$i+1;
+        }
+        
+        return $days;
+    }
+
     public function chartLine()
     {
         $api = url('/chart-line-ajax');
    
         $chart = new VendasLineChart;
-        $chart->labels(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+        $chart->labels($this->months)
         ->load($api)
         ->title('Venda Mensal');
 
         //teste
         $api2=url('/chart-line-ajax-api2');
-        for ($i=0; $i <=30 ; $i++) { 
-        	$days[$i]=$i+1;
-        }
 		
 		for($i = 1 ; $i <= 12; $i++)
 		{
@@ -34,7 +44,7 @@ class ChartController extends Controller
 		 
 		}
 
-
+        $days=$this->daysMonth();
 
         $chart2 = new VendasLineChart;
         $chart2->labels($days)
@@ -49,37 +59,70 @@ class ChartController extends Controller
      *
      * @var array
      */
+
+        function sumItemTotalVenda($items)
+    {
+        $total=0;
+
+        foreach ($items as $item)
+        {
+            $total=$total+$item->total_venda;
+        }
+        $result = $total;
+        
+        return $result;
+    }
+    function getDataSet($labels,$dataset)
+    {
+
+       foreach ($labels as $key => $value) {
+            if (isset($dataset[$value])) {
+                $data_var=$dataset[$value];
+            } else{
+                $data_var=0;
+            } 
+            $datas[$key]=$data_var;
+            $datas=array_values($datas);//without keys
+       };
+
+       return $datas;
+    }
+
     public function chartLineAjax(Request $request)
     {
-        $year = $request->has('year') ? $request->year : date('Y');
-        $users = VendasTroco::select(\DB::raw("sum(total_venda) as count"))
+        $year = $request->has('year') ? $request->year : date('Y'); 
+        $dataset = VendasTroco::select(\DB::raw("sum(total_venda) as count"),\DB::raw('date_format(created_at,"%b") as month'))
                     ->whereYear('created_at', $year)
-                    ->groupBy(\DB::raw("Month(created_at)"))
-                    ->pluck('count');
-  
+                    ->groupBy('month')
+                    ->pluck('count','month'); 
+
+        $datas=$this->getDataSet($this->months,$dataset);            
+
         $chart = new VendasLineChart;
-  
-        $chart->dataset('Total venda', 'line', $users)->options([
+        $chart->dataset('Total venda', 'line', $datas)
+              ->options([
                     'fill' => 'true',
                     'borderColor' => '#51C1C0'
                 ]);
-  
-        return $chart->api();
+
+        return $chart->api();   
     }
         public function chartLineAjax2(Request $request)
     {
         $year = $request->has('year') ? $request->year : date('Y');
         $month = $request->has('month') ? $request->month : date('m');
 
-        $users = VendasTroco::select(\DB::raw("sum(total_venda) as count"))
+        $dataset = VendasTroco::select(\DB::raw("sum(total_venda) as count"),\DB::raw("Day(created_at) as day"))
                     ->whereYear('created_at', $year)
                     ->wheremonth('created_at',$month)
-                    ->groupBy(\DB::raw("Day(created_at)"))
-                    ->pluck('count');
+                    ->groupBy('day')
+                    ->pluck('count','day');
+
+        $days=$this->daysMonth();          
+        $datas=$this->getDataSet($days,$dataset);  
   
         $chart2 = new VendasLineChart;
-  
-        $chart2->dataset('Venda', 'bar', $users)->options([
+        $chart2->dataset('Venda', 'bar', $datas)->options([
                     'fill' => 'true',
                     'borderColor' => '#51C1C0'
                 ]);
