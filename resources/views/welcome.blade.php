@@ -635,7 +635,7 @@
                 <div class="validation"></div>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Assunto" data-rule="minlen:8" data-msg="Por favor o seu assuntpo deve conter pelo menos 8 caracteres!!" />
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Assunto" data-rule="minlen:8" data-msg="Por favor o seu assunto deve conter pelo menos 8 caracteres!!" />
                 <div class="validation"></div>
               </div>
               <div class="form-group">

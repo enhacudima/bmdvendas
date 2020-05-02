@@ -10,8 +10,8 @@
 @stop
 
 @section('content')
-    <div class="container">
-        <div class="box box-solid box-danger">
+    <div class="">
+        <div class="box box-solid box-primary">
             <div class="box-header with-border"><b><center><i class="fa fa-calendar-plus-o"></i> Adicionar Evento ao Calendário </center></b></div>
             <div class="box-body">
                 {!! Form::open(array('route'=>'calendario.add','method'=>'POST','files'=>'true'))!!}
@@ -81,7 +81,7 @@
             </div>
         </div>
 
-        <div class="box box-solid box-danger">
+        <div class="box box-solid box-primary">
             <div class="box-header with-border"> <center><i class="fa fa-calendar"></i> Calendário</center></div>
                 <div class="box-body">
                   

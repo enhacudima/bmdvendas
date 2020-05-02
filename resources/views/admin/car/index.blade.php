@@ -37,7 +37,7 @@
                     <th scope="col">Caderneta</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Contacto</th>
-                    <th scope="col">Animal</th> 
+                    <th scope="col">Paciente</th> 
                     <th scope="col">Acção</th>
                 </tr>
                 </thead>

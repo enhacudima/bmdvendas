@@ -45,7 +45,7 @@
                             <div class="row">
                                     <div class="from-group col-lg-12">
                                         <label>NUIT</label>
-                                        <input type="text" name="nuit" id="nuit" class="form-control" value="{{$client->nuit}}" required autofocus>
+                                        <input type="text" name="nuit" id="nuit" class="form-control" value="{{$client->nuit}}" >
                                     </div>
                             </div>          
 
