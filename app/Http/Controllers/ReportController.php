@@ -396,10 +396,17 @@ class ReportController extends Controller
     public function vendascar ()
     {
 
-    $venda=VendasTempMesa::join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
+    /*$venda=VendasTempMesa::join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
               ->join('car','vendas_temp_mesa.car_id','car.id')
               ->select('car.name as car_name','car.sname as car_sname','vendas_temp_mesa.created_at','car.contacto1','car.contacto2','car.matricula as matricula','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id')
+              ->orderBy('vendas_temp_mesa.created_at','desc')
+              ->get();*/
+    $venda=VendasTempMesa::join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
+              ->join('produtos','produtos_entradas.produto_id','produtos.id')
+              ->join('paciente','vendas_temp_mesa.car_id','paciente.id')
+              ->join('cliente','cliente.id','paciente.cliente_id')  
+              ->select('vendas_temp_mesa.created_at','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id', 'paciente.nome','paciente.numero_ficha','paciente.caderneta','paciente.raca','cliente.nome as cliente_nome','cliente.apelido','cliente.contacto1', 'cliente.contacto2')
               ->orderBy('vendas_temp_mesa.created_at','desc')
               ->get();
 
@@ -419,10 +426,12 @@ class ReportController extends Controller
           $inicio=Carbon::parse($request->inicio);
           $fim=Carbon::parse($request->fim)->addHours(23)->addMinutes(59)->addSecond(59);  
 
-    $venda=VendasTempMesa::whereBetween('vendas_temp_mesa.updated_at',[$inicio,$fim])->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
+    $venda=VendasTempMesa::whereBetween('vendas_temp_mesa.updated_at',[$inicio,$fim])
+              ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
-              ->join('car','vendas_temp_mesa.car_id','car.id')
-              ->select('car.name as car_name','car.sname as car_sname','vendas_temp_mesa.created_at','car.contacto1','car.contacto2','car.matricula as matricula','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id')
+              ->join('paciente','vendas_temp_mesa.car_id','paciente.id')
+              ->join('cliente','cliente.id','paciente.cliente_id')  
+              ->select('vendas_temp_mesa.created_at','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id', 'paciente.nome','paciente.numero_ficha','paciente.caderneta','paciente.raca','cliente.nome as cliente_nome','cliente.apelido','cliente.contacto1', 'cliente.contacto2')
               ->orderBy('vendas_temp_mesa.created_at','desc')
               ->get();
 

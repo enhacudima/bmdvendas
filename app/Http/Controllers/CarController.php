@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Car;
 use App\CarTemp;
 use App\VendasTempMesa;
+use App\Mesa;
+use App\Paciente;
+use Auth;
+use App\Entradas;
+use DB;
 
 class CarController extends Controller
 {
@@ -21,11 +26,21 @@ class CarController extends Controller
     {
 
     	$mesa_id=$id;
-    	$car=Car::get();
-    	$car_temp=CarTemp::where('car_mesa',$mesa_id)->join('car','car_temp.car_id','car.id')->select('car_temp.*','car.matricula','car.name','car.sname','car.contacto1','car.contacto2','car.marca')->get();
-    
+    	//$car=Car::get();
+        $car=Paciente::get();
+    	$car_temp=CarTemp::where('car_mesa',$mesa_id)
+                    ->get();
+        $mesa=Mesa::find($id); 
+        $mesas=Mesa::where('description','!=','banho')
+                    ->where('description','!=','consultorio')
+                    ->get(); 
+        $tipo_banho=DB::table('produtos_venda_view')->where('status',1)
+                                                    ->where('produto_status',1)
+                                                    ->where('id',38)
+                                                    ->orwhere('id',37)
+                                                    ->get();
 
-    	return view('admin.car.index',compact('mesa_id','car','car_temp'));
+    	return view('admin.car.index',compact('mesas','mesa','mesa_id','car','car_temp','tipo_banho'));
     }
     public function carcreate($id)
     {	$mesa_id=$id;
@@ -84,10 +99,8 @@ class CarController extends Controller
     	public function cartemp($id, $mesa_id,$user_id)
     {	
     	$car=CarTemp::where('car_id',$id)->get();
-
-
     	if ($car->first()) {
-           return back()->with('error','Não pode duplicar o carro existente na lista de espera'); 
+           return back()->with('error','Não pode duplicar um elemento existente na lista de espera'); 
     	}else{
 
     	CarTemp::create([
@@ -97,11 +110,7 @@ class CarController extends Controller
     	'car_mesa'=>$mesa_id,
     	]);	
     	}
-
-
-    
-
-    	return back()->with('success','Carro adicionado com sucesso na lista de espera');
+    	return back()->with('success','Paciente adicionado com sucesso na lista de espera');
 
     }
 
@@ -131,5 +140,38 @@ class CarController extends Controller
 
           
         }
+    }
+    public function facturacao(Request $request)
+    {
+        $this->validate($request, [
+            'tipo_banho'=>'required',
+            'mesa_id'=>'required',
+            'paciente'=>'required',
+            'pacienteLinhaVenda'=>'required',
+        ]);
+
+
+
+        $produt_entrada_id=$request->tipo_banho;//defina o codigo da entrada
+        $user_id = (!Auth::guest()) ? Auth::user()->id : null ;//user_id   
+        $identificador_de_bulk='mesa'.'_'.time();
+
+       $produtos=new VendasTempMesa();
+        $produtos->user_id=$user_id;
+        $produtos->produto_id=$produt_entrada_id;
+        $produtos->quantidade=1;
+        $produtos->identificador_de_bulk=$identificador_de_bulk;
+        $produtos->mesa_id=$request->mesa_id;
+        $produtos->car_id=$request->paciente;
+        $produtos->save();
+
+        $mesa=Mesa::find($request->mesa_id);
+        $mesa->status=0;
+        $mesa->idusuario=Auth::user()->id;
+        $mesa->save();
+
+        CarTemp::where('id',$request->pacienteLinhaVenda)->delete();
+
+         
     }
 }

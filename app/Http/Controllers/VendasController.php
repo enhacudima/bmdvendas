@@ -437,7 +437,7 @@ class VendasController extends Controller
             $mesa->idusuario=Auth::user()->id;
             $mesa->save();
 
-            return response()->json($identificador_bulck);
+            //return response()->json('');
     		
     	}
     }

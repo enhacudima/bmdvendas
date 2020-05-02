@@ -12,4 +12,10 @@ class Cliente extends Model
     public $primaryKey = 'id';
 
     public $timestamps=true;
+
+ 	public function pacientes ()
+ 	{
+ 		return $this->hasMany('App\Paciente','cliente_id','id');
+ 	}
+    
 }

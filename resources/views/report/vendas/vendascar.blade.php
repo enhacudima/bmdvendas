@@ -75,10 +75,13 @@
         <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
             <thead >
             <tr>
-                <th scope="col">Nome</th>
-                <th scope="col">Apelido</th>
+                <th scope="col">Cliente Nome</th>
+                <th scope="col">Cliente Apelido</th>
                 <th scope="col">Contacto</th>
                 <th scope="col">Caderneta</th>
+                <th scope="col">Número da Ficha</th>
+                <th scope="col">Paciente</th>
+                <th scope="col">Raça</th>
                 <th scope="col">Data</th>
                 <th scope="col">Produto</th>
                 <th scope="col">Quantidade</th>
@@ -91,10 +94,13 @@
  
             @foreach($venda as $cil)
                 <tr>
-                <td>{{$cil->car_name}}</td> 
-                <td>{{$cil->car_sname}}</td> 
+                <td>{{$cil->cliente_nome}}</td> 
+                <td>{{$cil->apelido}}</td> 
                 <td>{{$cil->contacto1}} & {{$cil->contacto2}}</td>
-                <td>{{$cil->matricula}}</td> 
+                <td>{{$cil->caderneta}}</td>
+                <td>{{$cil->numero_ficha}}</td>
+                <td>{{$cil->nome}}</td> 
+                <td>{{$cil->raca}}</td> 
                 <td>{{$cil->created_at}}</td>
                 <td>{{$cil->name}}</td>
                 <td>{{$cil->quantidade}}</td>

@@ -24,7 +24,7 @@ class ClienteController extends Controller
 
     public function clienteshow($id)
     {
-    	$client=Cliente::find($id);
+    	$client=Cliente::with('pacientes')->find($id);
 
     	return view('admin.cliente.show',compact('client'));
     }
@@ -37,9 +37,10 @@ class ClienteController extends Controller
             'user_id'=>'required',
             'apelido'=>'required|min:3|max:50|string',
             'endereco'=> 'required|min:5|max:255|string',
-            'contacto1'=>'required|min:9|max:9|unique:cliente',
-            'contacto2'=>'max:9',
+            'contacto1'=>'required|digits:9|unique:cliente',
+            'contacto2'=>'nullable|digits:9',
             'email'=>'required|string|unique:cliente',
+            'nuit'=>'required|digits:9'
             ]);
 
 
@@ -57,9 +58,10 @@ class ClienteController extends Controller
             'user_id'=>'required',
             'apelido'=>'required|min:3|max:50|string',
             'endereco'=> 'required|min:5|max:100|string',
-            'contacto1'=>'required|min:9|max:9',
-            'contacto2'=>'max:9',
+            'contacto1'=>'required|digits:9',
+            'contacto2'=>'nullable|digits:9',
             'email'=>'required|string',
+            'nuit'=>'required|digits:9'
             ]);
 
     	$cliente->update($newdata);

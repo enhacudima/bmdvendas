@@ -3,30 +3,25 @@
 @section('title', ' | Paciente Show')
 
 @section('content_header')
-    <h1>Settings</h1>
+    <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ url('home') }}"><i class="fa fa-home"></i> Home</a></li>
+        <li> <a href="{{ url('index_cliente') }}"> Clientes </a></li>
+        <li> <a href="{{ route('paciente.index') }}"> Pacientes </a></li>
+        <li class="active">Edit</li>
+    </ol>
 @stop
 
 @section('content')
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-<div class="">
-    <div class="">
-    <div class="panel panel-default">
-
-    <div class="panel-heading">
-        <h4>Gestão de Clientes 
-        </h4>
-    </div>
-
-    <div class="panel-body">
-
-        <div class="col-lg-12">
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                <h4>Formulario de Actualização de Dados do Cliente
-                    <a href="{{ route('paciente.index') }}" class="btn btn-success btn-xs pull-right">Voltar a pagina principal</a>
+                <h4>Actualização de Dados do Paciente
+                    
                 </h4>
             </div>
 
@@ -58,6 +53,16 @@
                                     <input type="text" name="nome" id="nome" class="form-control" value="{{$paciente->nome}}" required autofocus>
                                 </div>
                             </div>
+
+
+
+                            <div class="row">
+                                <div class="from-group col-lg-12">
+                                    <label>Caderneta</label>
+                                    <input type="text" name="caderneta" id="caderneta" class="form-control" value="{{$paciente->caderneta}}" required autofocus>
+                                </div>
+                            </div>
+
 
                             <div class="row">
                                 <div class="from-group col-lg-12">
@@ -98,8 +103,8 @@
 
                             <div class="row">
                                 <div class="from-group col-lg-12">
-                                    <label>Idade</label>
-                                    <input type="number" name="idade" id="idade" class="form-control" value="{{$paciente->idade}}"  autofocus>
+                                    <label>Data de Nascimento</label>
+                                    <input type="date" name="idade" id="idade" class="form-control" value="{{$paciente->idade}}"  autofocus>
                                 </div>
                             </div>
 
@@ -128,13 +133,7 @@
                         </form>
                 </div>
             </div>
-        </div>
 
-        
-
-</div>
-
-</div>
 <script type="text/javascript">
 
 $(document).ready(function(){

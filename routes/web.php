@@ -175,7 +175,7 @@ Route::get('vendas/ultimas/vendas','VendasController@ultimas');
 Route::get('chart-line', 'ChartController@chartLine');
 Route::get('chart-line-ajax', 'ChartController@chartLineAjax');
 Route::get('chart-line-ajax-api2', 'ChartController@chartLineAjax2');
-
+Route::get('send-banho-venda','CarController@facturacao');
 //fim das rotas 
 });
 //todas rotas devem ser definidas acima 

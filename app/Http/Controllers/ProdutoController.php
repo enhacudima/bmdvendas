@@ -313,16 +313,14 @@ class ProdutoController extends Controller
         if ($status==1) 
         {
             foreach ($temp_name as $value) {
-                
             if ($value->status==1) { 
-                
                 $ver=$value->status;
             }    
             }
             
             if ($ver==1){
             return back()->with('error','Não pode activar mas de 1 produto com mesmo nome');
-                };
+              };
         };
           
 

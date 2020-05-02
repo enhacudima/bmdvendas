@@ -3,30 +3,23 @@
 @section('title', ' | Cliente Show')
 
 @section('content_header')
-    <h1>Settings</h1>
+        <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ url('home') }}"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="{{ url('index_cliente') }}">Clientes</a></li>
+        <li class="active">Edit</li>
+    </ol>
 @stop
 
 @section('content')
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-<div class="">
-    <div class="">
-    <div class="panel panel-default">
-
-    <div class="panel-heading">
-        <h4>Gestão de Clientes 
-        </h4>
-    </div>
-
-    <div class="panel-body">
-
-        <div class="col-lg-12">
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                <h4>Formulario de Actualização de Dados do Cliente
-                    <a href="{{ url('index_cliente') }}" class="btn btn-success btn-xs pull-right">Voltar a pagina principal</a>
+                <h4>Actualização de Dados do Cliente
                 </h4>
             </div>
 
@@ -47,7 +40,14 @@
                                         <label>Apelido</label>
                                         <input type="text" name="apelido" id="sname" class="form-control" value="{{$client->apelido}}" required autofocus>
                                     </div>
-                            </div>         
+                            </div>  
+
+                            <div class="row">
+                                    <div class="from-group col-lg-12">
+                                        <label>NUIT</label>
+                                        <input type="text" name="nuit" id="nuit" class="form-control" value="{{$client->nuit}}" required autofocus>
+                                    </div>
+                            </div>          
 
                             <div class="row">
                                     <div class="from-group col-lg-12">
@@ -90,13 +90,59 @@
                         </form>
                 </div>
             </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Pacientes
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="box-body table-responsive no-padding">     
+                <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
+                    <thead >
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Paciente</th>
+                        <th scope="col">Especie</th>
+                        <th scope="col">Raça</th>
+                        <th scope="col">Sexo</th>
+                        <th scope="col">Data de Nascimento</th>
+                        <th scope="col">Idade (Mêses)</th>
+                        <th scope="col">Pelagem</th>
+                        <th scope="col">Data de atualização</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(isset($client->pacientes))
+                    @foreach($client->pacientes as $cil)
+                        <tr>
+                         <td>{{$cil->id}}</td>
+                         <td>{{$cil->cliente->nome}} {{$cil->cliente->apelido}}</td>
+                         <td>
+                            <a class="btn btn btn-success btn-xs" href="{{route('paciente.edit', $cil->id)}}">
+                                <i class="fa fa-pencil fa-fw"></i> {{$cil->nome}}
+                            </a>
+                        </td>
+                         <td>{{$cil->especie}}</td>
+                         <td>{{$cil->raca}}</td>
+                         <td>{{$cil->sexo}}</td>
+                         <td>{{$cil->idade}}</td>
+                         <td>{{\Carbon\Carbon::parse($cil->idade)->DiffInMonths(\Carbon\Carbon::today())}}</td>
+                         <td>{{$cil->pelagem}}</td>
+                         <td>{{$cil->updated_at}}</td>
+                        </tr>
+                    @endforeach 
+                    @endif   
+                    </tbody>
+                </table>
+            </div>
+            </div>
         </div>
 
-        
 
-</div>
 
-</div>
+
 <script type="text/javascript">
 
 $(document).ready(function(){

@@ -124,7 +124,7 @@ return [
             'icon'   => 'user-o',
             'submenu'=> [
                             [
-                                'text'=>'Criar Cliente',
+                                'text'=>'Cliente',
                                 'url' =>'index_cliente',
                                 'icon'=>'user-plus',
                             ],

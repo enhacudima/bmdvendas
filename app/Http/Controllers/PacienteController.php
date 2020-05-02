@@ -21,7 +21,7 @@ class PacienteController extends Controller
     public function index()
     {
         $clientes=Cliente::get();
-        $pacientes=Paciente::get();
+        $pacientes=Paciente::with('Cliente')->get();
         $especies = DB::table('especies')->get();
         $racas = DB::table('racas')->get();
         return view('admin.paciente.index',compact(['pacientes','clientes','especies','racas']));
@@ -55,6 +55,7 @@ class PacienteController extends Controller
             'sexo'=>'required',
             'idade'=>'required',
             'pelagem'=>'required|string',
+            'caderneta'=>'required',
         ]);
 
 
@@ -109,6 +110,7 @@ class PacienteController extends Controller
             'sexo'=>'required',
             'idade'=>'required',
             'pelagem'=>'required|string',
+            'caderneta'=>'required',
         ]);
 
 
