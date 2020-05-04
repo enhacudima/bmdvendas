@@ -5,7 +5,14 @@
 
 
 @section('content_header')
-
+    <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ url('home') }}"><i class="fa fa-home"></i> Home</a></li>
+        <li class=""><a href="{{ url('calendario') }}"><i class="fa fa-calendar-plus-o"></i> Calendário</a></li>
+        <li class="active">Edit</li>
+    </ol>
+   
    
 @stop
 
@@ -41,8 +48,8 @@
                     <div class="alert alert-danger">{{ Session::get('warnning')}}</div>
                     @endif
                     </div>
-
-                    <div class="col-xs-4 col-sm-4 col-ms-4">
+                    <div class="row col-md-12">
+                    <div class="col-xs-12 col-sm-12 col-ms-12">
                         <div class="form-group">
                             {!!Form::label('titulo','Título do Evento:')!!}
                             <div class="">
@@ -51,8 +58,9 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-xs-3 col-sm-3 col-ms-3">
+                    </div>
+                    <div class="row col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             {!!Form::label('data_inicio','Data Início:')!!}
                             <div class="">
@@ -62,7 +70,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xs-3 col-sm-3 col-ms-3">
+                    <div class="col-md-6">
                         <div class="form-group">
                             {!!Form::label('data_final','Data Final:')!!}
                             <div class="">
@@ -71,10 +79,27 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-xs-1 col-sm-1 col-md-1 text-center"> &nbsp;</br/>
-                     {!! Form::button('<i class="fa fa-save"></i> Submit', ['id'=>'add-new-event','class'=>'btn btn-danger', 'type'=>'submit']) !!} 
                     </div>
+
+                    <div class="row col-md-12">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-paw"></i></span>
+
+                                <input  type="text" id="paciente_show"    class="form-control" value="{{old('paciente_show')}}" placeholder="Pesquise pelo nome ou caderneta"  autofocus>
+                                <input type="hidden" id="paciente_id" name="paciente_id" value="{{old('paciente_id')}}"/>
+                                
+                              </div>
+                            </div>
+                    </div>
+                    <div class="row col-md-1">
+                         
+                        <div class="col-md-12 text-center"> &nbsp;</br/>
+                         {!! Form::button('<i class="fa fa-save"></i> Submit', ['id'=>'add-new-event','class'=>'btn btn-danger', 'type'=>'submit']) !!} 
+                        </div>
+                    </div>
+
+
 <!--'id'=>'add-new-event'-->
                 </div>
                 {!! Form::close() !!}
@@ -116,6 +141,35 @@
   })
 
 
+</script>
+<script>
+
+    $(document).ready(function() {
+    $('#paciente_show').autocomplete({
+        delay: 500,// this is in milliseconds
+        minLength: 2,
+        source: function(request, response) {
+
+            $.getJSON("{{url('search-pacient')}}", {
+                search: request.term,
+            }, function(data) {
+                response(data);
+            });
+
+        },
+        focus: function(event, ui) {
+            // prevent autocomplete from updating the textbox
+            event.preventDefault();
+        },
+        select: function(event, ui) {
+            // prevent autocomplete from updating the textbox
+            event.preventDefault();
+
+            $('input[name="paciente_show"]').val(ui.item.label);
+            $('input[name="paciente_id"]').val(ui.item.id);
+        }
+    });
+    })
 </script>
 
 @stop

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', ' | Nova Ficha')
+@section('title', ' | Edit Ficha do Paciente')
 
 @section('content_header')
     <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
@@ -29,7 +29,7 @@
 
     <div class="panel-body">
         <div class="col-md-12">
-            <form method="post" action="{{route('ficha-clinica.store')}}" autocomplete="Active" accept-charset="UTF-8" >
+            <form method="post" action="{{route('ficha-clinica.update',$ficha->id)}}" autocomplete="Active" accept-charset="UTF-8" >
                 {{ csrf_field() }}
 
 
@@ -50,7 +50,6 @@
 
                             <input  type="text" id=""  name=""  class="form-control" value="{{$ficha->paciente->nome}} {{$ficha->paciente->caderneta}} - {{$ficha->paciente->numero_ficha}} ({{$ficha->paciente->cliente->nome}} {{$ficha->paciente->cliente->apelido}})" placeholder="" required autofocus disabled>
                             <input type="hidden" id="paciente_id" name="paciente_id" value="{{$ficha->paciente->id}}"/>
-                            <input type="hidden" id="parent_id" name="parent_id" value="{{$ficha->id}}"/>
                           </div>
                          @else
                          <div class="input-group">
@@ -77,7 +76,7 @@
                 <div class="row" >
                     <div class="from-group ">
                         <!--<label>Anamnese</label>-->
-                        <textarea rows="2" name="anamnese" id="anamnese"  class="form-control"  autofocus>{{old('anamnese')}}</textarea>
+                        <textarea rows="2" name="anamnese" id="anamnese"  class="form-control"  autofocus>@if(isset($ficha->anamnese)){!!$ficha->anamnese->anamnese!!}@endif</textarea>
                     </div>
                 </div>
 
@@ -100,7 +99,7 @@
                 <div class="row" >
                     <div class="from-group ">
                        <!-- <label>Sinais clinicos</label>-->
-                        <textarea rows="2" name="sinais_clinicos" id="sinais_clinicos"  class="form-control"  autofocus>{{old('sinais_clinicos')}}</textarea>
+                        <textarea rows="2" name="sinais_clinicos" id="sinais_clinicos"  class="form-control"  autofocus>@if(isset($ficha->sinais_clinicos)){!!$ficha->sinais_clinicos->sinais_clinicos!!}@endif</textarea>
                     </div>
                 </div>
 
@@ -122,7 +121,7 @@
                 <div class="row" >
                     <div class="from-group ">
                         <!--<label>Exames clinicos</label>-->
-                        <textarea rows="2" name="exame_clinico" id="exame_clinico"  class="form-control"  autofocus>{{old('exame_clinico')}}</textarea>
+                        <textarea rows="2" name="exame_clinico" id="exame_clinico"  class="form-control"  autofocus>@if(isset($ficha->exame)){!!$ficha->exame->exame_clinico!!}@endif</textarea>
                     </div>
                 </div>
 
@@ -147,14 +146,14 @@
                 <div class="row" >
                     <div class="from-group ">
                         <label>Diagnóstico</label>
-                        <textarea rows="2" name="diagnostico" id="diagnostico"  class="form-control" autofocus>{{old('diagnostico')}}</textarea>
+                        <textarea rows="2" name="diagnostico" id="diagnostico"  class="form-control" autofocus>@if(isset($ficha->diagnostico)){!!$ficha->diagnostico->diagnostico!!}@endif</textarea>
                     </div>
                 </div>
 
                 <div class="row" >
                     <div class="from-group ">
                         <label>Tratamento</label>
-                        <textarea rows="2" name="tratamento" id="tratamento"  class="form-control"  autofocus>{{old('tratamento')}}</textarea>
+                        <textarea rows="2" name="tratamento" id="tratamento"  class="form-control"  autofocus>@if(isset($ficha->diagnostico)){!!$ficha->diagnostico->tratamento!!}@endif</textarea>
                     </div>
                 </div>
 
@@ -177,7 +176,7 @@
                 <div class="row" >
                     <div class="from-group ">
                        <!-- <label>Observações</label>-->
-                        <textarea rows="2" name="observacao" id="observacao"  class="form-control"  autofocus>{{old('observacao')}}</textarea>
+                        <textarea rows="2" name="observacao" id="observacao"  class="form-control"  autofocus>@if(isset($ficha->observacao)){!!$ficha->observacao->observacao!!}@endif</textarea>
                     </div>
                 </div>
 
@@ -197,7 +196,7 @@
                 <div class="row" >
                     <div class="from-group ">
                         <!--<label>Peso</label>-->
-                        <input type="number" step="any" name="peso" id="peso"  class="form-control" value="{{old('peso')}}" autofocus> 
+                        <input type="number" step="any" name="peso" id="peso"  class="form-control" value="@if(isset($ficha->peso)){!!$ficha->peso->peso!!}@endif" autofocus> 
                     </div>
                 </div>
 
@@ -207,8 +206,8 @@
                 <div class="row" >
 
                     <div class="from-group text-right " style="width:80px">
-                         <label></label>
-                        <input class="btn btn-primary" type="submit" value="Cadastrar">
+                        <label></label>
+                        <input class="btn btn-primary" type="submit" value="Atualizar">
                     </div>
                 </div>         
                    

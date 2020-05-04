@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', ' | Cadastro de Sala')
+@section('title', ' | Pacientes')
 
 @section('content_header')
      <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
@@ -149,6 +149,7 @@
             <th scope="col">#</th>
             <th scope="col">Cliente</th>
             <th scope="col">Paciente</th>
+            <th scope="col">Ficha</th>
             <th scope="col">Especie</th>
             <th scope="col">Raça</th>
             <th scope="col">Sexo</th>
@@ -165,8 +166,13 @@
              <td>{{$cil->id}}</td>
              <td>{{$cil->cliente->nome}} {{$cil->cliente->apelido}}</td>
              <td>
-                <a class="btn btn btn-success btn-xs" href="{{route('paciente.edit', $cil->id)}}">
+                <a class="btn btn btn-success btn-xs" href="{{route('paciente.edit', $cil->id)}}" style="width: 100%">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->nome}}
+                </a>
+            </td>
+            <td>
+                <a class="btn btn btn-info btn-xs" href="{{url('ficha_clinica/paciente', $cil->id)}}">
+                    <i class="fa fa-stethoscope fa-fw"></i> Nova Ficha
                 </a>
             </td>
              <td>{{$cil->especie}}</td>

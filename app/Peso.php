@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Mesa extends Model
+class Peso extends Model
 {
-    protected $table = 'mesa';
+    protected $table = 'peso';
     protected $guarded =array();
 
     public $primaryKey = 'id';

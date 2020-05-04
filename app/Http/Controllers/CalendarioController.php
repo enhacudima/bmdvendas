@@ -23,12 +23,13 @@ class CalendarioController extends Controller
      */
     public function index()
     {     //$this->authorize('calendario');
-        $calendarios = Calendario::all();
+        $calendarios = Calendario::get();
             $calendario_list = [];
             $calendario_detalhes = [];
             foreach ($calendarios as $key => $calendario) {
+                $line=$calendario->titulo.' '.$calendario->paciente['nome'].' '.$calendario->paciente['caderneta'].' '.$calendario->paciente['numero_ficha'];
                 $calendario_list[]= Calendar::event(
-                 $calendario->titulo,
+                 $line,
                  true,
                  new \DateTime($calendario->data_inicio),
                  new \DateTime($calendario->data_final. '+1 day')
@@ -99,6 +100,7 @@ class CalendarioController extends Controller
         $event->data_inicio=$request->data_inicio;
         $event->data_final=$request->data_final;
         $event->concluido=$request->concluido;
+        $event->paciente_id=$request->paciente_id;
         $event->save();
 
 

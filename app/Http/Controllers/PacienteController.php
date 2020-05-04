@@ -137,4 +137,25 @@ class PacienteController extends Controller
     {
         //
     }
+
+    public function SearchPaciente(Request $request)
+    {
+        $term = $request->get('search');
+ 
+        if ( ! empty($term)) {
+            $pacientes = Paciente::where('nome', 'LIKE', '%' . $term .'%')
+                            ->orWhere('caderneta', 'LIKE', '%' . $term .'%')
+                            ->orwhere('numero_ficha','LIKE','%'.$term.'%')
+                            ->orwhere('raca','LIKE','%'.$term.'%')
+                            ->get();
+ 
+            foreach ($pacientes as $paciente) {
+                $paciente->label   = $paciente->nome.' '.$paciente->caderneta .' - '.$paciente->numero_ficha. ' (' . $paciente->cliente->nome.' '.$paciente->cliente->apelido .')';
+            }
+ 
+            return $pacientes;
+        }
+ 
+        return Response::json($pacientes);
+    }
 }

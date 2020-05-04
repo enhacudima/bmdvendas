@@ -12,4 +12,14 @@ class Calendario extends Model
     public $primaryKey = 'id';
 
     public $timestamps=true;
+    
+
+    public function user()
+    {
+        return $this->belongsTo('App\User','user_id','id');
+    }
+        public function paciente()
+    {
+        return $this->belongsTo('App\Paciente','paciente_id','id');
+    }
 }

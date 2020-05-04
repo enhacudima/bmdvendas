@@ -113,6 +113,7 @@ Route::post('storcliente','ClienteController@storcliente');
 Route::get('clienteshow/{id}','ClienteController@clienteshow');
 Route::post('updatecliente','ClienteController@updatecliente');
 Route::get('searchcliente','ClienteController@searchcliente')->name('searchloanid');
+Route::get('search-pacient','PacienteController@SearchPaciente')->name('search-pacient');
 
 Route::get('get-produt','ProdutoController@getprodut');
 
@@ -126,6 +127,10 @@ Route::get('vendas/produtos/stock','VendasController@produtosStock');
 //Route::get('ficha-clinica/{id}','FichaPacienteController@index');
 Route::resource('ficha-clinica', 'FichaPacienteController');
 Route::resource('paciente', 'PacienteController');
+Route::get('ficha-clinica/seguimento/{id}','FichaPacienteController@seguimento');
+Route::post('ficha_clinica/altera/estado','FichaPacienteController@altera_estado');
+Route::get('ficha_clinica/paciente/{id}','FichaPacienteController@paciente_nova_ficha');
+Route::post('ficha-clinica/{id}','FichaPacienteController@update');
 
 //venda
 Route::get('getstocktovenda','VendasController@getstocktovenda');
