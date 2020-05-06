@@ -205,7 +205,6 @@
                         <div class="media">
                             <div >
                                 <div class="media-body" style="width: 40%;margin:20% " >
-                                    @if(isset($fc->paciente->nome))
                                     <h4 class="media-heading user_name">Paciente: {{$fc->paciente->nome}}</h4>
                                     Caderneta: {{$fc->paciente->caderneta}}<br>
                                     Ficha: {{$fc->paciente->numero_ficha}}<br>
@@ -216,7 +215,6 @@
                                     Idade: {{\Carbon\Carbon::parse($fc->paciente->idade)->DiffInMonths(\Carbon\Carbon::today())}} Meses<br>
                                     Cliente: {{$fc->paciente->cliente->nome}} {{$fc->paciente->cliente->apelido}}<br>
                                     Contacto: {{$fc->paciente->cliente->contacto1}} {{$fc->paciente->cliente->contacto2}}<br>
-                                    @endif
                                 </div>
                                 
                             </div>
