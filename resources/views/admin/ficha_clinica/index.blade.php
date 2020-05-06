@@ -205,7 +205,6 @@
                         <div class="media">
                             <div >
                                 <div class="media-body" style="width: 40%;margin:20% " >
-                                  {{$fc->paciente}}
                                     @if(isset($fc->paciente->nome))
                                     <h4 class="media-heading user_name">Paciente: {{$fc->paciente->nome}}</h4>
                                     Caderneta: {{$fc->paciente->caderneta}}<br>

@@ -133,7 +133,7 @@ class FichaPacienteController extends Controller
 
         //Endagenda
 
-        $fichas_clinicas = FichaPaciente::where('parent_id',null)->get();
+        $fichas_clinicas = FichaPaciente::where('parent_id',null)->with(['paciente'])->get();
         $counta_ficha=FichaPaciente::orderby('updated_at','desc')->get();
         return view('admin.ficha_clinica.index',compact(['fichas_clinicas','counta_ficha','graf','calendario_detalhes']));
     }
