@@ -140,7 +140,7 @@
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                @if(isset($counta_ficha))
+                @if(isset($ultima->paciente->nome))
                 @foreach($counta_ficha->take(11) as $ultima)
                 <li class="active"><a href="{{route('ficha-clinica.show',$ultima->id)}}"><i class="fa fa-stethoscope"></i> {{$ultima->paciente->nome}} - <i> {{$ultima->paciente->caderneta}}  {{$ultima->paciente->numero_ficha}} @</i>{{$ultima->user->name}} 
                 <span class="text-muted pull-right">{{$ultima->updated_at->diffForHumans()}} - {{$ultima->updated_at->format('d/M/Y')}}</span>
