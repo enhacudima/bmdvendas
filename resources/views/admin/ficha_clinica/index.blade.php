@@ -131,7 +131,7 @@
 
           <div class="box box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">Ultimas Consultas</h3>
+              <h3 class="box-title">Últimas Consultas</h3>
 
               <div class="box-tools">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -140,7 +140,7 @@
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                @if(isset($ultima->paciente->nome))
+                @if(isset($counta_ficha))
                 @foreach($counta_ficha->take(11) as $ultima)
                 <li class="active"><a href="{{route('ficha-clinica.show',$ultima->id)}}"><i class="fa fa-stethoscope"></i> {{$ultima->paciente->nome}} - <i> {{$ultima->paciente->caderneta}}  {{$ultima->paciente->numero_ficha}} @</i>{{$ultima->user->name}} 
                 <span class="text-muted pull-right">{{$ultima->updated_at->diffForHumans()}} - {{$ultima->updated_at->format('d/M/Y')}}</span>
@@ -205,7 +205,7 @@
                         <div class="media">
                             <div >
                                 <div class="media-body" style="width: 40%;margin:20% " >
-
+                                    @if(isset($fc->paciente->nome))
                                     <h4 class="media-heading user_name">Paciente: {{$fc->paciente->nome}}</h4>
                                     Caderneta: {{$fc->paciente->caderneta}}<br>
                                     Ficha: {{$fc->paciente->numero_ficha}}<br>
@@ -216,7 +216,7 @@
                                     Idade: {{\Carbon\Carbon::parse($fc->paciente->idade)->DiffInMonths(\Carbon\Carbon::today())}} Meses<br>
                                     Cliente: {{$fc->paciente->cliente->nome}} {{$fc->paciente->cliente->apelido}}<br>
                                     Contacto: {{$fc->paciente->cliente->contacto1}} {{$fc->paciente->cliente->contacto2}}<br>
-
+                                    @endif
                                 </div>
                                 
                             </div>
