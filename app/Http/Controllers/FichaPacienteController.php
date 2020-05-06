@@ -135,7 +135,7 @@ class FichaPacienteController extends Controller
 
         $fichas_clinicas = FichaPaciente::where('parent_id',null)->get();  
         $car=Paciente::get();
-        dd($car[0]->cliente);
+        dd($fichas_clinicas[0]->paciente);
         $counta_ficha=FichaPaciente::orderby('updated_at','desc')->get();
         return view('admin.ficha_clinica.index',compact(['fichas_clinicas','counta_ficha','graf','calendario_detalhes']));
     }
