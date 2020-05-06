@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ficha_paciente extends Model
+class FichaPaciente extends Model
 {
     protected $table = 'ficha_clinica';
     protected $guarded =array();
@@ -48,7 +48,7 @@ class Ficha_paciente extends Model
 
     public function subFicha()
     {
-      return $this->hasMany(Ficha_paciente::class, 'parent_id');
+      return $this->hasMany(FichaPaciente::class, 'parent_id');
     }
 
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Anamnese;
-use App\Ficha_paciente;
+use App\FichaPaciente;
 use App\Paciente;
 use Illuminate\Http\Request;
 use App\Sinais_Clinicos;
@@ -28,7 +28,7 @@ class FichaPacienteController extends Controller
     public function index()
     {
         //chart
-        $labels=Ficha_paciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))
+        $labels=FichaPaciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))
                         ->orderby('created_at','asc')
                         ->get()
                         ->groupBy('date')
@@ -36,7 +36,7 @@ class FichaPacienteController extends Controller
                               // Return the number of persons
                               return count($item);
                           });
-          $total=Ficha_paciente::select(DB::raw('date_format(created_at, "%Y-%m") as "date"'))
+          $total=FichaPaciente::select(DB::raw('date_format(created_at, "%Y-%m") as "date"'))
                         ->orderby('created_at','asc')
                         ->get()
                         ->groupBy('date')
@@ -45,7 +45,7 @@ class FichaPacienteController extends Controller
                               return count($item);
                           });
 
-         $aberto=Ficha_paciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))->where('status',0)
+         $aberto=FichaPaciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))->where('status',0)
             ->orderby('created_at','asc')
             ->get()
             ->groupBy('date')
@@ -54,7 +54,7 @@ class FichaPacienteController extends Controller
                   return count($item);
               }); 
               
-          $internamento=Ficha_paciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))->where('status',1)
+          $internamento=FichaPaciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))->where('status',1)
                         ->orderby('created_at','asc')
                         ->get()
                         ->groupBy('date')
@@ -63,7 +63,7 @@ class FichaPacienteController extends Controller
                               return count($item);
                           });
 
-         $alta=Ficha_paciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))->where('status',2)
+         $alta=FichaPaciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))->where('status',2)
             ->orderby('created_at','asc')
             ->get()
             ->groupBy('date')
@@ -72,7 +72,7 @@ class FichaPacienteController extends Controller
                   return count($item);
               });
 
-          $obto=Ficha_paciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))->where('status',3)
+          $obto=FichaPaciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))->where('status',3)
                         ->orderby('created_at','asc')
                         ->get()
                         ->groupBy('date')
@@ -133,8 +133,8 @@ class FichaPacienteController extends Controller
 
         //Endagenda
 
-        $fichas_clinicas = Ficha_paciente::where('parent_id',null)->get();
-        $counta_ficha=Ficha_paciente::orderby('updated_at','desc')->get();
+        $fichas_clinicas = FichaPaciente::where('parent_id',null)->get();
+        $counta_ficha=FichaPaciente::orderby('updated_at','desc')->get();
         return view('admin.ficha_clinica.index',compact(['fichas_clinicas','counta_ficha','graf','calendario_detalhes']));
     }
 
@@ -229,14 +229,14 @@ class FichaPacienteController extends Controller
         }else{
             $parent_id=null;
 
-            $verif=Ficha_paciente::where('paciente_id',$data['paciente_id'])->where('parent_id',null)->first();
+            $verif=FichaPaciente::where('paciente_id',$data['paciente_id'])->where('parent_id',null)->first();
                 if(isset($verif)){
                     $parent_id=$verif->id;
                 }
         }
 
 
-        Ficha_paciente::create([
+        FichaPaciente::create([
             'anamnese_id'=>$anamnese,
             'sinais_clinicos_id'=>$sinais_clinicos,
             'exame_id'=>$exame,
@@ -254,7 +254,7 @@ class FichaPacienteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ficha_paciente  $ficha_paciente
+     * @param  \App\FichaPaciente  $FichaPaciente
      * @return \Illuminate\Http\Response
      */
     function anamnese($data,$request){
@@ -347,9 +347,9 @@ class FichaPacienteController extends Controller
         ]);
     }
 
-    public function show($ficha_paciente)
+    public function show($FichaPaciente)
     {
-        $ficha=Ficha_paciente::find($ficha_paciente);
+        $ficha=FichaPaciente::find($FichaPaciente);
 
         if(isset($ficha->subFicha))
         {
@@ -360,7 +360,7 @@ class FichaPacienteController extends Controller
 
     public function seguimento($id)
     {
-        $ficha=Ficha_paciente::find($id);
+        $ficha=FichaPaciente::find($id);
         return view('admin.ficha_clinica.create',compact(['ficha']));
     }
     public function altera_estado(Request $request)
@@ -370,7 +370,7 @@ class FichaPacienteController extends Controller
             'status'=>'required',
         ]);
 
-        $ficha=Ficha_paciente::find($request->id);
+        $ficha=FichaPaciente::find($request->id);
         if ($request->status==1) {
             $ficha->internamento_in=Carbon::Now();
         }
@@ -392,12 +392,12 @@ class FichaPacienteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ficha_paciente  $ficha_paciente
+     * @param  \App\FichaPaciente  $FichaPaciente
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $ficha=Ficha_paciente::find($id);
+        $ficha=FichaPaciente::find($id);
 
         return view('admin.ficha_clinica.edit',compact(['ficha']));
     }
@@ -406,7 +406,7 @@ class FichaPacienteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ficha_paciente  $ficha_paciente
+     * @param  \App\FichaPaciente  $FichaPaciente
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
@@ -415,7 +415,7 @@ class FichaPacienteController extends Controller
             'paciente_id'=>'required',
         ]);
 
-        $ficha=Ficha_paciente::find($id);
+        $ficha=FichaPaciente::find($id);
         if ($ficha->status!=0 and $ficha->status!=1 ) {
             return back()->with('error','Não pode atualizar uma Ficha terminada');
         }
@@ -606,10 +606,10 @@ class FichaPacienteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ficha_paciente  $ficha_paciente
+     * @param  \App\FichaPaciente  $FichaPaciente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ficha_paciente $ficha_paciente)
+    public function destroy(FichaPaciente $FichaPaciente)
     {
         //
     }
