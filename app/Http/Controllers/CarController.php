@@ -26,7 +26,6 @@ class CarController extends Controller
     {
 
     	$mesa_id=$id;
-    	//$car=Car::get();
         $car=Paciente::get();
     	$car_temp=CarTemp::where('car_mesa',$mesa_id)
                     ->get();

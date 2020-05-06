@@ -196,7 +196,6 @@
             </tr>
         </thead>
         <tbody>
-            @if(isset($fichas_clinicas))
             @foreach($fichas_clinicas as $fc)
             <tr>
                 <td>{{$fc->id}}</td>
@@ -225,7 +224,6 @@
                 <td><p class="pull-right"><small>{{$fc->created_at->diffForHumans()}}</small></p></td>
             </tr>
             @endforeach
-            @endif
         </tbody>
     </table>
     </div>
