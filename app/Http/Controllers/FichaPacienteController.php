@@ -487,16 +487,17 @@ class FichaPacienteController extends Controller
                 {
                     $tratamento=$data['tratamento'];
             };
+
+            $diagnostico_data->Update([
+                //'paciente_id' => $data['paciente_id'],
+                //'data' => $data['d_diagnostico'],
+                'diagnostico' => $diagnostico,
+                'tratamento' =>$tratamento,
+                'user_id' => $data['user_id']
+            ]);
+                    
         };
 
-        $diagnostico_data->Update([
-            //'paciente_id' => $data['paciente_id'],
-            //'data' => $data['d_diagnostico'],
-            'diagnostico' => $diagnostico,
-            'tratamento' =>$tratamento,
-            'user_id' => $data['user_id']
-        ]);
-        
         if($peso){
         $this->validate($request, [
             //'d_peso'=>'required',

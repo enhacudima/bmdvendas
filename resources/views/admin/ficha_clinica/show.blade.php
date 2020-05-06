@@ -20,7 +20,7 @@
               <div class="user-block">
                 <img class="img-circle" src="{{asset('storage/'.$ficha->user->avatar)}}" alt="User Image">
                 <span class="username"><a href="#">[{{$ficha->id}}] {{$ficha->user->name}}</a></span>
-                <span class="description">{{$ficha->paciente->nome}} {{$ficha->paciente->numero_ficha}} {{$ficha->paciente->caderneta}} - {{$ficha->created_at->diffForHumans()}}</span>
+                <span class="description">{{$ficha->paciente->nome}}: {{$ficha->paciente->numero_ficha}} - {{$ficha->paciente->caderneta}} - {{$ficha->created_at->diffForHumans()}}</span>
               </div>
               <!-- /.user-block -->
               <div class="box-tools">
