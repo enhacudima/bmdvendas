@@ -64,7 +64,7 @@
                         <div class="form-group">
                             {!!Form::label('data_inicio','Data Início:')!!}
                             <div class="">
-                            {!!Form::date('data_inicio',null, ['class'=>'form-control'], 'd/m/Y') !!}
+                            <input type="datetime-local" id="data_inicio" name="data_inicio" class="form-control" value="{{old('data_inicio')}}">
                             {!! $errors->first('data_inicio', '<p class="alert alert-danger">:message</p>') !!}
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                         <div class="form-group">
                             {!!Form::label('data_final','Data Final:')!!}
                             <div class="">
-                            {!!Form::date('data_final',date('D-m-y'), ['class'=>'form-control']) !!}
+                             <input type="datetime-local" id="data_final" name="data_final" class="form-control" value="{{old('data_final')}}">
                             {!! $errors->first('data_final', '<p class="alert alert-danger">:message</p>') !!}
                             </div>
                         </div>
@@ -145,6 +145,7 @@
 <script>
 
     $(document).ready(function() {
+    $('#cor').val("rgb(255, 133, 27)"); 
     $('#paciente_show').autocomplete({
         delay: 500,// this is in milliseconds
         minLength: 2,

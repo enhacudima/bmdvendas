@@ -21,7 +21,7 @@
         width: 95.2%;
         border: 0.88px solid;
     }
-}
+
   </style>
   <!--sweetalert-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

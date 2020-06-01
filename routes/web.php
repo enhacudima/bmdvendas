@@ -181,6 +181,17 @@ Route::get('chart-line', 'ChartController@chartLine');
 Route::get('chart-line-ajax', 'ChartController@chartLineAjax');
 Route::get('chart-line-ajax-api2', 'ChartController@chartLineAjax2');
 Route::get('send-banho-venda','CarController@facturacao');
+//tags
+Route::get('/tags/find', 'FichaPacienteController@find');
+Route::get('tags/tags','TagsController@index');
+Route::resource('tags', 'TagsController');
+Route::get('tags/remove/list/{id}','FichaPacienteController@tagRemove');
+
+//racas 
+Route::get('racas','RacasController@index');
+Route::post('especie/store','RacasController@especie_store');
+Route::post('raca/store','RacasController@raca_store');
+Route::post('especie/store','RacasController@pelagem_store');
 //fim das rotas 
 });
 //todas rotas devem ser definidas acima 

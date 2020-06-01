@@ -105,6 +105,22 @@
 
 
             </div>
+
+            @if((isset($ficha->tags)))
+              <div class="col-md-12 box-footer box-comments" style="margin-bottom:13px; margin-top:13px ">
+                <div class="col-md-12 fot textjusty ">
+                  @foreach($ficha->tags as $tag)
+                    <span class="pull-right-container" style="">
+                      <small class="label  bg-green">{{$tag->tag->name}}</small>
+                      <small class="label  bg-blue">{{$tag->tag->type}}</small>
+                      <small class="label  bg-blue">{{$tag->tag->updated_at->diffForHumans()}} - {{$tag->tag->updated_at->format('d/M/Y')}}</small>
+                      <a href="{{url('tags/remove/list',$tag->id)}}"><small class="label  bg-red">X</small></a>
+                    </span><br><br>
+                  @endforeach
+                </div>
+              </div>
+            @endif
+
             @if(isset($ficha->anamnese))
               <p>
                  <div class="col-md-12 box-footer box-comments" style="margin-bottom:13px">
@@ -157,6 +173,7 @@
                  </div>
               </p>
               @endif
+
               @if((isset($ficha->observacao)))
               <p>
                  <div class="col-md-12 box-footer box-comments" style="margin-bottom:13px">
@@ -170,19 +187,24 @@
                  </div>
               </p>
               @endif
-              @if((isset($ficha->peso)))
+              
+              @if((isset($ficha->observacao)))
               <p>
                  <div class="col-md-12 box-footer box-comments" style="margin-bottom:13px">
                     <div class="col-md-12 fot textjusty ">
-                        <span class="text-muted pull-right">{{$ficha->peso->updated_at->diffForHumans()}} - {{$ficha->peso->updated_at->format('d/M/Y')}}</span>
-                        <strong>Peso</strong><br>
+                        <span class="text-muted pull-right">{{$ficha->observacao->updated_at->diffForHumans()}} - {{$ficha->observacao->updated_at->format('d/M/Y')}}</span>
+                        <strong>Observação</strong><br>
    
-                        {!!$ficha->peso->peso!!}
+                        {!!$ficha->observacao->observacao!!}
 
                     </div>
                  </div>
               </p>
               @endif
+
+              <br>
+
+
               <a type="button" class="btn btn-default btn-xs " href="{{route('ficha-clinica.edit',$ficha->id)}}" ><i class="fa fa-pencil-square-o"></i> Editar</a>
               <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modal-warning"><i class="fa fa-wrench"></i> Estado</button>
               <a type="button" class="btn btn-default btn-xs " href="{{url('ficha-clinica/seguimento',$ficha->id)}}" ><i class="fa fa-plus"></i> Nova consulta </a>

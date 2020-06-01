@@ -17,6 +17,9 @@ use App\Charts\VendasLineChart;
 use DB;
 use App\Calendario;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
+use App\User;
+use App\Tags;
+use App\FichaTags;
 
 class FichaPacienteController extends Controller
 {
@@ -113,7 +116,7 @@ class FichaPacienteController extends Controller
             $calendario_list = [];
             $calendario_detalhes = [];
             foreach ($calendarios as $key => $calendario) {
-                $line=$calendario->titulo.' '.$calendario->paciente['nome'].' '.$calendario->paciente['caderneta'].' '.$calendario->paciente['numero_ficha'];
+                $line=Carbon::parse($calendario->data_inicio)->format('H:m').' '.$calendario->titulo.' '.$calendario->paciente['nome'].' '.$calendario->paciente['caderneta'].' '.$calendario->paciente['numero_ficha'];
                 $calendario_list[]= Calendar::event(
                  $line,
                  true,
@@ -157,6 +160,7 @@ class FichaPacienteController extends Controller
     public function store(Request $request)
     {
         $data=$request->all();
+        $calendario_messag=null;
         
         $this->validate($request, [
             'paciente_id'=>'required',
@@ -236,7 +240,7 @@ class FichaPacienteController extends Controller
         }
 
 
-        FichaPaciente::create([
+        $ficha_paciente=FichaPaciente::create([
             'anamnese_id'=>$anamnese,
             'sinais_clinicos_id'=>$sinais_clinicos,
             'exame_id'=>$exame,
@@ -248,7 +252,34 @@ class FichaPacienteController extends Controller
             'parent_id'=>$parent_id
         ]);
 
-        return back()->with('success','Successfully Added to List');
+        if (isset($request->titulo) or isset($request->data_inicio) or isset($request->data_final)) {
+        $this->validate($request, array(
+            'titulo'=>'required|min:5',
+            'cor'=>'required',
+            'data_inicio'=>'required|date|after_or_equal:today',
+            'data_final'=>'required|date|after_or_equal:data_inicio'
+        ));
+
+        $calendario= new Calendario();
+        $calendario->titulo=$request->titulo;
+        $calendario->cor=$request->cor;
+        $calendario->data_inicio=$request->data_inicio;
+        $calendario->data_final=$request->data_final;
+        $calendario->paciente_id=$request->paciente_id;
+        $calendario->save();
+
+        $calendario_messag=" & Evento adicionado com successo.";
+        }
+
+        if (isset($request->tag_list)) {
+        
+            foreach ($request->tag_list as $key     => $val) {
+
+                FichaTags::updateOrCreate(['tags_id'=>$val,'ficha_clinica_id'=>$ficha_paciente->id],['user_id'=>Auth::user()->id]);
+
+            }; 
+         };  
+        return back()->with('success','Successfully Added to List'.$calendario_messag);
     }
 
     /**
@@ -600,6 +631,17 @@ class FichaPacienteController extends Controller
             'paciente_id'=>$data['paciente_id'],
         ]);
 
+
+        if (isset($request->tag_list)) {
+        
+            foreach ($request->tag_list as $key     => $val) {
+
+                FichaTags::updateOrCreate(['tags_id'=>$val,'ficha_clinica_id'=>$id],['user_id'=>Auth::user()->id]);
+
+            }; 
+         };  
+
+
         return back()->with('success','Atualizado com sucesso');
         
     }
@@ -614,4 +656,34 @@ class FichaPacienteController extends Controller
     {
         //
     }
+
+        public function find(Request $request)
+    {
+        $term = trim($request->q);
+
+        if (empty($term)) {
+            return \Response::json([]);
+        }
+
+        $tags = Tags::search($term)->limit(10)->where('status',1)->get();
+
+        $formatted_tags = [];
+
+        foreach ($tags as $tag) {
+            $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->name.' - '.$tag->type];
+        }
+
+        return \Response::json($formatted_tags);
+    }
+
+    public function tagRemove($id)
+    {
+        $data=FichaTags::find($id);
+        $data->delete();
+
+        return back()->with('success','Removido com sucesso');
+    }
+
+
+
 }

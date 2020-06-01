@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
+        <a class="btn btn-social-icon btn-github"  href="{{ url('tags') }}"><i class="fa  fa-cog"></i></a>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ url('home') }}"><i class="fa fa-home"></i> Home</a></li>
@@ -62,6 +63,20 @@
                           @endif
                     </div>
                 </div>
+
+                <div class="row" >
+                        <h4>Tags</h4>
+                    <hr>
+                </div>
+
+                <div class="row" >
+                    <div class="from-group ">
+                        <!--<label>Anamnese</label>-->
+                        <select id="tag_list" name="tag_list[]" class="form-control" multiple style="width: 100%; "></select>
+
+                    </div>
+                </div>
+
                 <div class="row" >
                         <h4>Anamnese</h4>
                     <hr>
@@ -219,6 +234,30 @@
 </div>
 
 </div>
+
+ <script>
+    $('#tag_list').select2({
+        placeholder: "Seleciona as tags...",
+        minimumInputLength: 2,
+        ajax: {
+
+            url: '{{URL::to('/tags/find')}}',
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    q: $.trim(params.term)
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+</script>
+
 <script type="text/javascript">
 
 $(document).ready(function(){

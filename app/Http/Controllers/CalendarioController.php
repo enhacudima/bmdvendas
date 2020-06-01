@@ -8,7 +8,7 @@ use App\Http\Requests\CalendarioRequest;
 use App\Http\Controllers\Controller;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar; 
 use Validator;
-
+use Carbon\Carbon;
 
 class CalendarioController extends Controller
 {
@@ -27,7 +27,7 @@ class CalendarioController extends Controller
             $calendario_list = [];
             $calendario_detalhes = [];
             foreach ($calendarios as $key => $calendario) {
-                $line=$calendario->titulo.' '.$calendario->paciente['nome'].' '.$calendario->paciente['caderneta'].' '.$calendario->paciente['numero_ficha'];
+                $line=Carbon::parse($calendario->data_inicio)->format('H:m').' '.$calendario->titulo.' '.$calendario->paciente['nome'].' '.$calendario->paciente['caderneta'].' '.$calendario->paciente['numero_ficha'];
                 $calendario_list[]= Calendar::event(
                  $line,
                  true,

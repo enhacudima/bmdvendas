@@ -51,4 +51,9 @@ class FichaPaciente extends Model
       return $this->hasMany(FichaPaciente::class, 'parent_id');
     }
 
+    public function tags()
+    {
+      return $this->hasMany(FichaTags::class,'ficha_clinica_id');
+    }
+
 }

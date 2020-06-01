@@ -6,6 +6,7 @@ use App\Cliente;
 use App\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Pelagem;
 
 class PacienteController extends Controller
 {
@@ -24,7 +25,9 @@ class PacienteController extends Controller
         $pacientes=Paciente::with('Cliente')->get();
         $especies = DB::table('especies')->get();
         $racas = DB::table('racas')->get();
-        return view('admin.paciente.index',compact(['pacientes','clientes','especies','racas']));
+        $pelagem = Pelagem::get();
+
+        return view('admin.paciente.index',compact(['pacientes','clientes','especies','racas','pelagem']));
     }
 
     /**

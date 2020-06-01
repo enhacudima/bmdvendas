@@ -23,6 +23,7 @@
           <span aria-hidden="true">×</span></button>
         <h4 class="modal-title">Novo paciente</h4>
       </div>
+      <a class="btn btn-social-icon btn-github " style="margin: 10px"  href="{{ url('racas') }}"><i class="fa  fa-cog"></i></a>
       
         <form method="post" action="{{route('paciente.store')}}" autocomplete="Active" accept-charset="UTF-8" enctype="multipart/form-data" style="margin:15px">
             <div class="modal-body">
@@ -109,9 +110,11 @@
                         <label>Pelagem</label>
                         <select name="pelagem" id="pelagem" class="form-control" value="{{old('pelagem')}}" required autofocus>
                             <option disabled selected ></option>
-                            <option value="branca">Branca</option>
-                            <option value="castanha">Castanha</option>
-                            <option value="preta">Preta</option>
+                                @if(isset($pelagem))
+                                    @foreach($pelagem as $data)
+                                        <option value="{{$data->nome}}">{{$data->nome}}</option>
+                                    @endforeach
+                                @endif
                         </select>
                     </div>
                 </div>
