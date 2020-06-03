@@ -24,15 +24,16 @@ class VendasController extends Controller
 
 
 
-      public function __construct()
+    
+        public function __construct()
     {
-        $this->middleware('auth');
 
-
+        return Auth::guard(app('VoyagerGuard'));
     }
 
     public function getstocktovenda()
     {
+      $this->authorize('venda');
       $produtos=DB::table('produtos_venda_view')->where('produto_status',1)->where('status',1)->get();
 
       return response()->json($produtos);
@@ -40,6 +41,7 @@ class VendasController extends Controller
     
     public function index($id)
     {
+       $this->authorize('venda');
     	$mesa_id=$id;
 
         $data_mesa=VendasTempMesa::where('mesa_id',$mesa_id)->whereNull('codigo_venda')
@@ -54,6 +56,7 @@ class VendasController extends Controller
     }  
 
     public function produtosStock(Request $request){
+       $this->authorize('venda');
       $term=$request->key;
       $produtos=DB::table('produtos_venda_view')
       ->where('status',1)
@@ -91,6 +94,8 @@ class VendasController extends Controller
 
     public function carindex($car_id, $mesa_id, $user_id)
     {
+         $this->authorize('venda');
+
         $car_temp=CarTemp::find($car_id);
 
         $car_name=Car::find($car_temp->car_id); 
@@ -117,6 +122,8 @@ class VendasController extends Controller
 
         public function creditoindex($id)//clone de vendas normais
     {
+       $this->authorize('venda');
+
       $mesa_id=$id;
         $produtos=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
                     ->select('produtos_entradas.*','produtos.name')
@@ -137,6 +144,7 @@ class VendasController extends Controller
 
     public function  saveselection(Request $request)
     {
+       $this->authorize('venda');
 
     	if($request->ajax())
         {
@@ -257,6 +265,7 @@ class VendasController extends Controller
 
     public function atualizarvendatemp(Request $request)
     {
+       $this->authorize('actualizar_venda_temp_venda');
     	if($request->ajax())
     	{
     		  $request->except('_token');	
@@ -306,6 +315,7 @@ class VendasController extends Controller
 
     public function listapedidos(Request $request)
     {
+       $this->authorize('venda');
       if($request->ajax())
       {
         $request->except('_token'); 
@@ -336,6 +346,7 @@ class VendasController extends Controller
 
     public function efectuarpagamento(Request $request)
     {
+       $this->authorize('venda_pagamento');
     	if ($request->ajax()) 
     	{
     		  $request->except('_token');	
@@ -442,6 +453,8 @@ class VendasController extends Controller
     	}
     }
     public function ultimaVenda($pagamento){
+       $this->authorize('venda');
+
       $itens=VendasTempMesa::where('vendas_temp_mesa.codigo_venda',$pagamento)
               ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
@@ -457,6 +470,8 @@ class VendasController extends Controller
     }
 
     public function ultimaPrint($pagamento){
+       $this->authorize('venda');
+
       $itens=VendasTempMesa::where('vendas_temp_mesa.codigo_venda',$pagamento)
               ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
@@ -474,6 +489,7 @@ class VendasController extends Controller
 
     public function efectuarpagamentocredito(Request $request)
     {
+       $this->authorize('efectuar_pagamento_credito_venda');
       if ($request->ajax()) 
       {
           $request->except('_token'); 
@@ -528,6 +544,8 @@ class VendasController extends Controller
 
     public function  apagalinha(Request $request)
     {
+       $this->authorize('apagar_linha_venda');
+
       if($request->ajax())
         {
           $request->except('_token'); 
@@ -580,6 +598,8 @@ class VendasController extends Controller
 
 
 public function factura($id){
+   $this->authorize('venda_factura');
+
         $data_mesa=VendasTempMesa::where('identificador_de_bulk',$id)
           ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
           ->join('produtos','produtos_entradas.produto_id','produtos.id')
@@ -592,6 +612,8 @@ public function factura($id){
 }
 
 public function facturaVenda($id, $cliente){
+   $this->authorize('venda_factura');
+
         $data_mesa=VendasTempMesa::where('identificador_de_bulk',$id)
           ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
           ->join('produtos','produtos_entradas.produto_id','produtos.id')
@@ -606,6 +628,8 @@ public function facturaVenda($id, $cliente){
 
 public function findbulck(Request $request)
 {
+  $this->authorize('venda');
+
   $id=$request->mesa_id;
 
   $data_mesa=VendasTempMesa::where('mesa_id',$id)->whereNull('codigo_venda')->first();
@@ -614,6 +638,9 @@ public function findbulck(Request $request)
 }
 
 public function ultimas(){
+
+   $this->authorize('venda');
+
  $data=VendasTempMesa::select('vendas_temp_mesa.*','venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')
   ->join('venda_troco','venda_troco.codigo_venda','vendas_temp_mesa.codigo_venda')
   ->where('vendas_temp_mesa.codigo_venda','!=',null)

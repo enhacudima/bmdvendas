@@ -16,21 +16,25 @@ use App\ClienteVenda;
 use App\Cliente;
 use App\VendasTempMesa;
 use App\Vendas;
+use Auth;
 
 class ReportController extends Controller
 {
     
 
+    
         public function __construct()
     {
-        $this->middleware('auth');
 
-
+        return Auth::guard(app('VoyagerGuard'));
     }
 
     
         public function reportMovimento()
-    {   
+    {  
+
+       $this->authorize('report');
+
       $movimentos=DB::table('produtos_venda_view')->get();
          
                             
@@ -39,6 +43,8 @@ class ReportController extends Controller
 
             public function reportStockAtual()
     {   
+               $this->authorize('report');
+
         $movimentos=DB::table('saldo_atual_view')
                             ->get();
                      
@@ -49,6 +55,8 @@ class ReportController extends Controller
 
     public function reportMovimentoFilter(Request $request)
     {
+        $this->authorize('report');
+
     	$data=$request->all();
     	$this->validate($request, [
             'radio'=>'required',
@@ -86,6 +94,8 @@ class ReportController extends Controller
 
         public function reportMovimentoFilterAtual(Request $request)
     {
+        $this->authorize('report');
+
         $data=$request->all();
         $this->validate($request, [
             'radio'=>'required',
@@ -129,7 +139,9 @@ class ReportController extends Controller
     }
 
     public function reportPagamento()
-    {
+    {   
+        $this->authorize('report');
+
         $pagamentos=Vendas::select('fpagamento',DB::raw('Sum(valor) as total_venda'))->groupby('fpagamento')->get();
 
 
@@ -138,6 +150,7 @@ class ReportController extends Controller
 
     public function reportPagamentoFiltrar(Request $request)
     {
+        $this->authorize('report');
 
         $data=$request->all();
         $this->validate($request, [
@@ -154,7 +167,9 @@ class ReportController extends Controller
     }
 
     public function reportInflow()
-    {
+    {   
+               $this->authorize('report');
+
     	        $movimentos=VendasTroco::join('mesa','venda_troco.mesa_id','mesa.id')
     	        			->join('users','venda_troco.user_id','users.id')
                             ->select('mesa.name as mesa','users.name as username',
@@ -172,7 +187,8 @@ class ReportController extends Controller
 
 
     public function reportInflowFilter(Request $request)
-    {
+    {   
+               $this->authorize('report');
     	$data=$request->all();
     	$this->validate($request, [
             'inicio'=>'required',
@@ -214,6 +230,8 @@ class ReportController extends Controller
     	public function reportProdutoVendaFilter(Request $request)
 
     {	
+               $this->authorize('report');
+
     	$data=$request->all();
     	$this->validate($request, [
             'inicio'=>'required',
@@ -249,7 +267,8 @@ class ReportController extends Controller
 
     }
             public function reportAuditar()
-    {
+    {   
+               $this->authorize('report');
     			$user=User::get();
 
     	        $movimentos=Ajustes::join('produtos','produtos_ajustes.produto_id','produtos.id')
@@ -266,6 +285,8 @@ class ReportController extends Controller
         	public function reportAuditarFilter(Request $request)
 
     {	
+               $this->authorize('report');
+
     	$data=$request->all();
     	$this->validate($request, [
             'inicio'=>'required',
@@ -312,6 +333,7 @@ class ReportController extends Controller
 
     public function vendascredito ()
     {
+       $this->authorize('report');
 
     $venda=ClienteVenda::join('cliente','cliente_venda.cliente_id','cliente.id')
         ->join('users','cliente_venda.user_id','users.id')
@@ -328,6 +350,7 @@ class ReportController extends Controller
 
         public function vendascreditofiltre (Request $request)
     {
+       $this->authorize('report');
 
         $data=$request->all();
         $this->validate($request, [
@@ -349,6 +372,8 @@ class ReportController extends Controller
 
         public function listapedidos(Request $request)
     {
+               $this->authorize('report'); 
+
       if($request->ajax())
       {
         $request->except('_token'); 
@@ -381,6 +406,8 @@ class ReportController extends Controller
 
         public function pagamentocliente(Request $request)
     {
+               $this->authorize('report');
+
       if($request->ajax())
       {
         $request->except('_token'); 
@@ -395,6 +422,7 @@ class ReportController extends Controller
 
     public function vendascar ()
     {
+               $this->authorize('report');
 
     /*$venda=VendasTempMesa::join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
@@ -417,6 +445,7 @@ class ReportController extends Controller
 
     public function vendascarfilter (Request $request)
     {
+               $this->authorize('report');
 
         $data=$request->all();
         $this->validate($request, [

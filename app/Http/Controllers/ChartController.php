@@ -5,10 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\VendasTroco;
 use App\Charts\VendasLineChart;
+use Auth;
 
 class ChartController extends Controller
 {
-        /**
+    
+    
+        public function __construct()
+    {
+
+        return Auth::guard(app('VoyagerGuard'));
+    }
+    
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -28,6 +37,8 @@ class ChartController extends Controller
 
     public function chartLine()
     {
+        $this->authorize('dashboard');
+
         $api = url('/chart-line-ajax');
    
         $chart = new VendasLineChart;

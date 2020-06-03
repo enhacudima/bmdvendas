@@ -23,6 +23,15 @@ use App\FichaTags;
 
 class FichaPacienteController extends Controller
 {
+    
+
+
+        public function __construct()
+    {
+
+        return Auth::guard(app('VoyagerGuard'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +39,8 @@ class FichaPacienteController extends Controller
      */
     public function index()
     {
+    $this->authorize('consultorio');
+
         //chart
         $labels=FichaPaciente::select(DB::raw('date_format(updated_at, "%Y-%m") as "date"'))
                         ->orderby('created_at','asc')
@@ -148,6 +159,7 @@ class FichaPacienteController extends Controller
      */
     public function create()
     {
+         $this->authorize('create_ficha');
         return view('admin.ficha_clinica.create');
     }
 
@@ -159,6 +171,7 @@ class FichaPacienteController extends Controller
      */
     public function store(Request $request)
     {
+         $this->authorize('store_ficha');
         $data=$request->all();
         $calendario_messag=null;
         
@@ -289,6 +302,7 @@ class FichaPacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     function anamnese($data,$request){
+
         $this->validate($request, [
                 'd_anamnese'=>'required',
                 'anamnese'=>'required',
@@ -380,6 +394,8 @@ class FichaPacienteController extends Controller
 
     public function show($FichaPaciente)
     {
+         $this->authorize('show_ficha');
+
         $ficha=FichaPaciente::find($FichaPaciente);
 
         if(isset($ficha->subFicha))
@@ -391,11 +407,15 @@ class FichaPacienteController extends Controller
 
     public function seguimento($id)
     {
+         $this->authorize('ficha_seguimento');
+
         $ficha=FichaPaciente::find($id);
         return view('admin.ficha_clinica.create',compact(['ficha']));
     }
     public function altera_estado(Request $request)
     {   
+         $this->authorize('altera_estado');
+
         $this->validate($request, [
             'id'=>'required',
             'status'=>'required',
@@ -414,7 +434,9 @@ class FichaPacienteController extends Controller
         return back()->with('success','Atualizado com sucesso');
     }
     public function paciente_nova_ficha ($id)
-    {
+    {   
+         $this->authorize('nova_ficha');
+
         $paciente=Paciente::find($id);
 
         return view('admin.ficha_clinica.create',compact(['paciente']));
@@ -428,6 +450,8 @@ class FichaPacienteController extends Controller
      */
     public function edit($id)
     {
+         $this->authorize('edit_ficha');
+
         $ficha=FichaPaciente::find($id);
 
         return view('admin.ficha_clinica.edit',compact(['ficha']));
@@ -441,7 +465,8 @@ class FichaPacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
-    {    
+    {   
+         $this->authorize('edit_ficha'); 
         $this->validate($request, [
             'paciente_id'=>'required',
         ]);
@@ -678,6 +703,8 @@ class FichaPacienteController extends Controller
 
     public function tagRemove($id)
     {
+         $this->authorize('edit_ficha');
+
         $data=FichaTags::find($id);
         $data->delete();
 

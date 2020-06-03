@@ -4,26 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use Auth;
 
 class ClienteController extends Controller
 {
 
-	    public function __construct()
+    
+        public function __construct()
     {
-        $this->middleware('auth');
 
-
+        return Auth::guard(app('VoyagerGuard'));
     }
     
 
     public function indexcliente()
     {
-    	$cliente=Cliente::get();
+    	$this->authorize('cliente');
+        $cliente=Cliente::get();
     	return view('admin.cliente.index',compact('cliente'));
     }
 
     public function clienteshow($id)
     {
+
+        $this->authorize('show_cliente');
+
     	$client=Cliente::with('pacientes')->find($id);
 
     	return view('admin.cliente.show',compact('client'));
@@ -31,6 +36,9 @@ class ClienteController extends Controller
 
         public function storcliente(Request $request)
     {
+
+        $this->authorize('store_cliente');
+
     	$data=$request->all();
     	$this->validate($request, [
             'nome'=>'required|min:3|max:50|string',
@@ -50,6 +58,10 @@ class ClienteController extends Controller
     }
         public function updatecliente(Request $request)
     {	
+
+
+        $this->authorize('update_cliente');
+        
     	$data=$request->all();
     	$cliente=cliente::find($data['id']);
 
@@ -74,6 +86,7 @@ class ClienteController extends Controller
         public function searchcliente(Request $request)
     {   
          
+        $this->authorize('search_cliente');
 
 
         $term = $request->get('search');

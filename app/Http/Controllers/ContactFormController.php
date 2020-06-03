@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\ContactForm;
 use Illuminate\Http\Request;
 use Response;
+use Auth;
 
 class ContactFormController extends Controller
 {
-    /**
+   
+
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

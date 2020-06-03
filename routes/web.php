@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function(){
 Voyager::routes();
 
 });
+
+
 Route::group(['middleware' => ['auth']], function(){
 
 Route::get('/home', 'HomeController@index')->name('home');

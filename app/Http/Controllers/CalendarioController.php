@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar; 
 use Validator;
 use Carbon\Carbon;
+use Auth;
 
 class CalendarioController extends Controller
 {
@@ -22,7 +23,7 @@ class CalendarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {     //$this->authorize('calendario');
+    {     $this->authorize('calendario');
         $calendarios = Calendario::get();
             $calendario_list = [];
             $calendario_detalhes = [];
@@ -54,7 +55,7 @@ class CalendarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function addEvent(CalendarioRequest $request)
-    {     //$this->authorize('calendario_create');
+    {     $this->authorize('calendario_create');
         Calendario::create($request->all());
         return $this->index()->with('success','Evento criado com sucesso.');
 
@@ -79,7 +80,7 @@ class CalendarioController extends Controller
      */
     public function show($calendario)
     {
-        //$this->authorize('calendario_create');
+        $this->authorize('calendario_create');
         $event = Calendario::find($calendario);  
         return view('calendario.edit', compact('event'));
     }
@@ -92,7 +93,7 @@ class CalendarioController extends Controller
      */
     public function edit(Request $request,$calendario)
     {
-        //$this->authorize('calendario_create');
+        $this->authorize('calendario_create');
         $event = Calendario::find($calendario);
         $data=$request->except('_token');
         $event->titulo=$request->titulo;
@@ -127,7 +128,7 @@ class CalendarioController extends Controller
      */
     public function destroy($calendario)
     {
-        //$this->authorize('calendario_create');
+        $this->authorize('calendario_create');
         $event = Calendario::find($calendario)->delete();
         return redirect('calendario')->with('success','Evento Elimidado com sucesso.');
 

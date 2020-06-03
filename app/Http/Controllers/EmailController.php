@@ -11,6 +11,7 @@ use App\Mail\Geral;
 use App\Jobs\SendEmailGeral;
 use Carbon\Carbon;
 use App\ContactForm;
+use Auth;
 
 class EmailController extends Controller
 {
@@ -22,7 +23,7 @@ class EmailController extends Controller
 
       public function all()
       {
-        //$this->authorize('emails');
+        $this->authorize('emails');
         $sent=Email::where('status',0)->count();
         $drafts=Email::where('status',1)->count();
         $inbox=ContactForm::where('read_or_not',1)->count();
@@ -59,7 +60,7 @@ class EmailController extends Controller
     {
 
 
-    //$this->authorize('emails');
+    $this->authorize('emails');
 
       $sent=Email::where('status',0)->count();
       $drafts=Email::where('status',1)->count();
@@ -70,7 +71,7 @@ class EmailController extends Controller
 
     public function enviaremail(Request $request)
     {
-    //$this->authorize('emails');
+    $this->authorize('emails');
         $data=$request->all();
         $this->validate($request, array(
             'message' => 'required|min:3',
@@ -90,7 +91,7 @@ class EmailController extends Controller
 
         public function try($id)
     {
-   // $this->authorize('emails');
+   $this->authorize('emails');
 
         $data=Email::find($id)->toArray();
 
@@ -102,6 +103,8 @@ class EmailController extends Controller
 
     public function read ($id)
     {
+         $this->authorize('emails');
+
       $data=ContactForm::find($id);
       if ($data->read_or_not==0) {
           $data->read_or_not=1;
@@ -116,6 +119,8 @@ class EmailController extends Controller
     }
 
     public function reply($id){
+      
+         $this->authorize('emails');
 
       $data=ContactForm::find($id);
       

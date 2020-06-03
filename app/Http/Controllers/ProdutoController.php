@@ -10,6 +10,7 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Auth;
 
 class ProdutoController extends Controller
 {
@@ -18,16 +19,18 @@ class ProdutoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
         public function __construct()
     {
-        $this->middleware('auth');
 
-
+        return Auth::guard(app('VoyagerGuard'));
     }
 
     
     public function index()
-    {   $produtos=Produtos::get();
+    {   
+      $this->authorize('produtos');
+      $produtos=Produtos::get();
         return view('admin.produtos.index',compact('produtos'));
     }
 
@@ -50,6 +53,7 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
+      $this->authorize('store_produtos');
         $this->validate($request, [
             'name'=>'required|min:3|unique:produtos,name|max:192',
             'codigoproduto'=>'required|max:192|unique:produtos,codigoproduto',
@@ -88,6 +92,8 @@ class ProdutoController extends Controller
      */
     public function show($id)
     {
+      $this->authorize('show_produtos');
+
         $produtos=Produtos::find($id);
         return view ('admin.produtos.show',compact('produtos'));    
     }
@@ -113,6 +119,7 @@ class ProdutoController extends Controller
     public function update(Request $request, $id)
     {
         
+      $this->authorize('edit_produtos');
 
         $produtos=request()->except(['_token']);
             $this->validate($request, [
@@ -170,6 +177,7 @@ class ProdutoController extends Controller
     }
 
     public function entradaindex(){
+      $this->authorize('entradas');
         $produtos=Produtos::all()->where('status',1);
         $entradas=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
                             ->select('produtos_entradas.*','produtos.name')
@@ -180,6 +188,8 @@ class ProdutoController extends Controller
     public function entradastore(Request $request)
     {
         
+      $this->authorize('store_entradas');
+
         $this->validate($request,[
           'produto_id'=>'required',
           'quantidade'=>'required',
@@ -218,6 +228,9 @@ class ProdutoController extends Controller
 
     public function ajustindex()
     {
+
+      $this->authorize('ajuste');
+
       $produtos=Produtos::all();
       $lot=Entradas::distinct('lot')->get();
       $ajustes=Ajustes::join('produtos','produtos_ajustes.produto_id','produtos.id')
@@ -249,7 +262,9 @@ class ProdutoController extends Controller
     }
 
     public function ajustestore(Request $request)
-    {       
+    {     
+       $this->authorize('store_ajuste');  
+
         $data=$request->all();
         $this->validate($request, [
             'produto_id'=>'required',
@@ -267,6 +282,8 @@ class ProdutoController extends Controller
 
     public function lotshow($id)
     {   
+       $this->authorize('show_lot');
+
         $produtos=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
                             ->where('produtos_entradas.id',$id)
                             ->select('produtos_entradas.*','produtos.name','produtos.unidadedemedida')
@@ -277,6 +294,8 @@ class ProdutoController extends Controller
 
     public function loteupdate (Request $request)
     {   
+         $this->authorize('edit_lot');
+
         $this->validate($request,[
           'produto_id'=>'required',
           'quantidade'=>'required',

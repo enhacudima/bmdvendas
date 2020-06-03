@@ -7,6 +7,7 @@ use App\Mesa;
 use App\Entradas;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use Auth;
 
 class HomeController extends Controller
 {

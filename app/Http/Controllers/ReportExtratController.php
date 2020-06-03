@@ -17,13 +17,14 @@ use App\ReportNew;
 
 class ReportExtratController extends Controller
 {
-          protected function guard()
+  protected function guard()
   {
       return Auth::guard(app('VoyagerGuard'));
   }
 
   public function index()
   {
+
     if (Auth::user()->can('view_all_files'))
     {
           $data=ProcessedFiles::select('processed_files.*','users.name','users.avatar')->join('users','processed_files.user_id','users.id')->orderby('processed_files.created_at','asc')->get();

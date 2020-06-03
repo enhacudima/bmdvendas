@@ -7,12 +7,15 @@ use App\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Pelagem;
+use Auth;
 
 class PacienteController extends Controller
 {
-    public function __construct()
+    
+        public function __construct()
     {
-        $this->middleware('auth');
+
+        return Auth::guard(app('VoyagerGuard'));
     }
     /**
      * Display a listing of the resource.
@@ -21,6 +24,8 @@ class PacienteController extends Controller
      */
     public function index()
     {
+        $this->authorize('paciente');
+
         $clientes=Cliente::get();
         $pacientes=Paciente::with('Cliente')->get();
         $especies = DB::table('especies')->get();
@@ -48,6 +53,7 @@ class PacienteController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('store_paciente');
         $data=$request->all();
         $this->validate($request, [
             'nome'=>'required|min:3|max:50|string',
@@ -85,7 +91,9 @@ class PacienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {   
+        $this->authorize('edit_paciente');
+
         $paciente=Paciente::find($id);
         $clientes=Cliente::get();
         $especies = DB::table('especies')->get();
@@ -103,6 +111,8 @@ class PacienteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('edit_paciente');
+
         $data = Paciente::find($id);
         $object = $request->validate([
             'nome'=>'required|min:3|max:50|string',
@@ -142,7 +152,9 @@ class PacienteController extends Controller
     }
 
     public function SearchPaciente(Request $request)
-    {
+    {   
+           $this->authorize('search_paciente');
+
         $term = $request->get('search');
  
         if ( ! empty($term)) {
