@@ -117,7 +117,8 @@ return [
         [
             'text'    => 'Dashboard',
             'icon'    => 'heartbeat',
-            'url'     => 'chart-line',  
+            'url'     => 'chart-line',
+            'can'     => 'dashboard',    
         ],
         [
             'text'   => 'Clientes',
@@ -127,11 +128,14 @@ return [
                                 'text'=>'Cliente',
                                 'url' =>'index_cliente',
                                 'icon'=>'user-plus',
+                                'can'     => 'Cliente',   
+
                             ],
                             [
                                 'text'=>'Pacientes',
                                 'url' =>'paciente',
                                 'icon'=>'paw',
+                                'can'     => 'paciente',   
                             ]      
                         ]
         ], 
@@ -139,11 +143,13 @@ return [
             'text'    => 'Eventos',
             'icon'    => 'calendar',
             'url'     => 'calendario',  
+            'can'     => 'calendarios',   
         ],
         [
             'text'        => 'Messagens',
             'url'         => 'email/all',
             'icon'        => 'envelope-open',
+            'can'         => 'emails',  
         ],        
         [
             
@@ -161,13 +167,15 @@ return [
                     'text'  => 'New Report',
                     'url'   => 'report/new',
                     'icon'  => 'file-text-o',
+                    'can'   => 'report',
 
                 ],
             ]
         ],
         [
         'text' => 'Reporte',
-        'icon'        => 'bar-chart',
+        'icon' => 'bar-chart',
+        'can'  => 'report',
         'submenu'=>[
                     [
                      'text'=> 'Movimentos',
@@ -223,21 +231,23 @@ return [
         [
             'text'       => 'Produtos',
             'icon'       => 'shopping-bag',
-            'url'        => 'admin',
             'submenu'    => [
                             
                                 [
                                     'text' => 'Cadastro',
                                     'url'  => 'produto',
                                     'icon' => 'plus-square-o',
+                                    'can'  => 'produtos',
                                 ],
                                 [
                                     'text' => 'Entradas',
                                     'url'  => 'produto_entrada',
+                                    'can'  => 'entrada_produto',
                                 ],
                                 [
                                     'text' => 'Ajustes',
                                     'url'  => 'ajust_index',
+                                    'can'  => 'ajust_produto',
                                 ],
                                         
                             ], 
@@ -245,7 +255,8 @@ return [
 
         [
             'text'      => 'Salas',
-            'icon'      =>  'folder-open',
+            'icon'      => 'folder-open',
+            'can'       => 'mesa',
             'submenu'   => [
                             [
                                 'text' => 'Cadastro',
@@ -256,9 +267,10 @@ return [
         ],
     'Admin',
         [
-            'text'    => 'Configurações',
-            'icon'    => 'cog',
+            'text' => 'Configurações',
+            'icon' => 'cog',
             'url'  => 'admin',
+            'can'  => 'browse_admin',
             
         ],
 
