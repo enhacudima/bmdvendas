@@ -47,8 +47,8 @@ class ClienteController extends Controller
             'endereco'=> 'required|min:5|max:255|string',
             'contacto1'=>'required|digits:9|unique:cliente',
             'contacto2'=>'nullable|digits:9',
-            'email'=>'required|string|unique:cliente',
-            'nuit'=>'required|digits:9'
+            'email'=>'nullable|string|unique:cliente',
+            'nuit'=>'nullable|digits:9'
             ]);
 
 
@@ -72,8 +72,8 @@ class ClienteController extends Controller
             'endereco'=> 'required|min:5|max:100|string',
             'contacto1'=>'required|digits:9',
             'contacto2'=>'nullable|digits:9',
-            'email'=>'required|string',
-            'nuit'=>'required|digits:9'
+            'email'=>'nullable|string',
+            'nuit'=>'nullable|digits:9'
             ]);
 
     	$cliente->update($newdata);
