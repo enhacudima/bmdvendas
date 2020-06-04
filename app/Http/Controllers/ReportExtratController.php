@@ -70,23 +70,32 @@ class ReportExtratController extends Controller
 
 
     public function new ()
-    {   //$this->authorize('report');
+    {   
+        $this->authorize('report');
         $data=ReportNew::get();
         return view('admin.report.new', compact('data'));
     }
 
     public function filtro(Request $request)
     {
-    //$this->authorize('report');
+    $this->authorize('report');
+        $year = 1900; $month = 1; $day = 1;
+        $start=Carbon::createFromDate($year, $month, $day);
+        $end=Carbon::now();
 
-        $request->validate([
-            'start'=>'required|date',
-            'end'=>'required|date|after:start'
-        ]);
-
-
-          $start=Carbon::parse($request->start);
+        if (isset($request->start)) {
+              $request->validate([
+                  'start'=>'required|date',
+              ]);
+              $start=Carbon::parse($request->start);
+        }
+        if (isset($request->end)) {
+              $request->validate([
+                  'end'=>'required|date'
+              ]);
           $end=Carbon::parse($request->end)->addHours(23)->addMinutes(59)->addSecond(59);
+        }
+
           $type=$request->type;
           $filtro=$request->filtro;
 

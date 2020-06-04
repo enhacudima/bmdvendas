@@ -108,6 +108,9 @@ class MesaController extends Controller
         $this->authorize('mesa');
                
         $mesa=request()->except(['_token']);
+        $this->validate($request, [
+            'name'=>'required|string|min:3|max:50|unique:mesa,name',
+            ]);
           
         Mesa::where('id',$mesa['id'])
                 ->update($mesa);

@@ -14,9 +14,10 @@ class ReportNew extends Model
 
     public $timestamps=true;
 
-    public function filtros()
+
+
+        public function sync_filtros()
     {
-    	
-        return $this->hasMany('App\ReportNewFiltro');
+        return $this->hasMany('App\ReportNewSyncFiltro','groupo_filtro','filtro');
     }  
 }

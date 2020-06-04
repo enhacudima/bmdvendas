@@ -76,7 +76,7 @@ class ReportController extends Controller
         return view('report.movimentos.report',compact('movimentos'));
     		
     	}elseif ($radio=="ajuste") {
-         return "Esta função foi desabilitada pelo adiministrador";
+         return "This function has been disabled by the administrator";
     		    	$movimentos=DB::table('produtos_entradas_view')
     		        		->whereBetween('produtos_ajustes_view.created_at',[$inicio,$fim])
                             ->join('produtos','produtos_entradas_view.id','produtos.id')
@@ -360,7 +360,12 @@ class ReportController extends Controller
           $inicio=Carbon::parse($request->inicio);
           $fim=Carbon::parse($request->fim)->addHours(23)->addMinutes(59)->addSecond(59);    
 
-    $venda=ClienteVenda::whereBetween('cliente_venda.updated_at',[$inicio,$fim])->join('cliente','cliente_venda.cliente_id','cliente.id')->join('users','cliente_venda.user_id','users.id')->join('venda_troco','cliente_venda.codigo_venda','venda_troco.codigo_venda')->select('cliente.name as cname','cliente.name as clname','cliente.contacto1','cliente.contacto2','cliente_venda.created_at','users.name as uname','cliente_venda.codigo_venda', 'venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')->get();
+    $venda=ClienteVenda::whereBetween('cliente_venda.updated_at',[$inicio,$fim])
+    ->join('cliente','cliente_venda.cliente_id','cliente.id')
+    ->join('users','cliente_venda.user_id','users.id')
+    ->join('venda_troco','cliente_venda.codigo_venda','venda_troco.codigo_venda')
+         ->select('cliente.nome as cname','cliente.apelido as clname','cliente.contacto1','cliente.contacto2','cliente_venda.created_at','users.name as uname','cliente_venda.codigo_venda', 'venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')
+    ->get();
 
 
 

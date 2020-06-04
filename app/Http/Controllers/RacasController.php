@@ -47,7 +47,7 @@ class RacasController extends Controller
             $this->authorize('store_racas');
 
     	    $this->validate($request, [
-    	    	'nome'=>'required|min:3|unique:especies|max:255',
+    	    	'nome'=>'required|min:3|unique:racas|max:255',
     	    	'user_id'=>'required',
     	    	'especies_id'=>'required',
     	    ]);
@@ -61,7 +61,7 @@ class RacasController extends Controller
     {
             $this->authorize('store_pelagem');
     	    $this->validate($request, [
-    	    	'nome'=>'required|min:3|unique:especies|max:255',
+    	    	'nome'=>'required|min:3|unique:pelagem|max:255',
     	    	'user_id'=>'required',
     	    ]);
     	    Pelagem::create($request->all());

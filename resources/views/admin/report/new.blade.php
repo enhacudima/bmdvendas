@@ -27,9 +27,10 @@
                 <form role="form" method="POST" action="{{ url('report/filtro')}}" enctype="multipart/form-data">
                      @csrf
                     <input name="type" value="{{$report->table_name}}" type="hidden">
+                    @if(isset($report->sync_filtros[0]->filtros->value))
                     <select class="form-control" name="filtro">
-                        @foreach($report->filtros as $filtro)
-                            <option value="{{$filtro->value}}">{{$filtro->name}}</option>
+                        @foreach($report->sync_filtros as $filtro)
+                            <option value="{{$filtro->filtros->value}}">{{$filtro->filtros->name}}</option>
                         @endforeach
                     </select>
                     <br/>
@@ -38,17 +39,29 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-fw fa-calendar"></i></span>
-                                <input class="form-control"  type="date" name="start" required autofocus ></div>
+                                <input class="form-control"  type="date" name="start"  ></div>
                             </div>
 
                     
                             <div class="col-md-6">
                                 <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-fw fa-calendar"></i></span>
-                                <input class="form-control"  type="date" name="end" required autofocus ></div>
+                                <input class="form-control"  type="date" name="end"  ></div>
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <span >
+                      <small class="label  bg-red">We recommend that you select an interval to avoid processing delay.</small>
+                    </span>
+                    @else
+                        <div class="callout callout-info">
+                            <h4>Filters</h4>
+
+                            <p>Filters are not available for this report</p>
+                        </div>
+                        <input name="filtro" value="no_filter" type="hidden">
+                    @endif
                     <hr />
                 <span class="input-group-btn">
                  <button type="submit" class="btn btn-primary btn-flat "><i class="fa fa-download"></i></button>
