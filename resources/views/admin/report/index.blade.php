@@ -5,7 +5,7 @@
 @section('content_header')
     <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
      @if (Auth::user()->can('view_all_files'))
-     <a class="btn btn-social-icon btn-github" aria-hidden="true" href="{{url('admin/meusficheiros/all/deletefile')}}" ><i class=" fa fa-trash-o "></i></a>
+     <a class="btn btn-social-icon btn-github" aria-hidden="true" href="{{url('meusficheiros/all/deletefile')}}" ><i class=" fa fa-trash-o "></i></a>
      @endif
     </h1>
 @stop

@@ -194,6 +194,7 @@ Route::get('racas','RacasController@index');
 Route::post('especie/store','RacasController@especie_store');
 Route::post('raca/store','RacasController@raca_store');
 Route::post('pelagem/store','RacasController@pelagem_store');
+
 //fim das rotas 
 });
 //todas rotas devem ser definidas acima 
