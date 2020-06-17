@@ -112,9 +112,11 @@
                                 <div class="from-group col-lg-12">
                                     <label>Pelagem</label>
                                     <select name="pelagem" id="pelagem" class="form-control" value="{{$paciente->pelagem}}" required autofocus>
-                                        <option value="branca">Branca</option>
-                                        <option value="castanha">Castanha</option>
-                                        <option value="preta">Preta</option>
+                                        @if(isset($pelagem))
+                                            @foreach($pelagem as $data)
+                                                <option value="{{$data->nome}}">{{$data->nome}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>

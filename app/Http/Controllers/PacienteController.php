@@ -98,8 +98,9 @@ class PacienteController extends Controller
         $clientes=Cliente::get();
         $especies = DB::table('especies')->get();
         $racas = DB::table('racas')->get();
+        $pelagem = Pelagem::get();
 
-        return view('admin.paciente.show',compact(['paciente','clientes','especies','racas']));
+        return view('admin.paciente.show',compact(['paciente','clientes','especies','racas','pelagem']));
     }
 
     /**
