@@ -37,7 +37,8 @@
                             <div class="row">
                                 <div class="from-group col-lg-12">
                                     <label>Cliente</label>
-                                    <select name="cliente_id" id="cliente_id" class="form-control" value="{{$paciente->cliente_id}}" required autofocus>
+                                    <select name="cliente_id" id="cliente_id" class="form-control"  required autofocus>
+                                        <option disabled selected value="{{$paciente->cliente_id}}" >{{$paciente->cliente->nome}} {{$paciente->cliente->apelido}}</option>
                                         @if(isset($clientes))
                                             @foreach($clientes as $data)
                                                 <option value="{{$data->id}}">{{$data->nome}}</option>
@@ -67,7 +68,8 @@
                             <div class="row">
                                 <div class="from-group col-lg-12">
                                     <label>Especie</label>
-                                    <select name="especie" id="especie" class="form-control" value="{{$paciente->especie}}" required autofocus>
+                                    <select name="especie" id="especie" class="form-control"  required autofocus>
+                                        <option disabled selected value="{{$paciente->especie}}" >{{$paciente->especie}}</option>
                                         @if(isset($especies))
                                             @foreach($especies as $data)
                                                 <option value="{{$data->nome}}">{{$data->nome}}</option>
@@ -81,6 +83,7 @@
                                 <div class="from-group col-lg-12">
                                     <label>Raça</label>
                                     <select name="raca" id="raca" class="form-control" value="{{$paciente->raca}}" required autofocus>
+                                        <option disabled selected value="{{$paciente->raca}}" >{{$paciente->raca}}</option>
                                         @if(isset($racas))
                                             @foreach($racas as $data)
                                                 <option value="{{$data->nome}}">{{$data->nome}}</option>
@@ -111,7 +114,8 @@
                             <div class="row">
                                 <div class="from-group col-lg-12">
                                     <label>Pelagem</label>
-                                    <select name="pelagem" id="pelagem" class="form-control" value="{{$paciente->pelagem}}" required autofocus>
+                                    <select name="pelagem" id="pelagem" class="form-control"  required autofocus>
+                                        <option disabled selected value="{{$paciente->pelagem}}" >{{$paciente->pelagem}}</option>
                                         @if(isset($pelagem))
                                             @foreach($pelagem as $data)
                                                 <option value="{{$data->nome}}">{{$data->nome}}</option>
