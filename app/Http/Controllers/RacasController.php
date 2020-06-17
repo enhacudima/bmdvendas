@@ -64,6 +64,7 @@ class RacasController extends Controller
     	    	'nome'=>'required|min:3|unique:pelagem|max:255',
     	    	'user_id'=>'required',
     	    ]);
+            
     	    Pelagem::create($request->all());
 
     	return back()->with('success','Successfully Added to List');

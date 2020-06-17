@@ -109,7 +109,7 @@
         <h4 class="modal-title">Nova Pelagem</h4>
       </div>
       
-        <form method="post" action="{{url('especie/store')}}" autocomplete="Active" accept-charset="UTF-8" enctype="multipart/form-data" style="margin:15px">
+        <form method="post" action="{{url('pelagem/store')}}" autocomplete="Active" accept-charset="UTF-8" enctype="multipart/form-data" style="margin:15px">
             <div class="modal-body">
             {{ csrf_field() }}
             <input   name="user_id" type="hidden" id="user_id" value="{{ Auth::user()->id }}" required autofocus>
