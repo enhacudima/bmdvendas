@@ -136,6 +136,8 @@ class PacienteController extends Controller
         $data->sexo = $object['sexo'];
         $data->idade = $object['idade'];
         $data->user_id = $object['user_id'];
+        $data->pelagem =$object['pelagem'];
+        $data->caderneta = $object['caderneta'];
         $data->save();
 
         return redirect()->route('paciente.index')->with('success','Successfully updated to List');
