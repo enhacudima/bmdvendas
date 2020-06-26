@@ -200,7 +200,7 @@ class ProdutoController extends Controller
           'fornecedor'=>'nullable|string|max:255',
           'telefone'=>'nullable|numeric',
           'email_fornecedor'=>'nullable|email',
-
+          'final_p' =>'required|numeric',
         ]);
         $produto=Produtos::find($request->produto_id);
         $entrada= new Entradas;
@@ -213,7 +213,7 @@ class ProdutoController extends Controller
         $entrada->quantidade_unitaria=$request->quantidade*$produto->unidadedemedida;
         $entrada->custo_unitario=($request->precodecompra/$request->quantidade/$produto->unidadedemedida);
         $entrada->margem=$entrada->custo_unitario*($request->margem_per/100);
-        $entrada->preco_final=$entrada->custo_unitario+$entrada->margem;
+        $entrada->preco_final=$request->final_p;
 
         
         $entrada->data_exp=$request->data_exp;
@@ -306,7 +306,7 @@ class ProdutoController extends Controller
           'fornecedor'=>'nullable|string|max:255',
           'telefone'=>'nullable|numeric',
           'email_fornecedor'=>'nullable|email',
-
+          'final_p' =>'required|numeric',
         ]);
 
         $produto=Produtos::find($request->produto_id);
@@ -318,7 +318,7 @@ class ProdutoController extends Controller
         $quantidade_unitaria=$entrada->quantidade_unitaria=$request->quantidade*$produto->unidadedemedida;
         $custo_unitario=$entrada->custo_unitario=($request->precodecompra/$request->quantidade/$produto->unidadedemedida);
         $margem=$entrada->margem=$entrada->custo_unitario*($request->margem_per/100);
-        $preco_final=$entrada->preco_final=$entrada->custo_unitario+$entrada->margem;
+        $preco_final=$entrada->preco_final=$request->final_p;
         $status=$entrada->status=$request->status;
 
         $data_exp=$request->data_exp;

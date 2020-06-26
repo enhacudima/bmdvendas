@@ -30,13 +30,8 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Produto</label>
-                        <select name="produto_id" id="produto_id" class="form-control" value="{{old('produto')}}" required autofocus>
-                            @if(isset($produtos))
-                          
-                            <option value="{{$produtos[0]->produto_id}}">{{$produtos[0]->name}}</option>
-                        
-                            @endif
-                        </select>
+                        <input type="text" value="{{$produtos[0]->name}}">
+                        <input type="text" name="produto_id" id="produto_id" value="{{$produtos[0]->produto_id}}" hidden="">
                     </div>
             </div> 
             <div class="row">
@@ -48,7 +43,7 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Preço de Compra</label>
-                        <input type="number" name="precodecompra" id="precodecompra" class="form-control precodecompra" value="{{$produtos[0]->precodecompra}}"  autofocus>
+                        <input step="any" type="number" name="precodecompra" id="precodecompra" class="form-control precodecompra" value="{{$produtos[0]->precodecompra}}"  autofocus>
                     </div>
             </div> 
 
@@ -62,7 +57,7 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Preço final</label>
-                        <input step="any" type="number"   id="preco_final" class="form-control final_p" value="{{$produtos[0]->preco_final}}" required autofocus >
+                        <input step="any" type="number"  name="final_p" id="final_p" class="form-control final_p" value="{{$produtos[0]->preco_final}}" required autofocus >
                     </div>
             </div>
 
@@ -149,34 +144,8 @@
     } );
     </script>
 
-        <script>
-    $('#produto_id').on('change',function(){
-    var id = $(this).val();    
-    if(id){
-            $.ajax({
-               type:"GET",
-               url:"{{url('get-produt')}}?id="+id,
-               success:function(res){               
-                if(res){
-                    var unidadedemedida =res;
-                    $('#unidadedemedida').val(res);
-                }else{
-                   var unidadedemedida='';
-                }
-               }
-            });
-        }else{
-             var unidadedemedida='';
-        }
-            
-       });
-
-                        
-
-
+    <script>
     $('#margem_per').keyup(function(){
-        console.log(unidadedemedida);
-
         var quantidade =   parseFloat($('#quantidade').val());
         var precodecompra =  parseFloat($('#precodecompra').val());
         var margem_per = parseFloat($('#margem_per').val());
@@ -192,12 +161,11 @@
 
 
     $('#quantidade').keyup(function(){
-        console.log(unidadedemedida);
-
         var quantidade =   parseFloat($('#quantidade').val());
         var precodecompra =  parseFloat($('#precodecompra').val());
         var margem_per = parseFloat($('#margem_per').val());
         var unidadedemedida = parseFloat($('#unidadedemedida').val());
+        console.log(unidadedemedida);
      
         $custo_unitario=(precodecompra/quantidade/unidadedemedida);
         $margem=$custo_unitario*(margem_per/100);
@@ -209,8 +177,6 @@
 
 
     $('#precodecompra').keyup(function(){
-        console.log(unidadedemedida);
-
         var quantidade =   parseFloat($('#quantidade').val());
         var precodecompra =  parseFloat($('#precodecompra').val());
         var margem_per = parseFloat($('#margem_per').val());
@@ -224,8 +190,7 @@
 
     });
 
-    $('#final_p').keyup(function(){
-        
+    $('#final_p').keyup(function(){       
         var quantidade =   parseFloat($('#quantidade').val());
         var precodecompra =  parseFloat($('#precodecompra').val());
         var custo_unitario = parseFloat($('#final_p').val());

@@ -64,7 +64,7 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Preço final</label>
-                        <input step="any" type="number"   id="final_p" class="form-control final_p"  required autofocus >
+                        <input step="any" type="number"  name="final_p" id="final_p" class="form-control final_p"  required autofocus >
                     </div>
             </div>  
 
