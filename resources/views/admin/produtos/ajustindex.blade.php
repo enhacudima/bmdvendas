@@ -101,6 +101,7 @@
             <thead >
             <tr>
                 <th scope="col">#</th>
+                <th>Imagem</th>
                 <th scope="col">Produto</th>
                 <th scope="col">Lot</th>
                 <th scope="col">Quantidade</th>
@@ -114,6 +115,8 @@
             @foreach($ajustes as $cil)
                 <tr>
                  <td>{{$cil->id}}</td>
+                 <td><img src="{{asset('storage/'.$cil->image)}}" style="width:80px;  clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
+                 <td> 
                  <td>             <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->produto_id)}}">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
                  </a>

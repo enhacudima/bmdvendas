@@ -1,14 +1,14 @@
 @extends('adminlte::page')
 
-@section('title', ' | Cadastro de Nova entrada de Produtos')
+@section('title', ' | Entradas')
 
 @section('content_header')
     <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ url('home') }}"><i class="fa fa-home"></i> Home</a></li>
-        <li class="">Produtos</li>
-        <li class="active">Entrada</li>
+        <li class=""><a href="{{ url('produto') }}">Produtos</a></li>
+        <li class=""><a href="{{ url('produto_entrada') }}">Entradas</a></li>
     </ol>
 @stop
 
@@ -32,15 +32,27 @@
                     <div class="from-group col-lg-12">
                         <label>Produto</label>
                         <select name="produto_id" id="produto_id" class="form-control" value="{{old('produto')}}" required autofocus>
-                            <option selected value>Selecina..</option>
+                            <option selected disabled value="">Selecina..</option>
                             @if(isset($produtos))
                             @foreach($produtos as $cil)
-                            <option value="{{$cil->id}}">{{$cil->name}}</option>
+                            <option value="{{$cil->id}}"><b>{{$cil->name}}</b> - {{$cil->codigoproduto}}</option>
                             @endforeach
                             @endif
                         </select>
                     </div>
             </div> 
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Tipo de unidade de medida</label>
+                        <input   value="{{$produtos[0]->tipodeunidadedemedida}}" disabled="">
+                    </div>
+            </div>
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Unidade de Medida</label>
+                        <input   value="{{$produtos[0]->unidadedemedida}}" disabled="">
+                    </div>
+            </div>
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Quantidade</label>
@@ -49,7 +61,7 @@
             </div> 
             <div class="row">
                     <div class="from-group col-lg-12">
-                        <label>Preço de Compra</label>
+                        <label>Custo Total de aquisição</label>
                         <input step="any" type="number"  name="precodecompra" id="precodecompra" class="form-control precodecompra" value="{{old('precodecompra')}}" required autofocus>
                     </div>
             </div> 
@@ -63,7 +75,7 @@
 
             <div class="row">
                     <div class="from-group col-lg-12">
-                        <label>Preço final</label>
+                        <label>Preço de revenda</label>
                         <input step="any" type="number"  name="final_p" id="final_p" class="form-control final_p"  required autofocus >
                     </div>
             </div>  
@@ -130,10 +142,14 @@
             <thead >
             <tr>
                 <th scope="col">#</th>
+                <th>Imagem</th>
                 <th scope="col">Produto</th>
-                <th scope="col">Codigo</th>
+                <th scope="col">Codigo Produto</th>
+                <th scope="col">Tipo de unidade de Medida</th>
+                <th scope="col">unidade de Medida</th>
+                <th scope="col">Codigo Entrada</th>
                 <th scope="col">Quantidade</th>
-                <th scope="col">Preço da compra</th>
+                <th scope="col">Custo Total de aquisição</th>
                 <th scope="col">Margem (%)</th>
                 <th scope="col">Quantidade Unitaria</th>
                 <th scope="col">Custo unitario</th>
@@ -153,10 +169,15 @@
             @foreach($entradas as $cil)
                 <tr>
                  <td>{{$cil->id}}</td>
+                 <td><img src="{{asset('storage/'.$cil->image)}}" style="width:80px;  clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
+                 <td> 
                  <td>             <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->produto_id)}}">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
                  </a>
                 </td>
+                <td> {{$cil->codigoproduto}}</td>
+                <td> {{$cil->tipodeunidadedemedida}}</td>
+                <td> {{$cil->unidadedemedida}}</td>
                 <td>             <a class="btn btn btn-primary btn-xs" href="{{action('ProdutoController@lotshow', $cil->id)}}">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->lot}}
                  </a>

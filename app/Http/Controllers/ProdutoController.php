@@ -180,7 +180,7 @@ class ProdutoController extends Controller
       $this->authorize('entradas');
         $produtos=Produtos::all()->where('status',1);
         $entradas=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
-                            ->select('produtos_entradas.*','produtos.name')
+                            ->select('produtos_entradas.*','produtos.name','produtos.tipodeunidadedemedida','produtos.unidadedemedida','produtos.codigoproduto','produtos.image')
                             ->get();
         return view('admin.produtos.entradaindex', compact('produtos','entradas'));
     }
@@ -235,7 +235,7 @@ class ProdutoController extends Controller
       $lot=Entradas::distinct('lot')->get();
       $ajustes=Ajustes::join('produtos','produtos_ajustes.produto_id','produtos.id')
                       ->join('produtos_entradas','produtos_ajustes.lot_id','produtos_entradas.id')
-                      ->select('produtos_ajustes.*','produtos_entradas.lot','produtos.name')
+                      ->select('produtos_ajustes.*','produtos_entradas.lot','produtos.name','produtos.tipodeunidadedemedida','produtos.unidadedemedida','produtos.codigoproduto','produtos.image')
                       ->get();
       
       return view('admin.produtos.ajustindex',compact('produtos','lot','ajustes'));  

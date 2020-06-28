@@ -1,9 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', ' | Editar entrada de Produto')
+@section('title', ' | Edit Entrada')
 
-@section('content_header')
-    <h1>Produtos|Entradas|Show</h1>
+@section('content_header')    
+    <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ url('home') }}"><i class="fa fa-home"></i> Home</a></li>
+        <li class=""><a href="{{ url('produto') }}">Produtos</a></li>
+        <li class=""><a href="{{ url('produto_entrada') }}">Entradas</a></li>
+        <li class="active">Show</li>
+    </ol>
 @stop
 
 @section('content')
@@ -15,7 +22,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Editar entrada de Produto lote: {{$produtos[0]->lot}}
+        <h4>Edit Entrada: {{$produtos[0]->lot}}
         </h4>
     </div>
 
@@ -33,7 +40,20 @@
                         <input type="text" value="{{$produtos[0]->name}}">
                         <input type="text" name="produto_id" id="produto_id" value="{{$produtos[0]->produto_id}}" hidden="">
                     </div>
-            </div> 
+            </div>
+
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Tipo de unidade de medida</label>
+                        <input   value="{{$produtos[0]->tipodeunidadedemedida}}" disabled="">
+                    </div>
+            </div>
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Unidade de Medida</label>
+                        <input   value="{{$produtos[0]->unidadedemedida}}" disabled="">
+                    </div>
+            </div>
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Quantidade</label>
@@ -42,7 +62,7 @@
             </div> 
             <div class="row">
                     <div class="from-group col-lg-12">
-                        <label>Preço de Compra</label>
+                        <label>Custo Total de aquisição</label>
                         <input step="any" type="number" name="precodecompra" id="precodecompra" class="form-control precodecompra" value="{{$produtos[0]->precodecompra}}"  autofocus>
                     </div>
             </div> 
@@ -56,7 +76,7 @@
 
             <div class="row">
                     <div class="from-group col-lg-12">
-                        <label>Preço final</label>
+                        <label>Preço de revenda</label>
                         <input step="any" type="number"  name="final_p" id="final_p" class="form-control final_p" value="{{$produtos[0]->preco_final}}" required autofocus >
                     </div>
             </div>

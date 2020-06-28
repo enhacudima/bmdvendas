@@ -181,14 +181,14 @@
 
           <div class="box-footer">
             <div class="col-md-4">
-                <a class="btn btn-block btn-warning btn-flat" href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCash()"><i class="fa fa-money" aria-hidden="true"></i> Complentar </a>
+                <a class="btn btn-block btn-warning btn-flat" href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCash()"><i class="fa fa-money" aria-hidden="true"> Complentar</i>  </a>
             </div>
             <div class="col-md-4">
-                <button type="submit" class="btn btn-block btn-warning btn-flat" id="creditar" disabled href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCredito()"><i class="fa fa-credit-card" aria-hidden="true"></i> Creditar</button>
+                <button type="submit" class="btn btn-block btn-warning btn-flat" id="creditar" disabled href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCredito()"><i class="fa fa-credit-card" aria-hidden="true"> Creditar</i></button>
 
             </div>
             <div class="col-md-4">
-                 <a class="btn btn-block btn-warning btn-flat" href="#" id="factura"  target="_blanck"><i class="fa fa-print" aria-hidden="true"></i> Factura</a>
+                 <a class="btn btn-block btn-warning btn-flat" href="#" id="factura"  target="_blanck"><i class="fa fa-print" aria-hidden="true"> Factura</i></a>
             </div>
             
           </div>
