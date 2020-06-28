@@ -38,7 +38,7 @@
             <div class="row">
                     <div class="from-group ">
                         <label>Peso Liquido em Kg</label>
-                        <input type="text" name="peso" id="peso"  value="{{old('peso')}}" >
+                        <input type="number" step="any" name="peso" id="peso"  value="{{old('peso')}}" >
                     </div>
             </div> 
             <div class="row">
