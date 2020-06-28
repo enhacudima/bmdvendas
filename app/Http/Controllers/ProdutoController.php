@@ -375,6 +375,6 @@ class ProdutoController extends Controller
     {
         $produto = Produtos::find($request->id);
 
-        return response()->json($produto->unidadedemedida);
+        return response()->json($produto);
     }
 }

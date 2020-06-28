@@ -44,13 +44,13 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Tipo de unidade de medida</label>
-                        <input   value="{{$produtos[0]->tipodeunidadedemedida}}" disabled="">
+                        <input  id="tipodeunidadedemedida"  disabled="">
                     </div>
             </div>
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Unidade de Medida</label>
-                        <input   value="{{$produtos[0]->unidadedemedida}}" disabled="">
+                        <input  id="unidadedemedida"   disabled="">
                     </div>
             </div>
             <div class="row">
@@ -154,7 +154,7 @@
                 <th scope="col">Quantidade Unitaria</th>
                 <th scope="col">Custo unitario</th>
                 <th scope="col">Margem</th>
-                <th scope="col">Preco Final</th>
+                <th scope="col">Preço de revenda</th>
                 <th scope="col">Criado em</th>
                 <th scope="col">atualizado em</th>
                 <th scope="col">Estado</th>
@@ -170,10 +170,11 @@
                 <tr>
                  <td>{{$cil->id}}</td>
                  <td><img src="{{asset('storage/'.$cil->image)}}" style="width:80px;  clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
-                 <td> 
-                 <td>             <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->produto_id)}}">
+                 
+                 <td>   
+                     <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->produto_id)}}">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
-                 </a>
+                    </a>
                 </td>
                 <td> {{$cil->codigoproduto}}</td>
                 <td> {{$cil->tipodeunidadedemedida}}</td>
@@ -211,7 +212,6 @@
     </div>
 </div>
 
-<input type="hidden" id="unidadedemedida">
 
 @stop
 @section('js')
@@ -258,15 +258,20 @@
                url:"{{url('get-produt')}}?id="+id,
                success:function(res){               
                 if(res){
-                    var unidadedemedida =res;
-                    $('#unidadedemedida').val(res);
+                    console.log(res);
+                    var unidadedemedida =res.unidadedemedida;
+                    var tipodeunidadedemedida =res.tipodeunidadedemedida;
+                    $('#unidadedemedida').val(unidadedemedida);
+                    $('#tipodeunidadedemedida').val(tipodeunidadedemedida);
                 }else{
                    var unidadedemedida='';
+                   var tipodeunidadedemedida='';
                 }
                }
             });
         }else{
              var unidadedemedida='';
+             var tipodeunidadedemedida='';
         }
             
        });
