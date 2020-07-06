@@ -26,7 +26,7 @@
   <!--sweetalert-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         
- <div class="col-md-8">
+ <div class="col-md-9">
     <div class="row">
           <div class="box box-default ">
             <div class="box-header with-border">
@@ -90,27 +90,35 @@
                                 <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
                                     <thead >
                                     <tr>
-                                        <th >Descrição do Produto</th>
-                                        <th scope="col">Preço.(Mtn)</th>
-                                        <th scope="col">Qua.t</th>
-                                        <th scope="col">Total.(Mtn)</th>
-                                        <th scope="col">Apagar</th>
+                                        <th class="col-md-5">Descrição do Produto</th>
+                                        <th class="col-md-2">Preço.(Mtn)</th>
+                                        <th class="col-md-2">Qua.t</th>
+                                        <th class="col-md-2">Total.(Mtn)</th>
+                                        <th class="col-md-1">Apagar</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @if(isset($data_mesa))  
                                     @foreach($data_mesa as $key => $value)
                                         <tr>
-                                        <td style="width: 400px"> 
                                             <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true">
                                             <input type="text" id="idbulk" name="idbulk" hidden="true" value="{{$value->identificador_de_bulk}}">
                                             <input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="{{$value->id}}">
-                                            <input style="width: 250px" class="form-control" type="text" name="produt" id="produt"  disabled="" value="{{$value->name}} "></td> 
-                                        <td><input style="width: 100px" class="form-control " step="any" type="number"  name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}"></td> 
-                                        <td><input style="width: 100px" class="form-control" step="any" type="number"  name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}"></td> 
-                                        <td><input style="width: 100px"  class="form-control" step="any" type="number"  name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}"></td>
-                                        <td><a type="submit"class="btn btn-block btn-danger btn-flat"  data-value="{{$value->id}}" id="delete" href="#">
-                                                <i class="fa fa-trash-o fa-lg" ></i> Eliminar
+                                        <td > 
+                                            <input  class="form-control col-md-5" type="text" name="produt" id="produt"  disabled="" value="{{$value->name}} ">
+                                        </td> 
+                                        <td>
+                                            <input  class="form-control col-md-2" step="any" type="number"  name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}">
+                                        </td> 
+                                        <td>
+                                            <input  class="form-control col-md-2" step="any" type="number"  name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}">
+                                        </td> 
+                                        <td>
+                                            <input   class="form-control col-md-2" step="any" type="number"  name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}">
+                                        </td>
+                                        <td>
+                                            <a type="submit"class="btn btn-block btn-danger btn-flat col-md-1"  data-value="{{$value->id}}" id="delete" href="#">
+                                                <i class="fa fa-trash-o fa-lg" ></i>
                                             </a>
                                         </td>
 
@@ -126,7 +134,7 @@
                             <br>
 
                             @if ($data_mesa)
-                            <button type="submit" class="btn btn-block btn-primary btn-flat" style=" margin-bottom: 15px"><i class="fa fa-hourglass-start" ></i> Atualizar</button>
+                            <button type="submit" class="btn btn-block btn-primary btn-flat" style=" margin-bottom: 15px"><i class="fa fa-refresh" ></i> Atualizar</button>
                             @endif 
 
 
@@ -140,7 +148,7 @@
      
  </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
         <div class="box box-primary">
         <div class="box-header with-border">
             <h5 class="box-title">Cliente</h5>
@@ -171,24 +179,21 @@
         <!-- form start -->
           <div class="box-body">
             <div class="form-group">
-              <p class="help-block">Iva:    <span data-toggle="tooltip" class="badge bg-blue">17%</span></p>
-              <p class="help-block">Total IVA:    <span data-toggle="tooltip" class="badge bg-yellow " id="spanTotalVendas" ></p>
-              <p class="help-block" style="background: #00ff1f40">Sub Total:    <span data-toggle="tooltip" class="badge bg-green " id="spanTotal" ></span></p>
-              <h3 style="border:1px dotted"><i class="fa fa-usd" aria-hidden="true"></i> Total <input style="color: red" type="text"  class="total form-control" value="0" name="sum" id="sum" disabled="" /></h3>
+              <h3 style="border:1px dotted"><i class="fa fa-usd" aria-hidden="true"></i> Total <input  style="color: red" type="text"  class="total form-control" value="0" name="sum"  disabled="" /></h3>
             </div>
           </div>
           <!-- /.box-body -->
 
           <div class="box-footer">
             <div class="col-md-4">
-                <a class="btn btn-block btn-warning btn-flat" href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCash()"><i class="fa fa-money" aria-hidden="true"> Complentar</i>  </a>
+                <a class="btn btn-block btn-danger btn-flat" href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCash()"><i class="fa fa-money" aria-hidden="true"></i>  </a>
             </div>
             <div class="col-md-4">
-                <button type="submit" class="btn btn-block btn-warning btn-flat" id="creditar" disabled href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCredito()"><i class="fa fa-credit-card" aria-hidden="true"> Creditar</i></button>
+                <button type="submit" class="btn btn-block btn-warning btn-flat" id="creditar" disabled href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCredito()"><i class="fa fa-credit-card" aria-hidden="true"> </i></button>
 
             </div>
             <div class="col-md-4">
-                 <a class="btn btn-block btn-warning btn-flat" href="#" id="factura"  target="_blanck"><i class="fa fa-print" aria-hidden="true"> Factura</i></a>
+                 <a class="btn btn-block btn-info btn-flat" href="#" id="factura"  target="_blanck"><i class="fa fa-print" aria-hidden="true"> </i></a>
             </div>
             
           </div>
@@ -205,13 +210,13 @@
                 <div class="box-body table-responsive no-padding"> 
                     <table id="ultimasVendasTables" class="table table-striped  table-hover" cellspacing="0" width="100%">
                         <thead>
-                            <th>Hora</th>
+                            <th>Informação</th>
+                            <th>Imprimir</th>
                             <th>Total</th>
                             <th>Pago</th>
                             <th width="13%">A Pagar</th>
                             <th>Troco</th>
-                            <th>Informação</th>
-                            <th>Imprimir</th>
+                            <th>Data</th>
                         </thead>
                         <tbody>
                             
@@ -574,8 +579,8 @@
                             //alert(parseFloat(_total))
                             $(".total").val( Number(_total).toFixed(2));
                             
-                            document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
-                            document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
+                            //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
+                            //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                             getIdBulck();
                   }});
                 return false;
@@ -630,8 +635,8 @@
                              }
                             //alert(parseFloat(_total))
                                 $(".total").val( Number(_total).toFixed(2));                            
-                                document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
-                                document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
+                                //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
+                                //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
 
                                 //produtoStock()
 
@@ -663,8 +668,8 @@
                  }
                 //alert(parseFloat(_total))
                     $(".total").val( Number(_total).toFixed(2));                            
-                    document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
-                    document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
+                    //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
+                    //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                     //produtoStock()
                  });
 
@@ -768,6 +773,7 @@
                   data: {fpagamento:_fpagamento,detalhes:_detalhes,referencia:_referencia,valor:_valor,mesa_id:$mesa_id,porpagar:$porpagar,pago:$pago,ppago:$ppago,_troco:$troco,formtype:$formtype,cliente:_cliente},
 
                   success: function(data) {
+                        ultimasvendas();
                         //zerando os campos
                         $porpagar=($('[name="porpagar"]').val(0));
                         $pago=($('[name="pago"]').val(0));
@@ -791,10 +797,11 @@
                              }
                             //alert(parseFloat(_total))
                                 $(".total").val( Number(_total).toFixed(2));                            
-                                document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
-                                document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
+                                //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
+                                //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                                 //produtoStock();
-                                swal("Pagamento Aceito com Sucesso!", "Você adicionou um pagamento", "success");
+
+                                swal("Pagamento Aceito com Sucesso!","Você adicionou um pagamento","success");
 
 
 
@@ -893,8 +900,8 @@
                              }
                             //alert(parseFloat(_total))
                                 $(".total").val( Number(_total).toFixed(2));                            
-                                document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
-                                document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
+                                //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
+                                //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                                 //produtoStock();
                                 swal("Pagamento Aceito com Sucesso!", "Você adicionou um pagamento a credito com sucesso", "success");
 
@@ -948,8 +955,8 @@
                              }
                             //alert(parseFloat(_total))
                                 $(".total").val( Number(_total).toFixed(2));                            
-                                document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
-                                document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
+                                //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
+                                //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                                 //produtoStock();
 
 
@@ -1049,7 +1056,7 @@
                         $(".ultimas_vendas").empty();
                          var corpo=[];
                         $.each(data, function (key, value) {
-                             corpo[key]='<tr><td>'+value.created_at+'</td><td> <span data-toggle="tooltip" title="'+value.total_venda+'" class="badge bg-yellow " > '+value.total_venda+'</span></td><td><span data-toggle="tooltip" title="'+value.total_pago+'" class="badge bg-yellow " > '+value.total_pago+' </span> </td><td><span data-toggle="tooltip" title="'+value.total_porpagar+'" class="badge bg-yellow " > '+value.total_porpagar+' </span> </td><td><span data-toggle="tooltip"  title="'+value.total_troco+'" class="badge bg-yellow " > '+value.total_troco+'</span></td><td><a class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima")}}'+'/'+value.codigo_venda+'"> <i class="fa fa-info-circle" aria-hidden="true"></i></a></td><td><a target="_blanck" class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima/print")}}'+'/'+value.codigo_venda+'"><i class="fa fa-print" aria-hidden="true"></i>  </a></td></tr>';
+                             corpo[key]='<tr><td><a class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima")}}'+'/'+value.codigo_venda+'"> <i class="fa fa-info-circle" aria-hidden="true"></i></a></td><td><a target="_blanck" class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima/print")}}'+'/'+value.codigo_venda+'"><i class="fa fa-print" aria-hidden="true"></i>  </a></td><td> <span data-toggle="tooltip" title="'+value.total_venda+'" class="badge bg-yellow " > '+value.total_venda+'</span></td><td><span data-toggle="tooltip" title="'+value.total_pago+'" class="badge bg-yellow " > '+value.total_pago+' </span> </td><td><span data-toggle="tooltip" title="'+value.total_porpagar+'" class="badge bg-yellow " > '+value.total_porpagar+' </span> </td><td><span data-toggle="tooltip"  title="'+value.total_troco+'" class="badge bg-yellow " > '+value.total_troco+'</span></td><td>'+value.created_at+'</td></tr>';
                         });
                         $('#ultimasVendasTables > tbody') .html(corpo);  
                     }

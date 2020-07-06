@@ -248,14 +248,14 @@ class VendasController extends Controller
           		->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
           		->join('produtos','produtos_entradas.produto_id','produtos.id')
           		->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk')
-          		->orderBy('vendas_temp_mesa.created_at','asc')
+          		->orderBy('vendas_temp_mesa.created_at','desc')
           		->get();            
             }else{
             $data_mesa=VendasTempMesa::where('mesa_id',$data['mesa_id'])->whereNull('codigo_venda')
               ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
               ->select('produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk')
-              ->orderBy('vendas_temp_mesa.created_at','asc')
+              ->orderBy('vendas_temp_mesa.created_at','desc')
               ->get();
             }
             $output=$this->dataMesaTemp($data_mesa);
@@ -464,7 +464,7 @@ class VendasController extends Controller
               ->orderBy('vendas_temp_mesa.created_at','desc')
               ->get();
       $trocos=VendasTroco::where('codigo_venda',$pagamento)->first();   
-
+          
           $pdf = app('dompdf.wrapper')->loadView('documentos.recipt', compact('itens','trocos'));
           return $pdf->stream('invoice.pdf');
     }
@@ -657,12 +657,23 @@ function dataMesaTemp($data_mesa){
     $output.=
     '
       <tr>
-        <td  style="width: 400px"> <input type="text" id="idbulk" name="idbulk" hidden="true" value="'.$value->identificador_de_bulk.'"><input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="'.$value->id.'"><input class="form-control" type="text" name="produt" id="produt"  disabled="" value="'.$value->name.'"></td> 
-        <td><input class="form-control" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="'.$value->preco_final.'"></td> 
-        <td><input class="form-control" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="'.$value->quantidade.'"></td> 
-        <td><input  class="form-control" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="'.$value->quantidade * $value->preco_final.'"></td>
-        <td><a type="submit"class="btn btn-block btn-danger btn-flat"  data-value="'.$value->id.'" id="delete" href="#">
-          <i class="fa fa-trash-o fa-lg" ></i> Delete </a>
+        <input type="text" id="idbulk" name="idbulk" hidden="true" value="'.$value->identificador_de_bulk.'">
+        <input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="'.$value->id.'">
+        <td> 
+          <input class="form-control col-md-5" type="text" name="produt" id="produt"  disabled="" value="'.$value->name.'">
+        </td> 
+        <td>
+          <input class="form-control col-md-2" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="'.$value->preco_final.'">
+        </td> 
+        <td>
+          <input class="form-control col-md-2" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="'.$value->quantidade.'">
+        </td> 
+        <td>
+          <input  class="form-control col-md-2" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="'.$value->quantidade * $value->preco_final.'">
+        </td>
+        <td>
+        <a type="submit"class="btn btn-block btn-danger btn-flat col-md-1"  data-value="'.$value->id.'" id="delete" href="#">
+          <i class="fa fa-trash-o fa-lg" ></i></a>
         </td>
 
       </tr>
