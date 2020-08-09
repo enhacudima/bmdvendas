@@ -106,6 +106,7 @@ class ReportExtratController extends Controller
         ProcessedFiles::create($data);
 
         //return Excel::download(new  RelatorioExport($start,$end,$type,$filtro), $filename);
+       
 
         (new RelatorioExport($start,$end,$type,$filtro))->queue($filename)->chain([
             new NotifyUserOfCompletedExport(request()->user(),$filename),

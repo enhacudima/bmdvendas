@@ -30,7 +30,7 @@ class ProdutoController extends Controller
     public function index()
     {   
       $this->authorize('produtos');
-      $produtos=Produtos::get();
+      $produtos=Produtos::orderby('name','asc')->get();
         return view('admin.produtos.index',compact('produtos'));
     }
 
@@ -178,9 +178,10 @@ class ProdutoController extends Controller
 
     public function entradaindex(){
       $this->authorize('entradas');
-        $produtos=Produtos::all()->where('status',1);
+        $produtos=Produtos::orderby('name','asc')->where('status',1)->get();
         $entradas=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
                             ->select('produtos_entradas.*','produtos.name','produtos.tipodeunidadedemedida','produtos.unidadedemedida','produtos.codigoproduto','produtos.image')
+                            ->orderby('produtos.name','asc')
                             ->get();
         return view('admin.produtos.entradaindex', compact('produtos','entradas'));
     }

@@ -40,7 +40,7 @@ class RelatorioExport implements FromQuery, ShouldAutoSize,ShouldQueue,WithHeadi
     public function query()
     {
         $data=new ProcessedFiles;
-        if ($this->filtro='no_filter') {
+        if ($this->filtro=='no_filter') {
             $data=DB::table($this->type);
         }else{
            $data=DB::table($this->type)->whereBetween($this->filtro,[$this->start,$this->end])->orderBy($this->filtro,'asc'); 
