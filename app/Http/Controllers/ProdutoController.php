@@ -332,7 +332,12 @@ class ProdutoController extends Controller
         $ver=0;
         if ($status==1) 
         {
-            foreach ($temp_name as $value) {
+          Entradas::where('produto_id',$request->produto_id)
+                    ->where('status',1)
+                    ->update([
+                      'status' => 0,
+                    ]);
+            /*foreach ($temp_name as $value) {
             if ($value->status==1) { 
                 $ver=$value->status;
             }    
@@ -340,7 +345,7 @@ class ProdutoController extends Controller
             
             if ($ver==1){
             return back()->with('error','Não pode activar mas de 1 produto com mesmo nome');
-              };
+              };*/
         };
           
 
@@ -363,7 +368,7 @@ class ProdutoController extends Controller
                         'email_fornecedor'=>$email_fornecedor,
                     ]);
 
-        return back()->with('success','Successfully update');
+        return redirect('produto_entrada')->with('success','Successfully update');
 
         
 
