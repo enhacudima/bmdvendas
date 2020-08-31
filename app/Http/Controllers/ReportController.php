@@ -17,6 +17,8 @@ use App\Cliente;
 use App\VendasTempMesa;
 use App\Vendas;
 use Auth;
+use DataTables;
+
 
 class ReportController extends Controller
 {
@@ -473,6 +475,27 @@ class ReportController extends Controller
     
     return view('report.vendas.vendascar',compact('venda'));        
     }
+
+
+public function todas_facturas()
+{
+  return view('report.vendas.facturas');
+}
+
+public function facturas_allsource()
+{
+  $data=VendasTempMesa::select('vendas_temp_mesa.*','venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco','users.name')
+  ->join('venda_troco','venda_troco.codigo_venda','vendas_temp_mesa.codigo_venda')
+  ->join('users', 'vendas_temp_mesa.user_id', '=', 'users.id')
+  ->where('vendas_temp_mesa.codigo_venda','!=',null)
+  ->groupby('vendas_temp_mesa.codigo_venda')
+  ->orderBy('vendas_temp_mesa.created_at','desc');
+
+
+ return Datatables::of($data)
+        ->addColumn('time', '{{\Carbon\Carbon::parse($created_at)->diffForHumans()}}')
+        ->make(true);
+}
 
 
 }

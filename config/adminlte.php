@@ -189,7 +189,12 @@ return [
                     ],
                     [ 
                         'text' => 'Vendas',
-                        'submenu' =>[
+                        'submenu' =>[      
+                                        [
+                                         'text'=> 'Facturas',
+                                         'url'  => 'vendas_facturas ',
+                                                
+                                        ], 
                                         [
                                          'text'=> 'Inflow',
                                          'url'  => 'report_inflow',
@@ -219,7 +224,7 @@ return [
                                          'text'=> 'Detalhes Banho ',
                                          'url'  => 'report_vendacar',
                                                 
-                                        ],                       
+                                        ],                 
 
                                     ]
 

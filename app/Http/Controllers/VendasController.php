@@ -684,4 +684,15 @@ function dataMesaTemp($data_mesa){
   return $output;
 }
 
+public function eliminar_venda($id)
+{
+  $this->authorize('store_ajuste');
+  
+  ClienteVenda::where('codigo_venda',$id)->delete();
+  VendasTroco::where('codigo_venda',$id)->delete();
+  Vendas::where('identificador_bulck',$id)->delete();
+  VendasTempMesa::where('codigo_venda',$id)->delete();
+
+  return back()->with('success','Successfully removed');
+}
 }

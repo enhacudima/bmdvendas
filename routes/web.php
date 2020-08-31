@@ -195,6 +195,13 @@ Route::post('especie/store','RacasController@especie_store');
 Route::post('raca/store','RacasController@raca_store');
 Route::post('pelagem/store','RacasController@pelagem_store');
 
+//report Facturas
+Route::get('vendas_facturas','ReportController@todas_facturas');
+Route::get('facturas/allsource','ReportController@facturas_allsource');
+
+//eliminar venda
+Route::get('vendas/eliminar/venda/{id}','VendasController@eliminar_venda');
+
 //fim das rotas 
 });
 //todas rotas devem ser definidas acima 
