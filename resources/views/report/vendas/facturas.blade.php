@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', ' | Email')
+@section('title', ' | Facturas')
 
 @section('content_header')
 <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa fa-fw fa-arrow-left"></i></a>
