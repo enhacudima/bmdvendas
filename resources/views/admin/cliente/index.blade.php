@@ -49,28 +49,28 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Morada</label>
-                        <input type="text" name="endereco" id="endereco" class="form-control" value="{{old('endereco')}}" required autofocus placeholder="Provincia/Cidade,bairro">
+                        <input type="text" name="endereco" id="endereco" class="form-control" value="{{old('endereco')}}"  placeholder="Provincia/Cidade,bairro">
                     </div>
             </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Contacto 1</label>
-                        <input type="number" name="contacto1" id="contacto1" class="form-control" value="{{old('contacto1')}}" required autofocus placeholder="Ex: 84*******">
+                        <input type="number" name="contacto1" id="contacto1" class="form-control" value="{{old('contacto1')}}"  placeholder="Ex: 84*******">
                     </div>
             </div>
 
             <div class="row">
                 <div class="from-group col-lg-12">
                     <label>Contacto 2</label>
-                    <input type="number" name="contacto2" id="contacto2" class="form-control" value="{{old('contacto2')}}"  autofocus placeholder="Ex: 86*******">
+                    <input type="number" name="contacto2" id="contacto2" class="form-control" value="{{old('contacto2')}}"   placeholder="Ex: 86*******">
                 </div>
             </div>
 
             <div class="row">
                 <div class="from-group col-lg-12">
                     <label>Email</label>
-                    <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}"  autofocus placeholder="Ex: 86*******">
+                    <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}"   placeholder="Ex: 86*******">
                 </div>
             </div>
       </div>

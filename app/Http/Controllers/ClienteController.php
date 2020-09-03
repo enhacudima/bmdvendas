@@ -44,8 +44,8 @@ class ClienteController extends Controller
             'nome'=>'required|min:3|max:50|string',
             'user_id'=>'required',
             'apelido'=>'required|min:3|max:50|string',
-            'endereco'=> 'required|min:5|max:255|string',
-            'contacto1'=>'required|digits:9|unique:cliente',
+            'endereco'=> 'nullable|min:5|max:255|string',
+            'contacto1'=>'nullable|digits:9|unique:cliente',
             'contacto2'=>'nullable|digits:9',
             'email'=>'nullable|string|unique:cliente',
             'nuit'=>'nullable|digits:9'
@@ -69,8 +69,8 @@ class ClienteController extends Controller
             'nome'=>'required|min:3|max:50|string',
             'user_id'=>'required',
             'apelido'=>'required|min:3|max:50|string',
-            'endereco'=> 'required|min:5|max:100|string',
-            'contacto1'=>'required|digits:9',
+            'endereco'=> 'nullable|min:5|max:100|string',
+            'contacto1'=>'nullable|digits:9',
             'contacto2'=>'nullable|digits:9',
             'email'=>'nullable|string',
             'nuit'=>'nullable|digits:9'
