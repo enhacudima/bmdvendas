@@ -54,16 +54,16 @@
             <td align="left" style="">
             </td>
             <td align="center">
-                <img src="{{ asset('imglogo/pp.jpg') }}" alt="Logo" width="150" class="logo"/><br>
-                <h3>{{$itens[0]->nome}} {{$itens[0]->apelido}}</h3>
-                
+                <img src="{{ asset('imglogo/pp.jpg') }}" alt="Logo" width="150" class="logo"/><br><br>
+                <i>{{$itens[0]->nome}} {{$itens[0]->apelido}}</i><br>
+                <i>{{$itens[0]->nuit}}</i><br><br>
+
                 Estrada Nacional EN1<br>
                 Cell: (+258) 84 150 003 1<br>
                 Fixo: (+258) 82 150 003 1<br>
                 Email: pelosepatas@gmail.com<br>
                 <br />
-                Date: {{ date('d-M-Y') }}<br>
-                Venda: {{$itens[0]->codigo_venda}}
+                Date: {{ date('d-M-Y H:m') }}<br>
                 
 
             <div class="invoice" >
@@ -83,7 +83,7 @@
                     <tr>
                         <td>{{$iten->name}}
                             <br>
-                            Q - {{$iten->quantidade}}
+                            Uni : {{$iten->quantidade}}
                         </td>
                         @php($st=($iten->preco_final*$iten->quantidade))
                         @php($n=$n+$iten->quantidade)
@@ -95,10 +95,13 @@
                     </tbody>
 
                     <tfoot>
+
                     <tr>
-                        <td align="left">Total
-                            <br>
-                            Itens - {{$n}}
+                        <td>Total Uni: {{$n}}</td>
+                        <td></td>
+                    </tr>    
+                    <tr>
+                        <td align="left">Total Mt
                         </td>
                         <td align="left" class="gray">{{number_format(round($t,2), 2, ',', ' ')}} </td>
                     </tr>
@@ -128,15 +131,15 @@
                         <td align="left" class="gray"></td>
                     </tr>
                     <tr>
-                        <td align="left">Pago</td>
+                        <td align="left">Pago Mt</td>
                         <td align="left" class="gray">{{number_format(round($trocos->total_pago,2), 2, ',', ' ')}} </td>
                     </tr>
                     <tr>
-                        <td align="left">A Pagar</td>
+                        <td align="left">A Pagar Mt</td>
                         <td align="left" class="gray">{{number_format(round($trocos->total_porpagar,2), 2, ',', ' ')}} </td>
                     </tr>
                     <tr>
-                        <td align="left">Troco</td>
+                        <td align="left">Troco Mt</td>
                         <td align="left" class="gray">{{number_format(round($trocos->total_troco,2), 2, ',', ' ')}} </td>
                     </tr>
                     </tfoot>
@@ -144,7 +147,8 @@
 
             </div>
             <hr>
-            By {{Auth::user()->name}}
+             <i>{{Auth::user()->name}}: {{$itens[0]->codigo_venda}}</i><br>
+             <i>Power By Evidevi 840 793 205</i>
             </td>
         </tr>
 

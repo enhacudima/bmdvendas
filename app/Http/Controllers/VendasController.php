@@ -77,12 +77,18 @@ class VendasController extends Controller
       
       $url=\URL::to('storage').'/';
       foreach ($produtos as $key => $value) {
+        $q=$value->total_entrada-$value->total_saida;
+        $msg="Lote:".$value->entrada_lot;
+        if ($q<=0) {
+          $msg="<code>Produto sem estoque por favor atualize o stock do lote ".$value->entrada_lot."</code>";
+        }
+
         $output.='<tr><td><img src="'.$url.$value->image.'" style="width:85px;  clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
         <td>
         <b>Nome:</b> '.$value->name.'<br>
         <b>Codigo:</b> '.$value->codigoproduto.'<br>
-        <b>Preço: '.$value->entrada_preco.'</b><br>
-        <b>Em Stock:</b> '.($value->total_entrada-$value->total_saida).'
+        <b style="color:red">Preço: '.number_format(round($value->entrada_preco,2), 2, ',', ' ').' MT</b><br>
+        <b>Em Stock:</b> '.number_format(round($value->total_entrada-$value->total_saida,2), 2, ',', ' ').' Unt '.$msg.'
         </td>
         <td>
         <button  class="btn btn-block btn-success btn-flat" onclick="produtostockadd('.$value->id.')" style="" value="'.$value->id.'"><i class="fa fa-shopping-cart"></i></button>
@@ -477,10 +483,11 @@ class VendasController extends Controller
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
               ->leftjoin('cliente_venda','cliente_venda.codigo_venda','vendas_temp_mesa.codigo_venda')
               ->leftjoin('cliente','cliente.id','cliente_venda.cliente_id')
-              ->select('produtos.codigoproduto','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk','cliente.nome','cliente.apelido','vendas_temp_mesa.codigo_venda')
+              ->select('produtos.codigoproduto','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id','vendas_temp_mesa.identificador_de_bulk','cliente.nome','cliente.apelido','cliente.nuit','vendas_temp_mesa.codigo_venda')
               ->orderBy('vendas_temp_mesa.created_at','desc')
               ->get();
       $trocos=VendasTroco::where('codigo_venda',$pagamento)->first();   
+     
 
           $pdf = app('dompdf.wrapper')->loadView('documentos.recipt_print', compact('itens','trocos'));
           return $pdf->stream('invoice.pdf');
@@ -684,15 +691,17 @@ function dataMesaTemp($data_mesa){
   return $output;
 }
 
-public function eliminar_venda($id)
+public function eliminar_venda(Request $request)
 {
   $this->authorize('store_ajuste');
-  
+  $id=$request->data;
+
+  Ajustes::where('tipo','venda')->where('decricao',$id)->delete();
   ClienteVenda::where('codigo_venda',$id)->delete();
   VendasTroco::where('codigo_venda',$id)->delete();
   Vendas::where('identificador_bulck',$id)->delete();
   VendasTempMesa::where('codigo_venda',$id)->delete();
-
-  return back()->with('success','Successfully removed');
+  $arr = array('msg' => 'Successfully removed', 'status' => true);
+  return Response()->json($arr);
 }
 }
