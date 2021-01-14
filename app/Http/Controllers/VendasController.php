@@ -64,6 +64,7 @@ class VendasController extends Controller
       ->Where(function($query) use ($term){
           $query->orwhere('codigoproduto','like','%'.$term.'%')
                 ->orwhere('name','like','%'.$term.'%')
+                ->orwhere('codigoproduto','like','%'.$term.'%')
                 ->orwhere('entrada_preco','like','%'.$term.'%');
       })
       ->get();

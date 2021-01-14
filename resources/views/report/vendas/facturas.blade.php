@@ -108,28 +108,28 @@
                     render:function ( data, type, row ) {
                       return new Intl.NumberFormat().format(data.total_venda);
                     },
-                    "name":"total_venda"
+                    "name":"venda_troco.total_venda" 
                 },
                 { 
                     data:null,
                     render:function ( data, type, row ) {
                       return new Intl.NumberFormat().format(data.total_pago);
                     },
-                    "name":"total_pago"
+                    "name":"venda_troco.total_pago"
                 },
                 { 
                     data:null,
                     render:function ( data, type, row ) {
                       return new Intl.NumberFormat().format(data.total_porpagar);
                     },
-                    "name":"total_porpagar"
+                    "name":"venda_troco.total_porpagar"
                 },
                 { 
                     data:null,
                     render:function ( data, type, row ) {
                       return new Intl.NumberFormat().format(data.total_troco);
                     },
-                    "name":"total_troco"
+                    "name":"venda_troco.total_troco"
                 },
                 { "data": "time" },
                 { "data": "created_at" },
@@ -139,7 +139,7 @@
                     return '<a class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima")}}'+'/'+data.codigo_venda+'"> <i class="fa fa-info-circle" aria-hidden="true"></i></a>';
 
                   },
-                  'name':'assunto'
+                  'name':'venda_troco.codigo_venda'
                 },
                 {
                   data: null,
@@ -147,14 +147,14 @@
                     return '<a target="_blanck" class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima/print")}}'+'/'+data.codigo_venda+'"><i class="fa fa-print" aria-hidden="true"></i>  </a>';
 
                   },
-                  'name':'assunto'
+                  'name':'venda_troco.codigo_venda'
                 },
                 {
                   data: null,
                   render: function ( data, type, row ) {
                     return '<button class="btn  btn-danger btn-flat btn-xs "  data-id='+data.codigo_venda+' > <i class="fa fa-trash" aria-hidden="true"></i></button>';
                   },
-                  'name':'assunto',
+                  'name':'venda_troco.codigo_venda',
                   "class": 'btnDelete'
                 }
             ],
