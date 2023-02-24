@@ -25,7 +25,7 @@
         <div class="login-logo">
             <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}"><!--{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}-->
                 <div class="logo">
-                    <img src="{{asset('imglogo/pp.jpg') }}"  alt="logo" width="120" height="80">
+                    <!--<img src="{{asset('imglogo/pp.jpg') }}"  alt="logo" width="120" height="80">-->
                 <div class="clearfix"></div>
                 </div>
             </a>
@@ -84,7 +84,7 @@
             <hr/>
 
             <div class="footer text-muted">
-                <center> <strong>Copyright © 2020 <a href="http://www.amanaseguros.co.mz/" class="text-white">Evidevi</a>.</strong> All rights reserved.</center>
+                <center> <strong>Copyright © 2023 <a href="https://github.com/enhacudima" class="text-white">Evidevi</a>.</strong> All rights reserved.</center>
             </div>
 
         </div>

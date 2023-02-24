@@ -15,16 +15,15 @@ class MesaController extends Controller
      */
 
 
-    
+
         public function __construct()
     {
-
         return Auth::guard(app('VoyagerGuard'));
     }
 
-    
+
     public function index()
-    {   
+    {
         $this->authorize('mesa');
         $mesas=Mesa::get();
         return view ('admin.mesa.index',compact('mesas'));
@@ -37,7 +36,7 @@ class MesaController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -71,7 +70,7 @@ class MesaController extends Controller
 
         $mesa=Mesa::find($id);
        // dd($mesa);
-        return view ('admin.mesa.show',compact('mesa'));   
+        return view ('admin.mesa.show',compact('mesa'));
     }
 
     /**
@@ -104,17 +103,17 @@ class MesaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updatemesa(Request $request)
-    {    
+    {
         $this->authorize('mesa');
-               
+
         $mesa=request()->except(['_token']);
         $this->validate($request, [
             'name'=>'required|string|min:3|max:50|unique:mesa,name',
             ]);
-          
+
         Mesa::where('id',$mesa['id'])
                 ->update($mesa);
 
-        return $this->index()->with('success','Successfully Updated');        
+        return $this->index()->with('success','Successfully Updated');
     }
 }

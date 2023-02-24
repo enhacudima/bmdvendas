@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'title' => '',
+    'title' => 'MCA Cosméticos',
 
-    'title_prefix' => 'Pelos & Patas',
+    'title_prefix' => 'MCA Cosméticos',
 
     'title_postfix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>Pelos</b>Patas',
+    'logo' => '<b>MCA</b>Cosméticos',
 
-    'logo_mini' => '<b>P</b>P',
+    'logo_mini' => '<b>MCA</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,8 +108,8 @@ return [
     */
 
     'menu' => [
-        'MAIN NAVIGATION',
-        [  
+        'NAVEGAÇÃO PRINCIPAL',
+        [
             'text' => 'Home',
             'icon' => 'home',
             'url'  => 'home',
@@ -118,7 +118,7 @@ return [
             'text'    => 'Dashboard',
             'icon'    => 'heartbeat',
             'url'     => 'chart-line',
-            'can'     => 'dashboard',    
+            'can'     => 'dashboard',
         ],
         [
             'text'   => 'Clientes',
@@ -128,31 +128,31 @@ return [
                                 'text'=>'Cliente',
                                 'url' =>'index_cliente',
                                 'icon'=>'user-plus',
-                                'can'     => 'Cliente',   
+                                'can'     => 'Cliente',
 
                             ],
                             [
                                 'text'=>'Pacientes',
                                 'url' =>'paciente',
                                 'icon'=>'paw',
-                                'can'     => 'paciente',   
-                            ]      
+                                'can'     => 'paciente',
+                            ]
                         ]
-        ], 
+        ],
         [
             'text'    => 'Eventos',
             'icon'    => 'calendar',
-            'url'     => 'calendario',  
-            'can'     => 'calendarios',   
+            'url'     => 'calendario',
+            'can'     => 'calendarios',
         ],
         [
             'text'        => 'Messagens',
             'url'         => 'email/all',
             'icon'        => 'envelope-open',
-            'can'         => 'emails',  
-        ],        
+            'can'         => 'emails',
+        ],
         [
-            
+
             'text'        => 'Extract',
             'url'         => 'report/index',
             'icon'        => 'long-arrow-down',
@@ -180,55 +180,55 @@ return [
                     [
                      'text'=> 'Movimentos',
                      'url'  => 'report_produt',
-                            
+
                     ],
                     [
                      'text'=> 'Stock Atual',
                      'url'  => 'report_stock_atual',
-                            
+
                     ],
-                    [ 
+                    [
                         'text' => 'Vendas',
-                        'submenu' =>[      
+                        'submenu' =>[
                                         [
                                          'text'=> 'Facturas',
                                          'url'  => 'vendas_facturas ',
-                                                
-                                        ], 
+
+                                        ],
                                         [
                                          'text'=> 'Inflow',
                                          'url'  => 'report_inflow',
-                                                
-                                        ],   
+
+                                        ],
                                         [
                                          'text'=> 'Tipo de Pagamento',
                                          'url'  => 'report_pagamento',
-                                                
-                                        ],                                        
+
+                                        ],
                                         [
                                          'text'=> 'Produtos',
                                          'url'  => 'report_produto_venda',
-                                                
-                                        ],  
+
+                                        ],
                                         [
                                          'text'=> 'Auditar',
                                          'url'  => 'report_auditar',
-                                                
-                                        ],  
+
+                                        ],
                                         [
                                          'text'=> 'Vendas a Credito',
                                          'url'  => 'report_vendacredito',
-                                                
-                                        ],   
+
+                                        ],
                                         [
                                          'text'=> 'Detalhes Banho ',
                                          'url'  => 'report_vendacar',
-                                                
-                                        ],                 
+
+                                        ],
 
                                     ]
 
-                    ]                                          
+                    ]
                    ]
     ],
 
@@ -237,7 +237,7 @@ return [
             'text'       => 'Produtos',
             'icon'       => 'shopping-bag',
             'submenu'    => [
-                            
+
                                 [
                                     'text' => 'Cadastro',
                                     'url'  => 'produto',
@@ -254,8 +254,8 @@ return [
                                     'url'  => 'ajust_index',
                                     'can'  => 'ajust_produto',
                                 ],
-                                        
-                            ], 
+
+                            ],
         ],
 
         [
@@ -276,7 +276,7 @@ return [
             'icon' => 'cog',
             'url'  => 'admin',
             'can'  => 'browse_admin',
-            
+
         ],
 
     ],

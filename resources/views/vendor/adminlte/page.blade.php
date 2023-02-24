@@ -61,12 +61,13 @@
                         <li class="dropdown messages-menu">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
-                            <span class="label label-success">{{ Auth::user()->contactForm()->count() }}</span>
+                            <span class="label label-success">{{ 0 }}</span>
                           </a>
                           <ul class="dropdown-menu">
-                            <li class="header">You have {{ Auth::user()->contactForm()->count() }} messages</li>
+                            <li class="header">You have {{ 0 }} messages</li>
                             <li>
                               <!-- inner menu: contains the actual data -->
+                              @if(1==5)
                               @foreach(Auth::user()->contactForm() as $contact)
                               <ul class="menu">
                                 <li><!-- start message -->
@@ -76,7 +77,7 @@
                                     </div>
                                     <h4>
                                       {{$contact->name}}
-                                      
+
                                     </h4>
                                     <p>{{$contact->message}}</p>
                                     <p><small><i class="fa fa-clock-o"></i> {{$contact->updated_at->diffForHumans()}} - {{$contact->updated_at->format('d/M/Y')}}</small></p>
@@ -85,6 +86,7 @@
                                 <!-- end message -->
                               </ul>
                               @endforeach
+                              @endif
                             </li>
                             <li class="footer"><a href="{{url('email/inbox')}}">See All Messages</a></li>
                           </ul>
@@ -93,11 +95,12 @@
                       <li class="dropdown tasks-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                           <i class="fa fa-calendar"></i>
-                          <span class="label label-danger">{{ Auth::user()->calendar()->count() }}</span>
+                          <span class="label label-danger">{{ 0 }}</span>
                         </a>
                         <ul class="dropdown-menu">
-                          <li class="header">You have {{ Auth::user()->calendar()->count() }} events</li>
+                          <li class="header">You have {{ 0 }} events</li>
                           <li>
+                            @if(1==5)
                             @foreach(Auth::user()->calendar() as $calendar)
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
@@ -108,13 +111,14 @@
                                     @php($data_final=Carbon\Carbon::parse($calendar->data_final))
                                     @php($percentag=(strtotime($data_final)/strtotime(today()))*100)
                                     <p><small><i class="fa fa-clock-o"></i> {{$data_final->diffForHumans()}} - {{$data_final->format('d/M/Y')}}</small></p>
-                                   
+
                                   </h3>
                                 </a>
                               </li>
                               <!-- end task item -->
                             </ul>
                             @endforeach
+                            @endif
                           </li>
                           <li class="footer">
                             <a href="{{url('calendario')}}">View all </a>
@@ -137,7 +141,7 @@
                               <small>Member since {{Auth::user()->created_at}}</small>
                             </p>
                           </li>
-                          <!-- Menu Body 
+                          <!-- Menu Body
                           <li class="user-body">
                             <div class="row">
                               <div class="col-xs-4 text-center">
