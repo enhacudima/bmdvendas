@@ -25,7 +25,7 @@ Route::get('/clear-cache-all', function() {
 
 Auth::routes();
 
-//home contact form 
+//home contact form
 Route::resource('contactFormData','ContactFormController');
 Route::post('contactFormData/store','ContactFormController@store');
 
@@ -75,7 +75,7 @@ Route::get('creditarvenda','VendasController@creditarvenda');
 Route::post('savecredito','VendasController@savecredito');
 
 
-// relatorios 
+// relatorios
 Route::get('report_produt','ReportController@reportMovimento');
 Route::get('report_stock_atual','ReportController@reportStockAtual');
 Route::post('report_movimetos_filter','ReportController@reportMovimentoFilter');
@@ -189,7 +189,7 @@ Route::get('tags/tags','TagsController@index');
 Route::resource('tags', 'TagsController');
 Route::get('tags/remove/list/{id}','FichaPacienteController@tagRemove');
 
-//racas 
+//racas
 Route::get('racas','RacasController@index');
 Route::post('especie/store','RacasController@especie_store');
 Route::post('raca/store','RacasController@raca_store');
@@ -202,6 +202,6 @@ Route::get('facturas/allsource','ReportController@facturas_allsource');
 //eliminar venda
 Route::get('vendas/eliminar/venda','VendasController@eliminar_venda');
 
-//fim das rotas 
+//fim das rotas
 });
-//todas rotas devem ser definidas acima 
+//todas rotas devem ser definidas acima

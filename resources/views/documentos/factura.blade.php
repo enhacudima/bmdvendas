@@ -3,19 +3,19 @@
 @section('title', ' | Fatura')
 
 @section('content_header')
-     
+
 @stop
 
 @section('content')
 
-          
-<page id="printableArea" name="printableArea"> 
+
+<page id="printableArea" name="printableArea">
      <section class="invoice">
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-             Pelos e Patas
+             {{config('company.name')}}
             <small class="pull-right">Data: {{\Carbon\Carbon::now()->format('d-m-Y')}}</small>
           </h2>
         </div>
@@ -25,34 +25,34 @@
       <div class="row invoice-info">
         <div class="col-sm-4 invoice-col">
           <address>
-           <strong>Pelos e Patas, SA</strong><br>
-            Av. de Moçambique, Bairro do Zimpeto.<br>  
-            Cell: (+258) 84 150 003 1<br>
-            Fixo: (+258) 82 150 003 1<br>
-            Email: pelosepatas@gmail.com<br>
-            Maputo, Moçambique
-            <br>
+           <strong>{{config('company.name')}}</strong><br>
+            {{config('company.address')}}<br>
+            @if(config('company.country'))  {{config('company.country')}} <br> @endif
+            @if(config('company.nuit'))  {{config('company.nuit')}} <br> @endif
+            @if(config('company.contact'))  Cell: {{config('company.contact')}} <br> @endif
+            @if(config('company.fax'))  Fax: {{config('company.fax')}} <br> @endif
+            @if(config('company.email'))  Email: {{config('company.email')}} <br> @endif
             Operador: {{Auth::user()->name}}
           </address>
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
-          
-          
+
+
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
-          <b><img src="{{ asset('imglogo/pp.jpg') }}"   alt="logo" width="200" height="100"></b><br>  
+          <b><img src="{{ asset('imglogo/pp.jpg') }}"   alt="logo" width="200" height="100"></b><br>
           <br>
-          <b>&emsp;&emsp;&emsp;&emsp;Factura Nᵒ  {{$data_mesa[0]->identificador_de_bulk}}</b>
-          
+          <b>&emsp;Factura Nᵒ  {{$data_mesa[0]->identificador_de_bulk}}</b>
+
         </div>
         <!-- /.col -->
       </div>
 
       <br>
       <!-- /.row -->
-      
+
       <h5><strong></strong></h5>
       <div class="box box-solid box-danger">
       <div class="row invoice-info">
@@ -60,7 +60,7 @@
         <div class="col-sm-4 invoice-col">
           <address>
             <br>
-              <b> Cliente:</b> @if(isset($cliente)){{$cliente->nome}} {{$cliente->apelido}}@endif<br/> 
+              <b> Cliente:</b> @if(isset($cliente)){{$cliente->nome}} {{$cliente->apelido}}@endif<br/>
               <b> Data Limite Pagamento:</b> {{\Carbon\Carbon::now()->adddays(7)->format('d-m-Y')}}<br>
           </address>
         </div>
@@ -73,11 +73,11 @@
         <div class="col-sm-4 invoice-col">
             <address>
             <br>
-           
-              
+
+
             </address>
         </div>
-      
+
       </div>
 
     </div>
@@ -92,7 +92,7 @@
               <th>Descrição</th>
               <th>Quantidade</th>
               <th>Valor</th>
-            
+
             </tr>
             </thead>
             <tbody>
@@ -127,28 +127,29 @@
         <!-- /.col -->
       </div>
       <!-- /.row -->
-      
+    @if(config('company.bank_name'))
       <div class="row">
         <!-- accepted payments column -->
         <div class="col-xs-6">
           <p class="lead"><strong><i class="fa fa-fw fa-cc-visa"></i>Dados Bancários:</strong></p>
 
           <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-          <b>Banco:</b> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;##<br>  
-          <b>Titular:</b> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;###<br>  
-          <b>Nᵒ de Conta:</b>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;### (MZN)<br>
-          <b>NIB:</b> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;#####<br>   
+          <b>Banco:</b> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;{{config('company.bank_name')}}<br>
+          <b>Titular:</b> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{config('company.bank_holder')}}<br>
+          <b>Nᵒ de Conta:</b> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{config('company.bank_account')}} (MZN)<br>
+          <b>NIB:</b> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;{{config('company.bank_nib')}}<br>
           </p>
         </div>
         <!-- /.col detalhes por encargos -->
 
       </div>
+    @endif
       <!-- /.row -->
      </section>
 </page>
 
 
-    
+
     <section class="invoice">
       <!-- this row will not appear when printing -->
       <div class="row no-print">
@@ -160,11 +161,11 @@
         </div>
       </div>
     </section>
-      
-    </div>             
 
-        </div>   
-            
+    </div>
+
+        </div>
+
 
 
 

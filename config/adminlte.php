@@ -131,15 +131,9 @@ return [
                                 'can'     => 'Cliente',
 
                             ],
-                            [
-                                'text'=>'Pacientes',
-                                'url' =>'paciente',
-                                'icon'=>'paw',
-                                'can'     => 'paciente',
-                            ]
                         ]
         ],
-        [
+        /*[
             'text'    => 'Eventos',
             'icon'    => 'calendar',
             'url'     => 'calendario',
@@ -150,7 +144,7 @@ return [
             'url'         => 'email/all',
             'icon'        => 'envelope-open',
             'can'         => 'emails',
-        ],
+        ],*/
         [
 
             'text'        => 'Extract',

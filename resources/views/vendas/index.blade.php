@@ -25,7 +25,7 @@
   </style>
   <!--sweetalert-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        
+
  <div class="col-md-9">
     <div class="row">
           <div class="box box-default ">
@@ -60,13 +60,13 @@
                         <th width="10%">Ação</th>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
 
                 <form id="demoform" action="#" method="post" style="margin: 5px">
                  {{ csrf_field() }}
-              </form> 
+              </form>
             </div>
             <!-- /.box-body -->
           </div>
@@ -79,13 +79,13 @@
             </div>
             <div class="panel-body">
 
-                <div class="box-body table-responsive no-padding">  
+                <div class="box-body table-responsive no-padding">
                 <form id="carrinhoform" action="#" method="POST" style="margin-right: 15px; margin-left: 15px">
                     {{ csrf_field() }}
                         <div class="panel-body">
 
-                            <div class="box-body table-responsive no-padding"> 
-  
+                            <div class="box-body table-responsive no-padding">
+
 
                                 <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
                                     <thead >
@@ -98,21 +98,21 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if(isset($data_mesa))  
+                                    @if(isset($data_mesa))
                                     @foreach($data_mesa as $key => $value)
                                         <tr>
                                             <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true">
                                             <input type="text" id="idbulk" name="idbulk" hidden="true" value="{{$value->identificador_de_bulk}}">
                                             <input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="{{$value->id}}">
-                                        <td > 
+                                        <td >
                                             <input  class="form-control col-md-5" type="text" name="produt" id="produt"  disabled="" value="{{$value->name}} ">
-                                        </td> 
+                                        </td>
                                         <td>
                                             <input  class="form-control col-md-2" step="any" type="number"  name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}">
-                                        </td> 
+                                        </td>
                                         <td>
                                             <input  class="form-control col-md-2" step="any" type="number"  name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}">
-                                        </td> 
+                                        </td>
                                         <td>
                                             <input   class="form-control col-md-2" step="any" type="number"  name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}">
                                         </td>
@@ -124,18 +124,18 @@
 
 
                                         </tr>
-                                    @endforeach 
+                                    @endforeach
 
-                                    @endif   
+                                    @endif
                                     </tbody>
                                 </table>
-                            </div>   
+                            </div>
                             </div>
                             <br>
 
                             @if ($data_mesa)
                             <button type="submit" class="btn btn-block btn-primary btn-flat" style=" margin-bottom: 15px"><i class="fa fa-refresh" ></i> Atualizar</button>
-                            @endif 
+                            @endif
 
 
                 </form>
@@ -143,9 +143,9 @@
                 </div>
             </div>
          </div>
-        
+
     </div>
-     
+
  </div>
 
 <div class="col-md-3">
@@ -165,10 +165,10 @@
           <!-- /.box-body -->
 
           <div class="box-footer">
-            
+
           </div>
-        
-        </div> 
+
+        </div>
 
 
         <div class="box box-primary">
@@ -179,14 +179,14 @@
         <!-- form start -->
           <div class="box-body">
             <div class="form-group">
-              <h3 style="border:1px dotted"><i class="fa fa-usd" aria-hidden="true"></i> Total <input  style="color: red" type="text"  class="total form-control" value="0" name="sum"  disabled="" /></h3>
+              <h3 style="border:1px dotted"><i class="fa fa-money" aria-hidden="true"></i> Total <input  style="color: red" type="text"  class="total form-control" value="0" name="sum"  disabled="" /></h3>
             </div>
           </div>
           <!-- /.box-body -->
 
           <div class="box-footer">
             <div class="col-md-4">
-                <a class="btn btn-block btn-danger btn-flat" href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCash()"><i class="fa fa-money" aria-hidden="true"></i>  </a>
+                <a class="btn btn-block btn-success btn-flat" href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCash()"><i class="fa fa-money" aria-hidden="true"></i>  </a>
             </div>
             <div class="col-md-4">
                 <button type="submit" class="btn btn-block btn-warning btn-flat" id="creditar" disabled href="#ticket-edit-mesa-modal" data-toggle="modal" data-target="#ticket-edit-mesa-modal" onclick="tipoVendaCredito()"><i class="fa fa-credit-card" aria-hidden="true"> </i></button>
@@ -195,10 +195,10 @@
             <div class="col-md-4">
                  <a class="btn btn-block btn-info btn-flat" href="#" id="factura"  target="_blanck"><i class="fa fa-print" aria-hidden="true"> </i></a>
             </div>
-            
+
           </div>
-        
-        </div>  
+
+        </div>
 
         <div class="box box-primary">
         <div class="box-header with-border">
@@ -207,7 +207,7 @@
         <!-- /.box-header -->
         <!-- form start -->
           <div class="box-body">
-                <div class="box-body table-responsive no-padding"> 
+                <div class="box-body table-responsive no-padding">
                     <table id="ultimasVendasTables" class="table table-striped  table-hover" cellspacing="0" width="100%">
                         <thead>
                             <th>Informação</th>
@@ -219,19 +219,19 @@
                             <th>Data</th>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
-                        
+
                     </table>
                </div>
            </div>
           <!-- /.box-body -->
 
           <div class="box-footer">
-            
+
           </div>
-        
-        </div> 
+
+        </div>
 
 </div>
 
@@ -244,14 +244,14 @@
                     <div class="modal-header">
                         <h4 class="modal-title" id="ticket-edit-mesa-modal-Label">Finalização da Venda </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        
-                    </div> 
+
+                    </div>
                     <input type="hidden" id="formtypePagamento" name="formtype"  />
 
                     <div class="modal-body">
 
                         <div class="row">
-   
+
 
                         </div>
                         <div class="row" style="margin-bottom: 10px">
@@ -302,58 +302,58 @@
                                             <option disabled="" value="nan" selected>
                                                 Seleciona..
                                             </option>
-                                             
+
                                             <option value="Milennium BIM">
                                                 Milennium BIM
-                                            </option>    
+                                            </option>
                                             <option value="BancABC">
                                                 BancABC
-                                            </option>    
+                                            </option>
                                             <option value="Barclays">
                                                 Barclays
-                                            </option>    
+                                            </option>
                                             <option value="BCI">
                                                 BCI
-                                            </option>    
+                                            </option>
                                             <option value="Nosso Banco">
                                                 Nosso Banco
-                                            </option>    
+                                            </option>
                                             <option value="BNI">
                                                 BNI
-                                            </option>    
+                                            </option>
                                             <option value="Ecobank">
                                                 Ecobank
-                                            </option>    
+                                            </option>
                                             <option value="BancABC">
                                                 BancABC
-                                            </option>    
+                                            </option>
                                             <option value="CEP">
                                                 CEP
-                                            </option>    
+                                            </option>
                                             <option value="Unico">
                                                 Unico
-                                            </option>    
+                                            </option>
                                             <option value="Gapi">
                                                 Gapi
-                                            </option>    
+                                            </option>
                                             <option value="FNB">
                                                 FNB
-                                            </option>    
+                                            </option>
                                             <option value="CapitalBanck">
                                                 CapitalBanck
-                                            </option>    
+                                            </option>
                                             <option value="Moza Banco">
                                                 Moza Banco
-                                            </option>    
+                                            </option>
                                             <option value="Standard Bank">
                                                 Standard Bank
-                                            </option>    
+                                            </option>
                                             <option value="Societe Generale Moçambique">
                                                 Societe Generale Moçambique
-                                            </option> 
+                                            </option>
 
-                                             
-                                             
+
+
                                         </select>
                                     </div>
 
@@ -400,7 +400,7 @@
                                     <div class="col-md-3">
                                         <input class="form-control valor" step="any" type="number"  name="valor[]" value="0" required="">
                                     </div>
-                                </div>                  
+                                </div>
 
                                 <div class="row" style="margin-right: 4px;margin-bottom: 3px">
                                     <div class="col-md-3">
@@ -419,7 +419,7 @@
                                         <input class="form-control valor" step="any" type="number"  name="valor[]" value="0" required="">
                                     </div>
                                 </div>
-                                <hr>  
+                                <hr>
 
                                 <div class="row" style="margin-right: 4px;margin-bottom: 3px">
                                     <div class="col-md-6">
@@ -430,9 +430,9 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <input class="form-control total "   type="number" step="0.01" name="porpagar" id="porpagar"  disabled="true" value="">
+                                        <input class="form-control total"   type="number" step="0.01" name="porpagar" id="porpagar"  disabled="true" value="">
                                     </div>
-                                </div> 
+                                </div>
 
                                 <div class="row" style="margin-right: 4px;margin-bottom: 3px">
                                     <div class="col-md-6">
@@ -445,7 +445,7 @@
                                     <div class="col-md-3">
                                         <input class="form-control " step="any" type="number"  name="pago" id="pago" value="0" required="" disabled="">
                                     </div>
-                                </div>           
+                                </div>
 
                                 <div class="row" style="margin-right: 4px;margin-bottom: 3px">
                                     <div class="col-md-6">
@@ -458,7 +458,7 @@
                                     <div class="col-md-3">
                                         <input class="form-control total" step="any" type="number"  name="ppago" id="ppago" value="0" required="" disabled="">
                                     </div>
-                                </div>           
+                                </div>
 
                                 <div class="row" style="margin-right: 4px;margin-bottom: 3px">
                                     <div class="col-md-6">
@@ -480,23 +480,23 @@
                             <!-- /.col -->
 
                     </div>
-                          
+
 
                             <div class="clearfix"></div>
 
                             <div class="modal-footer">
 
-                     
-                                
+
+
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                                 <input class="btn btn-primary" type="submit" data- value="Complentar">
                                 </div>
                     </form>
                         </div>
                     </div>
-        </div> 
+        </div>
 
-     
+
 
 
         <script type="text/javascript">
@@ -513,13 +513,13 @@
 
                         $('.identificador_de_bulk').val(data.identificador_de_bulk);
                         var link = document.getElementById("factura");
-                        var _cliente=($('[id="cliente"]').val()); 
+                        var _cliente=($('[id="cliente"]').val());
                         if(_cliente){
-                        var url="{{ url('venda/facturaVenda/') }}"+'/'+data.identificador_de_bulk+'/'+_cliente;   
+                        var url="{{ url('venda/facturaVenda/') }}"+'/'+data.identificador_de_bulk+'/'+_cliente;
                         }else{
-                        var url="{{ url('venda/factura/') }}"+'/'+data.identificador_de_bulk;    
+                        var url="{{ url('venda/factura/') }}"+'/'+data.identificador_de_bulk;
                         }
-                        
+
                         link.setAttribute("href", url);
                     },
                     error: function (error){
@@ -554,7 +554,7 @@
 
             <script>
 
-              
+
               function produtostockadd($id) {
                 $mesa_id=($('[name="mesa_id"]').val());
                 $formtype=($('[name="formtype"]').val());
@@ -578,7 +578,7 @@
                              }
                             //alert(parseFloat(_total))
                             $(".total").val( Number(_total).toFixed(2));
-                            
+
                             //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
                             //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                             getIdBulck();
@@ -595,7 +595,7 @@
             </script>
 
             <script type="text/javascript">
-                //atualizando os dados na tabela temporaria 
+                //atualizando os dados na tabela temporaria
                 $("#carrinhoform").submit(function(e){
                     e.preventDefault();
 
@@ -610,10 +610,10 @@
                     for (var i = 0; i < id.length; i++) {
                         _id.push($(id).eq(i).val());
                         _quantidade.push($(quantidade).eq(i).val())
-                        
+
                     }
                     //alert(JSON.stringify(p));//or alert(p)
-                    //alert(_id+''+_quantidade+''+idbulk);   
+                    //alert(_id+''+_quantidade+''+idbulk);
 
                 $.ajax({
                   url: "{{URL('atualizarvendatemp')}}",
@@ -634,13 +634,13 @@
                                 _total=parseFloat(__total)+parseFloat(_total);
                              }
                             //alert(parseFloat(_total))
-                                $(".total").val( Number(_total).toFixed(2));                            
+                                $(".total").val( Number(_total).toFixed(2));
                                 //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
                                 //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
 
                                 //produtoStock()
 
-                        
+
 
 
                     //alert(data);
@@ -667,18 +667,18 @@
                     _total=parseFloat(__total)+parseFloat(_total);
                  }
                 //alert(parseFloat(_total))
-                    $(".total").val( Number(_total).toFixed(2));                            
+                    $(".total").val( Number(_total).toFixed(2));
                     //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
                     //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                     //produtoStock()
                  });
 
-               
+
 
             </script>
 
             <script type="text/javascript">
-                
+
             $(document).ready(function(){
 
                 $('.valor').keyup(function(){
@@ -742,7 +742,7 @@
                     $pago=($('[name="pago"]').val());
                     $ppago=($('[name="ppago"]').val());
                     $troco=($('[name="troco"]').val());
-                    var _cliente=($('[name="cliente"]').val()); 
+                    var _cliente=($('[name="cliente"]').val());
                     //var $formtype=($('[name="formtype"]').val());
                     var formtypePagamento=($('#formtypePagamento').val());
                     var $formtype=($('#formtypePagamento').val());
@@ -758,14 +758,14 @@
                         _detalhes.push($(detalhes).eq(i).val())
                         _referencia.push($(referencia).eq(i).val());
                         _valor.push($(valor).eq(i).val())
-                        
+
                     }
                 if (formtypePagamento=='credito') {creditoSave();}
 
                 if (confirm("Tens a certeza que pretendes Efectuar o pagamento : " + $pago + "?"))
-                {   
-                 
-                if ($ppago==0 || $pago==$porpagar) 
+                {
+
+                if ($ppago==0 || $pago==$porpagar)
                 {
                 $.ajax({
                   url: "{{URL('efectuarpagamento')}}",
@@ -796,7 +796,7 @@
                                 _total=parseFloat(__total)+parseFloat(_total);
                              }
                             //alert(parseFloat(_total))
-                                $(".total").val( Number(_total).toFixed(2));                            
+                                $(".total").val( Number(_total).toFixed(2));
                                 //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
                                 //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                                 //produtoStock();
@@ -805,7 +805,7 @@
 
 
 
-                        
+
 
 
                     //alert(data);
@@ -854,23 +854,23 @@
                         _detalhes.push($(detalhes).eq(i).val())
                         _referencia.push($(referencia).eq(i).val());
                         _valor.push($(valor).eq(i).val())
-                        
+
                     }
 
-                    
 
-           
+
+
                 if (!_cliente) {
                    swal("Cliente não verificado!", "Verifica se existe um cliente selecionado, ou pesquise pelos nomes dos clientes aptos à contrair credito.", "error");
                 }else{
 
                 if (confirm("Tens a certeza que pretendes Efectuar o credito : " + $porpagar + "?"))
-                {  
+                {
 
 
 
-                 
-                
+
+
                 $.ajax({
                   url: "{{URL('efectuarpagamento')}}",
                   type:'POST',
@@ -899,7 +899,7 @@
                                 _total=parseFloat(__total)+parseFloat(_total);
                              }
                             //alert(parseFloat(_total))
-                                $(".total").val( Number(_total).toFixed(2));                            
+                                $(".total").val( Number(_total).toFixed(2));
                                 //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
                                 //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                                 //produtoStock();
@@ -907,7 +907,7 @@
 
 
 
-                        
+
 
 
                     //alert(data);
@@ -954,7 +954,7 @@
                                 _total=parseFloat(__total)+parseFloat(_total);
                              }
                             //alert(parseFloat(_total))
-                                $(".total").val( Number(_total).toFixed(2));                            
+                                $(".total").val( Number(_total).toFixed(2));
                                 //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
                                 //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
                                 //produtoStock();
@@ -963,10 +963,10 @@
                 }}
                 );
 
-                }    
+                }
 
 
-                
+
             }));
             </script>
 
@@ -974,7 +974,7 @@
 
                 $(document).ready(function() {
                 $('#loanidshow').autocomplete({
-                    
+
 
                     delay: 500,// this is in milliseconds
 
@@ -997,7 +997,7 @@
                     select: function(event, ui) {
                         // prevent autocomplete from updating the textbox
                         event.preventDefault();
-         
+
                         $('input[name="loanidshow"]').val(ui.item.label);
                         $('input[name="cliente"]').val(ui.item.id);
                         document.getElementById("creditar").disabled = false;
@@ -1006,13 +1006,13 @@
                         var link = document.getElementById("factura");
                         var _cliente=($('[name="cliente"]').val());
                         if(_cliente){
-                        var url="{{ url('venda/facturaVenda/') }}"+'/'+identificador_de_bulk+'/'+_cliente;   
+                        var url="{{ url('venda/facturaVenda/') }}"+'/'+identificador_de_bulk+'/'+_cliente;
                         }else{
-                        var url="{{ url('venda/factura/') }}"+'/'+identificador_de_bulk;    
+                        var url="{{ url('venda/factura/') }}"+'/'+identificador_de_bulk;
                         }
-                        
+
                         link.setAttribute("href", url);
-                        //console.log( ui.item.LoanID ); 
+                        //console.log( ui.item.LoanID );
                     }
                 });
                 })
@@ -1029,10 +1029,10 @@
             </script>
 
             <script type="text/javascript">
-            $(document).ready(function(){   
+            $(document).ready(function(){
             $('#find_produtos_stock').keyup(function(){
                 var value = $('#find_produtos_stock').val();
-                 
+
                 jqxhr.abort();
                 jqxhr =$.ajax({
                   url: "{{URL('vendas/produtos/stock')}}",
@@ -1040,12 +1040,9 @@
                   data: {key:value},
                   success: function(data) {
                     $('#produtosVenda > tbody') .html(data);
-
-
-
                 }});
-            }); 
-            }) 
+            });
+            })
             </script>
             <script type="text/javascript">
                 function ultimasvendas(){
@@ -1058,7 +1055,7 @@
                         $.each(data, function (key, value) {
                              corpo[key]='<tr><td><a class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima")}}'+'/'+value.codigo_venda+'"> <i class="fa fa-info-circle" aria-hidden="true"></i></a></td><td><a target="_blanck" class="btn  btn-info btn-flat btn-xs" href="{{url("vendas/ultima/print")}}'+'/'+value.codigo_venda+'"><i class="fa fa-print" aria-hidden="true"></i>  </a></td><td> <span data-toggle="tooltip" title="'+value.total_venda+'" class="badge bg-yellow " > '+value.total_venda+'</span></td><td><span data-toggle="tooltip" title="'+value.total_pago+'" class="badge bg-yellow " > '+value.total_pago+' </span> </td><td><span data-toggle="tooltip" title="'+value.total_porpagar+'" class="badge bg-yellow " > '+value.total_porpagar+' </span> </td><td><span data-toggle="tooltip"  title="'+value.total_troco+'" class="badge bg-yellow " > '+value.total_troco+'</span></td><td>'+value.created_at+'</td></tr>';
                         });
-                        $('#ultimasVendasTables > tbody') .html(corpo);  
+                        $('#ultimasVendasTables > tbody') .html(corpo);
                     }
                 })}
             </script>

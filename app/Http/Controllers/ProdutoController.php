@@ -19,16 +19,16 @@ class ProdutoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
         public function __construct()
     {
 
         return Auth::guard(app('VoyagerGuard'));
     }
 
-    
+
     public function index()
-    {   
+    {
       $this->authorize('produtos');
       $produtos=Produtos::orderby('name','asc')->get();
         return view('admin.produtos.index',compact('produtos'));
@@ -72,13 +72,13 @@ class ProdutoController extends Controller
       if (isset($request->image))
       {
           $file_name='product/'.time() .'.'. $request->file('image')->getClientOriginalExtension();
-          $request->image->storeAs('public', $file_name); 
-          
+          $request->image->storeAs('public', $file_name);
+
       }
         $data=$request->all();
         $data['image']=$file_name;
-        
-        
+
+
         Produtos::create($data);
 
         return back()->with('success','Successfully Added to List');
@@ -95,7 +95,7 @@ class ProdutoController extends Controller
       $this->authorize('show_produtos');
 
         $produtos=Produtos::find($id);
-        return view ('admin.produtos.show',compact('produtos'));    
+        return view ('admin.produtos.show',compact('produtos'));
     }
 
     /**
@@ -106,7 +106,7 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-        
+
     }
 
     /**
@@ -118,7 +118,7 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
       $this->authorize('edit_produtos');
 
         $produtos=request()->except(['_token']);
@@ -144,23 +144,23 @@ class ProdutoController extends Controller
         $newFilename=$request->file('image')->getClientOriginalName();
 
           if ($produtos->image!="product/default.jpg") {
-              
+
             Storage::delete('/public/'.$produtos->image);
           }
             $file_name='product/'.time() .'.'. $request->file('image')->getClientOriginalExtension();
-            $request->image->storeAs('public', $file_name); 
-          
+            $request->image->storeAs('public', $file_name);
 
-          
+
+
       }
         $data=$request->except(['_token']);
         $data['image']=$file_name;
-        
+
         Produtos::where('id',$id)
                 ->update($data);
 
         return back()->with('success','Successfully Updated');
-        
+
 
 
     }
@@ -188,7 +188,7 @@ class ProdutoController extends Controller
 
     public function entradastore(Request $request)
     {
-        
+
       $this->authorize('store_entradas');
 
         $this->validate($request,[
@@ -206,7 +206,7 @@ class ProdutoController extends Controller
         $produto=Produtos::find($request->produto_id);
         $entrada= new Entradas;
         $entrada->produto_id=$request->produto_id;
-        $entrada->lot=time();
+        $entrada->lot=time().auth()->user()->id;
         $entrada->quantidade=$request->quantidade;
         $entrada->precodecompra=$request->precodecompra;
         $entrada->margem_per=$request->margem_per;
@@ -216,7 +216,7 @@ class ProdutoController extends Controller
         $entrada->margem=$entrada->custo_unitario*($request->margem_per/100);
         $entrada->preco_final=$request->final_p;
 
-        
+
         $entrada->data_exp=$request->data_exp;
         $entrada->fornecedor=$request->fornecedor;
         $entrada->telefone=$request->telefone;
@@ -238,8 +238,8 @@ class ProdutoController extends Controller
                       ->join('produtos_entradas','produtos_ajustes.lot_id','produtos_entradas.id')
                       ->select('produtos_ajustes.*','produtos_entradas.lot','produtos.name','produtos.tipodeunidadedemedida','produtos.unidadedemedida','produtos.codigoproduto','produtos.image')
                       ->get();
-      
-      return view('admin.produtos.ajustindex',compact('produtos','lot','ajustes'));  
+
+      return view('admin.produtos.ajustindex',compact('produtos','lot','ajustes'));
     }
 
         public function lotid(Request $request)
@@ -263,8 +263,8 @@ class ProdutoController extends Controller
     }
 
     public function ajustestore(Request $request)
-    {     
-       $this->authorize('store_ajuste');  
+    {
+       $this->authorize('store_ajuste');
 
         $data=$request->all();
         $this->validate($request, [
@@ -282,7 +282,7 @@ class ProdutoController extends Controller
 
 
     public function lotshow($id)
-    {   
+    {
        $this->authorize('show_lot');
 
         $produtos=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
@@ -294,7 +294,7 @@ class ProdutoController extends Controller
     }
 
     public function loteupdate (Request $request)
-    {   
+    {
          $this->authorize('edit_lot');
 
         $this->validate($request,[
@@ -328,9 +328,9 @@ class ProdutoController extends Controller
         $email_fornecedor=$request->email_fornecedor;
 
         $temp_name=Entradas::where('produto_id',$request->produto_id)->get();
-        
+
         $ver=0;
-        if ($status==1) 
+        if ($status==1)
         {
           Entradas::where('produto_id',$request->produto_id)
                     ->where('status',1)
@@ -338,20 +338,20 @@ class ProdutoController extends Controller
                       'status' => 0,
                     ]);
             /*foreach ($temp_name as $value) {
-            if ($value->status==1) { 
+            if ($value->status==1) {
                 $ver=$value->status;
-            }    
             }
-            
+            }
+
             if ($ver==1){
             return back()->with('error','Não pode activar mas de 1 produto com mesmo nome');
               };*/
         };
-          
 
 
-        
-        
+
+
+
         Entradas::where('id',$request->id)
                 ->update(['quantidade'=>$quantidade,
                         'precodecompra'=>$precodecompra,
@@ -370,9 +370,9 @@ class ProdutoController extends Controller
 
         return redirect('produto_entrada')->with('success','Successfully update');
 
-        
 
-       
+
+
 
 
 

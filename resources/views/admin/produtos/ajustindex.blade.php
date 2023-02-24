@@ -25,7 +25,7 @@
           <span aria-hidden="true">×</span></button>
         <h4 class="modal-title">Novo ajuste</h4>
       </div>
-      
+
         <form method="post" action="{{{url('store_produto_ajuste')}}}" autocomplete="Active" accept-charset="UTF-8" enctype="multipart/form-data" style="margin:15px">
             <div class="modal-body">
             {{ csrf_field() }}
@@ -44,10 +44,10 @@
                             @endif
                         </select>
                     </div>
-                    
+
                 </div>
                 <div class="row">
-                    
+
                     <div class="from-group col-lg-6">
                         <label>lot</label>
                         <select name="lot_id" id="lot_id" class="form-control" value="{{old('lot_id')}}" required autofocus>
@@ -60,14 +60,14 @@
                 </div>
 
                 <div class="row">
-                    
+
                     <div class="from-group col-lg-12">
                         <label>Descrição</label>
                         <textarea type="textarea" name="decricao" id="decricao" class="form-control" value="{{old('decricao')}}"  autofocus></textarea>
                     </div>
                 </div>
-          
-        
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -96,7 +96,7 @@
 
     <div class="panel-body">
 
-    <div class="box-body table-responsive no-padding">     
+    <div class="box-body table-responsive no-padding">
         <table id="movimentos" class="table table-striped  table-hover" cellspacing="0" width="100%">
             <thead >
             <tr>
@@ -111,27 +111,27 @@
             </tr>
             </thead>
             <tbody>
-            @if(isset($ajustes))    
+            @if(isset($ajustes))
             @foreach($ajustes as $cil)
                 <tr>
                  <td>{{$cil->id}}</td>
                  <td><img src="{{asset('storage/'.$cil->image)}}" style="width:80px;  clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
-                 <td> 
-                 <td>             <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->produto_id)}}">
+                 <td>
+                 <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->produto_id)}}">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
                  </a>
-                </td> 
+                </td>
                  <td>{{$cil->lot}}</td>
                  <td>{{$cil->quantidade_unidade}}</td>
                  <td>{{$cil->decricao}}</td>
                  <td>{{$cil->created_at}}</td>
                  <td>{{$cil->updated_at}}</td>
                 </tr>
-            @endforeach 
-            @endif   
+            @endforeach
+            @endif
             </tbody>
         </table>
-      </div>  
+      </div>
         </div>
     </div>
 </div>
@@ -151,7 +151,7 @@
 
 
     <script>
-         
+
     $(document).ready(function() {
         $('#movimentos').DataTable( {
             columnDefs: [
@@ -212,7 +212,7 @@
 
 
 
-   
+
 
 @stop
 
@@ -232,12 +232,12 @@
 
        </style>
 
-               <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"> 
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">   
+               <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">
 
         <style type="text/css">
             .dataTables_wrapper .dt-buttons {
-          float:none;  
+          float:none;
           text-align:center;
           margin-bottom: 30px;
         }

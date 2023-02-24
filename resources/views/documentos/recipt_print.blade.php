@@ -56,15 +56,19 @@
             <td align="center">
                 <img src="{{ asset('imglogo/pp.jpg') }}" alt="Logo" width="150" class="logo"/><br><br>
                 <i>{{$itens[0]->nome}} {{$itens[0]->apelido}}</i><br>
-                <i>{{$itens[0]->nuit}}</i><br><br>
+                <i>{{$itens[0]->nuit}}</i><br>
 
-                Estrada Nacional EN1<br>
-                Cell: (+258) 84 150 003 1<br>
-                Fixo: (+258) 82 150 003 1<br>
-                Email: pelosepatas@gmail.com<br>
+                {{config('company.address')}}<br>
+                @if(config('company.country'))  {{config('company.country')}} <br> @endif
+                @if(config('company.nuit'))  {{config('company.nuit')}} <br> @endif
+                @if(config('company.contact'))  Cell: {{config('company.contact')}} <br> @endif
+                @if(config('company.fax'))  Fax: {{config('company.fax')}} <br> @endif
+                @if(config('company.email'))  Email: {{config('company.email')}} <br> @endif
+                Operador: {{Auth::user()->name}}<br>
+                Código: {{$itens[0]->codigo_venda}}
                 <br />
                 Date: {{ date('d-M-Y H:m') }}<br>
-                
+
 
             <div class="invoice" >
                 <hr>
@@ -99,7 +103,7 @@
                     <tr>
                         <td>Total Uni: {{$n}}</td>
                         <td></td>
-                    </tr>    
+                    </tr>
                     <tr>
                         <td align="left">Total Mt
                         </td>
@@ -147,8 +151,7 @@
 
             </div>
             <hr>
-             <i>{{Auth::user()->name}}: {{$itens[0]->codigo_venda}}</i><br>
-             <i>Power By Evidevi 840 793 205</i>
+             <i>Power By Evidevi</i>
             </td>
         </tr>
 

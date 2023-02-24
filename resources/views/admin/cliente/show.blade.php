@@ -40,28 +40,28 @@
                                         <label>Apelido</label>
                                         <input type="text" name="apelido" id="sname" class="form-control" value="{{$client->apelido}}" required autofocus>
                                     </div>
-                            </div>  
+                            </div>
 
                             <div class="row">
                                     <div class="from-group col-lg-12">
                                         <label>NUIT</label>
                                         <input type="text" name="nuit" id="nuit" class="form-control" value="{{$client->nuit}}" >
                                     </div>
-                            </div>          
+                            </div>
 
                             <div class="row">
                                     <div class="from-group col-lg-12">
                                         <label>Morada</label>
                                         <input type="text" name="endereco" id="endereco" class="form-control" value="{{$client->endereco}}" required autofocus placeholder="Provincia/Cidade,bairro">
                                     </div>
-                            </div>  
+                            </div>
 
                             <div class="row">
                                     <div class="from-group col-lg-12">
                                         <label>Contacto 1</label>
                                         <input type="number" name="contacto1" id="contacto1" class="form-control" value="{{$client->contacto1}}" required autofocus placeholder="Ex: 84*******">
                                     </div>
-                            </div>  
+                            </div>
 
                             <div class="row">
                                     <div class="from-group col-lg-12">
@@ -85,68 +85,15 @@
                                      <label></label>
                                     <input class="btn btn-primary" type="submit" value="Atualizar">
                                 </div>
-                            </div>         
-                           
+                            </div>
+
                         </form>
                 </div>
             </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>Pacientes
-                </h4>
-            </div>
-            <div class="panel-body">
-                <div class="box-body table-responsive no-padding">     
-                <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
-                    <thead >
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Paciente</th>
-                        <th scope="col">Especie</th>
-                        <th scope="col">Raça</th>
-                        <th scope="col">Sexo</th>
-                        <th scope="col">Data de Nascimento</th>
-                        <th scope="col">Idade (Mêses)</th>
-                        <th scope="col">Pelagem</th>
-                        <th scope="col">Data de atualização</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if(isset($client->pacientes))
-                    @foreach($client->pacientes as $cil)
-                        <tr>
-                         <td>{{$cil->id}}</td>
-                         <td>{{$cil->cliente->nome}} {{$cil->cliente->apelido}}</td>
-                         <td>
-                            <a class="btn btn btn-success btn-xs" href="{{route('paciente.edit', $cil->id)}}">
-                                <i class="fa fa-pencil fa-fw"></i> {{$cil->nome}}
-                            </a>
-                        </td>
-                         <td>{{$cil->especie}}</td>
-                         <td>{{$cil->raca}}</td>
-                         <td>{{$cil->sexo}}</td>
-                         <td>{{$cil->idade}}</td>
-                         <td>{{\Carbon\Carbon::parse($cil->idade)->DiffInMonths(\Carbon\Carbon::today())}}</td>
-                         <td>{{$cil->pelagem}}</td>
-                         <td>{{$cil->updated_at}}</td>
-                        </tr>
-                    @endforeach 
-                    @endif   
-                    </tbody>
-                </table>
-            </div>
-            </div>
-        </div>
-
-
-
-
 <script type="text/javascript">
 
 $(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip(); 
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 </script>
@@ -166,6 +113,6 @@ $(document).ready(function(){
 
     </style>
 
-    
+
 @stop
 @stop

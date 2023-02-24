@@ -32,6 +32,7 @@ class EmailController extends Controller
 
       public function allsource()
       {
+        $this->authorize('emails');
          $data=Email::select('emails_send.*','users.name')->join('users', 'emails_send.user_id', '=', 'users.id')->orderby('emails_send.created_at','desc');
          return Datatables::of($data)
                 ->addColumn('assuntox','{{$assunto}} - {{$name_cliente}}')
@@ -41,6 +42,7 @@ class EmailController extends Controller
 
       public function inbox()
       {
+        $this->authorize('emails');
         $sent=Email::where('status',0)->count();
         $drafts=Email::where('status',1)->count();
         $inbox=ContactForm::where('read_or_not',1)->count();
@@ -49,6 +51,7 @@ class EmailController extends Controller
       }
       public function inboxData ()
       {
+        $this->authorize('emails');
         $data=ContactForm::select('*')->orderby('created_at');
         return Datatables::of($data)
               ->addColumn('time','{{\Carbon\Carbon::parse($created_at)->diffForHumans()}}')
@@ -65,7 +68,7 @@ class EmailController extends Controller
       $sent=Email::where('status',0)->count();
       $drafts=Email::where('status',1)->count();
       $inbox=ContactForm::where('read_or_not',1)->count();
-        
+
         return view('email.email', compact('sent','drafts','inbox'));
     }
 
@@ -85,7 +88,7 @@ class EmailController extends Controller
 
         $emailJob = (new SendEmailGeral($data,$id));
         dispatch($emailJob);
-        
+
         return back()->with('success','Email enviado');
     }
 
@@ -97,7 +100,7 @@ class EmailController extends Controller
 
         $emailJob = (new SendEmailGeral($data,$id));
         dispatch($emailJob);
-        
+
         return back()->with('success','Email enviado');
     }
 
@@ -111,7 +114,7 @@ class EmailController extends Controller
       }else{
           $data->read_or_not=0;
       }
-     
+
       $data->save();
 
       return $this->inbox();
@@ -119,15 +122,15 @@ class EmailController extends Controller
     }
 
     public function reply($id){
-      
+
          $this->authorize('emails');
 
       $data=ContactForm::find($id);
-      
+
       $sent=Email::where('status',0)->count();
       $drafts=Email::where('status',1)->count();
       $inbox=ContactForm::where('read_or_not',1)->count();
-        
+
       return view('email.email_reply', compact('sent','drafts','inbox','data'));
 
     }

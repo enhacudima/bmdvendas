@@ -52,31 +52,26 @@
             <td align="left" style="width: 40%;">
                 <h3>{{$itens[0]->nome}} {{$itens[0]->apelido}}</h3>
                 <pre>
-Estrada Nacional EN1
-Cell: (+258) 84 150 003 1<br>
-Fixo: (+258) 82 150 003 1<br>
-Email: pelosepatas@gmail.com<br>
-Nuit:<br>
-<br />
-Date: {{ date('d-M-Y') }}
-Estado: Pago
-</pre>
+                Data: {{ date('d-M-Y') }}
+                Estado: Pago
+                </pre>
 
 
             </td>
             <td align="center">
-                <img src="{{ asset('imglogo/pp.jpg') }}" alt="Logo" width="200" class="logo"/>
+                <img src="{{ asset('imglogo/pp.jpg') }}" alt="Logo" width="100" class="logo"/>
             </td>
             <td align="right" style="width: 40%;">
 
-                <h3>Pelos & Patas</h3>
+                <h3>{{config('company.name')}}</h3>
                 <pre>
-                    https://pataspelos.com
-
-                    Av. de Moçambique,
-                    Bairro do Zimpeto
-                    Maputo Cidade
-                    Moçambique
+                    {{config('company.address')}}
+                    @if(config('company.contact'))  Cell: {{config('company.contact')}} <br> @endif
+                    @if(config('company.fax'))  Fax: {{config('company.fax')}} <br> @endif
+                    @if(config('company.country'))  {{config('company.country')}} <br> @endif
+                    @if(config('company.email'))  Email: {{config('company.email')}} <br> @endif
+                    @if(config('company.nuit'))  {{config('company.nuit')}} <br> @endif
+                    Operador: {{Auth::user()->name}}
                 </pre>
             </td>
         </tr>
@@ -110,7 +105,7 @@ Estado: Pago
             <td>{{number_format(round($iten->preco_final,2), 2, ',', ' ')}}</td>
             <td>{{$iten->quantidade}}</td>
             @php($st=($iten->preco_final*$iten->quantidade))
-            @php($n=$n+1)
+            @php($n=$n+$iten->quantidade)
             <td>{{number_format(round($st,2), 2, ',', ' ')}} Mt</td>
             @php($t=$st+$t)
         </tr>
@@ -154,14 +149,14 @@ Estado: Pago
             <td colspan="1"></td>
             <td align="left"></td>
             <td align="left">IVA</td>
-            <td align="left" class="gray">{{number_format(round($t*0.17,2), 2, ',', ' ')}} Mt</td>
+            <td align="left" class="gray">0 Mt</td>
         </tr>
         <tr>
             <td colspan="1"></td>
             <td colspan="1"></td>
             <td align="left"></td>
             <td align="left">Sub-Total</td>
-            <td align="left" class="gray">{{number_format(round($t-($t*0.17),2), 2, ',', ' ')}} Mt</td>
+            <td align="left" class="gray">{{number_format(round($t,2), 2, ',', ' ')}} Mt</td>
         </tr>
         <tr>
             <td colspan="1"></td>
@@ -218,7 +213,7 @@ Estado: Pago
                 &copy; {{ date('Y') }} {{ config('app.url') }} - All rights reserved.
             </td>
             <td align="right" style="width: 50%;">
-                Pelos & Patas
+                {{config('company.name')}}
             </td>
         </tr>
 

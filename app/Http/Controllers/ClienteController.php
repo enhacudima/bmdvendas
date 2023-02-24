@@ -9,13 +9,13 @@ use Auth;
 class ClienteController extends Controller
 {
 
-    
+
         public function __construct()
     {
 
         return Auth::guard(app('VoyagerGuard'));
     }
-    
+
 
     public function indexcliente()
     {
@@ -29,7 +29,7 @@ class ClienteController extends Controller
 
         $this->authorize('show_cliente');
 
-    	$client=Cliente::with('pacientes')->find($id);
+    	$client=Cliente::find($id);
 
     	return view('admin.cliente.show',compact('client'));
     }
@@ -57,11 +57,11 @@ class ClienteController extends Controller
         return back()->with('success','Successfully Added to List');
     }
         public function updatecliente(Request $request)
-    {	
+    {
 
 
         $this->authorize('update_cliente');
-        
+
     	$data=$request->all();
     	$cliente=cliente::find($data['id']);
 
@@ -77,36 +77,35 @@ class ClienteController extends Controller
             ]);
 
     	$cliente->update($newdata);
-    	
 
-        return back()->with('success','Successfully updated recode');
+        return redirect('index_cliente')->with('success','Successfully update');
     }
 
 
         public function searchcliente(Request $request)
-    {   
-         
+    {
+
         $this->authorize('search_cliente');
 
 
         $term = $request->get('search');
- 
+
         if ( ! empty($term)) {
- 
+
             // search loan  by loanid or nuit
             $clientes = Cliente::where('contacto1', 'LIKE', '%' . $term .'%')
                             ->orWhere('contacto2', 'LIKE', '%' . $term .'%')
                             ->orwhere('nome','LIKE','%'.$term.'%')
                             ->orwhere('apelido','LIKE','%'.$term.'%')
                             ->get();
- 
+
             foreach ($clientes as $cliente) {
                 $cliente->label   = $cliente->nome.' '.$cliente->apelido . ' (' . $cliente->contacto1 .')';
             }
- 
+
             return $clientes;
         }
- 
+
         return Response::json($clientes);
     }
 }
