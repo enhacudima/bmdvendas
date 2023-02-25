@@ -110,8 +110,8 @@ return [
     'menu' => [
         'NAVEGAÇÃO PRINCIPAL',
         [
-            'text' => 'Home',
-            'icon' => 'home',
+            'text' => 'Caixa',
+            'icon' => 'shopping-cart',
             'url'  => 'home',
         ],
         [
