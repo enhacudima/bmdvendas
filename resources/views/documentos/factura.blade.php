@@ -60,7 +60,7 @@
         <div class="col-sm-4 invoice-col">
           <address>
             <br>
-              <b> Cliente:</b> @if(isset($cliente)){{$cliente->nome}} {{$cliente->apelido}}@endif<br/>
+              @if(isset($cliente)) <b> Cliente:</b> {{$cliente->nome}} {{$cliente->apelido}}<br/>@endif
               <b> Data Limite Pagamento:</b> {{\Carbon\Carbon::now()->adddays(7)->format('d-m-Y')}}<br>
           </address>
         </div>

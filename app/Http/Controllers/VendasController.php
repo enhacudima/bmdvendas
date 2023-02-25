@@ -467,19 +467,20 @@ class VendasController extends Controller
     }
 
     public function ultimaPrint($pagamento){
-       $this->authorize('venda');
-      $itens=$this->data_ultima_venda($pagamento);
-      $trocos=VendasTroco::where('codigo_venda',$pagamento)->first();
-
-
-          $pdf = app('dompdf.wrapper')->loadView('documentos.recipt_print', compact('itens','trocos'));
-          return $pdf->stream('invoice.pdf');
+        $this->authorize('venda');
+        $itens=$this->data_ultima_venda($pagamento);
+        if(isset($itens)){
+            return back()->with('error',"Venda não encotrada.");
+        }
+        $trocos=VendasTroco::where('codigo_venda',$pagamento)->first();
+        $pdf = app('dompdf.wrapper')->loadView('documentos.recipt_print', compact('itens','trocos'));
+        return $pdf->stream('invoice.pdf');
     }
 
 
     public function efectuarpagamentocredito(Request $request)
     {
-       $this->authorize('efectuar_pagamento_credito_venda');
+      $this->authorize('efectuar_pagamento_credito_venda');
       if ($request->ajax())
       {
           $request->except('_token');
@@ -509,22 +510,17 @@ class VendasController extends Controller
             $vendas->valor=$valor[$key];
             $vendas->identificador_bulck=$identificador_bulck;
             $vendas->save();
-
-
             }
 
-              $troco=new VendasTroco();
-              $troco->user_id=$user_id;
-              $troco->codigo_venda=$identificador_bulck;
-              $troco->mesa_id=$mesa_id;
-              $troco->total_venda=$porpagar;
-              $troco->total_pago=$pago;
-              $troco->total_porpagar=$ppago;
-              $troco->total_troco=$_troco;
-              $troco->save();
-
-
-
+            $troco=new VendasTroco();
+            $troco->user_id=$user_id;
+            $troco->codigo_venda=$identificador_bulck;
+            $troco->mesa_id=$mesa_id;
+            $troco->total_venda=$porpagar;
+            $troco->total_pago=$pago;
+            $troco->total_porpagar=$ppago;
+            $troco->total_troco=$_troco;
+            $troco->save();
       }
     }
 

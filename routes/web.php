@@ -12,14 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome')->name('welcome');
+    return redirect('home');
 });
 
 Route::get('/clear-cache-all', function() {
-
     Artisan::call('cache:clear');
     dd("Cache Clear All");
-
 });
 
 
@@ -68,7 +67,7 @@ Route::get('saveselection','VendasController@saveselection');
 Route::get('getmesatem','VendasController@getmesatem');
 Route::post('atualizarvendatemp','VendasController@atualizarvendatemp');
 Route::post('efectuarpagamento','VendasController@efectuarpagamento');
-Route::post('efectuarpagamentocredito','VendasController@venda/facturacredito');
+Route::post('efectuarpagamentocredito', 'VendasController@efectuarpagamentocredito');
 Route::post('efectuarcredito','VendasController@efectuarcredito');
 Route::get('listapedidos','VendasController@listapedidos');
 Route::get('creditarvenda','VendasController@creditarvenda');

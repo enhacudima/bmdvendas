@@ -24,95 +24,28 @@ class ReportExtratController extends Controller
 
   public function index()
   {
-
-    if (Auth::user()->can('view_all_files'))
-    {
-          $data=ProcessedFiles::select('processed_files.*','users.name','users.avatar')->join('users','processed_files.user_id','users.id')->orderby('processed_files.created_at','asc')->get();
-    }else{
-          $data=ProcessedFiles::select('processed_files.*','users.name','users.avatar')->where('users.id',Auth::user()->id)->join('users','processed_files.user_id','users.id')->orderby('processed_files.created_at','asc')->get();   
-    }
-  
-
-    return view('admin.report.index',compact('data'));
+    abort(403);
   }
 
-      public function deletefile($file)
+        public function deletefile($file)
     {
-         $destinationPath = storage_path('app/');
-         File::delete($destinationPath.$file);
-         ProcessedFiles::where('filename',$file)->delete();
-
-        return back();
+        abort(403);
     }
 
     public function alldeletefile()
     {
-     $destinationPath = storage_path('app/');
-
-        if (Auth::user()->can('view_all_files'))
-    {
-            $files=ProcessedFiles::get();
-            $out='';
-
-            foreach ($files as $file)
-            {
-            $out.=$file->filename.',';	
-            }
-
-               
-             File::delete($destinationPath.$out);
-             DB::delete('delete from processed_files');
-    
-    }
-
-        return back();
+        abort(403);
     }
 
 
     public function new ()
-    {   
-        $this->authorize('report');
-        $data=ReportNew::get();
-        return view('admin.report.new', compact('data'));
+    {
+        abort(403);
     }
 
     public function filtro(Request $request)
     {
-    $this->authorize('report');
-        $year = 1900; $month = 1; $day = 1;
-        $start=Carbon::createFromDate($year, $month, $day);
-        $end=Carbon::now();
-
-        if (isset($request->start)) {
-              $request->validate([
-                  'start'=>'required|date',
-              ]);
-              $start=Carbon::parse($request->start);
-        }
-        if (isset($request->end)) {
-              $request->validate([
-                  'end'=>'required|date'
-              ]);
-          $end=Carbon::parse($request->end)->addHours(23)->addMinutes(59)->addSecond(59);
-        }
-
-          $type=$request->type;
-          $filtro=$request->filtro;
-
-        $filename=$type.time().'.xlsx';
-        $data=[];
-        $data['filename']=$filename;
-        $data['user_id']=Auth::user()->id;
-        ProcessedFiles::create($data);
-
-        //return Excel::download(new  RelatorioExport($start,$end,$type,$filtro), $filename);
-       
-
-        (new RelatorioExport($start,$end,$type,$filtro))->queue($filename)->chain([
-            new NotifyUserOfCompletedExport(request()->user(),$filename),
-        ]);
-
-        return back()->withSuccess('Export started!');
+        abort(403);
 
     }
 }

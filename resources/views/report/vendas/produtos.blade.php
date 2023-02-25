@@ -27,17 +27,17 @@
     <div class="">
         <div class="form-group col-sm-2">
                 <label >Data Inicio</label>
-                
+
                         <input class="form-control" type="date" tyle="width: 100%"  id="inicio"  name="inicio" required autofocus>
-                
+
 
         </div>
 
         <div class="form-group  col-sm-2 ">
                 <label >Data Fim</label>
-            
+
                         <input class="form-control" type="date" tyle="width: 100%"  id="fim"  name="fim" required autofocus >
-                
+
 
         </div>
         <div class="form-group  col-sm-2 col-sm-offset-1">
@@ -49,8 +49,8 @@
             <label class="container">Data de Actualização
               <input type="radio" value="atualizacao" id="radio" name="radio">
               <span class="checkmark"></span>
-            </label>    
-            </label>             
+            </label>
+            </label>
         </div>
 
         </div>
@@ -62,16 +62,16 @@
             </strong>
         </p>
 
-        </div>   
+        </div>
 
 
     <input hidden="" htype="" name="idusuario" id="idusuario" value="{{ Auth::user()->id }}">
-           
 
 
-    </form> 
 
-    
+    </form>
+
+
 
     <div class="col-lg-12">
     <div class="panel panel-default">
@@ -83,7 +83,7 @@
 
     <div class="panel-body">
 
-    <div class="box-body table-responsive no-padding">     
+    <div class="box-body table-responsive no-padding">
         <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
             <thead >
             <tr>
@@ -94,29 +94,29 @@
             </tr>
             </thead>
             <tbody>
-            @if(isset($movimentos))  
-            @php($p=0)  
-            @php($t=0)  
+            @if(isset($movimentos))
+            @php($p=0)
+            @php($t=0)
             @foreach($movimentos as $cil)
                 <tr>
-                <td>{{$cil->name}}</td> 
-                <td>{{$cil->preco}}</td> 
-                <td>{{$cil->quantidade}}</td> 
-                <td>{{$cil->quantidade*$cil->preco}}</td>
+                <td>{{$cil->name}}</td>
+                <td>{{number_format($cil->preco,2)}}</td>
+                <td>{{number_format($cil->quantidade,2)}}</td>
+                <td>{{number_format($cil->quantidade*$cil->preco,2)}}</td>
                 </tr>
                 @php($p=$cil->quantidade+$p)
                 @php($t=$cil->quantidade*$cil->preco+$t)
-            @endforeach 
-                <tr>                    
+            @endforeach
+                <tr>
                     <td></td>
                     <td>Total:</td>
-                    <td>{{$p}} Uni</td>
-                    <td>{{$t}} MTN</td>
+                    <td>{{number_format($p,2)}} Uni</td>
+                    <td>{{number_format($t,2)}} MTN</td>
                 </tr>
-            @endif   
+            @endif
             </tbody>
         </table>
-    </div>    
+    </div>
         </div>
     </div>
 </div>
@@ -139,7 +139,7 @@
 
 
     <script>
-         
+
     $(document).ready(function() {
         $('#reclatodas').DataTable( {
             columnDefs: [
@@ -163,12 +163,12 @@
 @stop
 
 @section('css')
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"> 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">   
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">
 
 <style type="text/css">
     .dataTables_wrapper .dt-buttons {
-  float:none;  
+  float:none;
   text-align:center;
   margin-bottom: 30px;
 }
@@ -187,6 +187,6 @@
         border-radius: 0;
         }
 
-        
+
     </style>
 @stop

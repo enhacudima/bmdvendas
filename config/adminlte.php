@@ -214,11 +214,6 @@ return [
                                          'url'  => 'report_vendacredito',
 
                                         ],
-                                        [
-                                         'text'=> 'Detalhes Banho ',
-                                         'url'  => 'report_vendacar',
-
-                                        ],
 
                                     ]
 

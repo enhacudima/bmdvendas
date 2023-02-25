@@ -22,35 +22,35 @@ use DataTables;
 
 class ReportController extends Controller
 {
-    
 
-    
+
+
         public function __construct()
     {
 
         return Auth::guard(app('VoyagerGuard'));
     }
 
-    
+
         public function reportMovimento()
-    {  
+    {
 
        $this->authorize('report');
 
       $movimentos=DB::table('produtos_venda_view')->get();
-         
-                            
+
+
         return view('report.movimentos.report',compact('movimentos'));
     }
 
             public function reportStockAtual()
-    {   
+    {
                $this->authorize('report');
 
         $movimentos=DB::table('saldo_atual_view')
                             ->get();
-                     
-                            
+
+
         return view('report.movimentos.stockAtual',compact('movimentos'));
     }
 
@@ -73,10 +73,10 @@ class ReportController extends Controller
     	if ($radio=="movimento") {
 
         $movimentos=DB::table('produtos_venda_view')->whereBetween('created_at',[$inicio,$fim])->get();
-                     
-                            
+
+
         return view('report.movimentos.report',compact('movimentos'));
-    		
+
     	}elseif ($radio=="ajuste") {
          return "This function has been disabled by the administrator";
     		    	$movimentos=DB::table('produtos_entradas_view')
@@ -87,8 +87,8 @@ class ReportController extends Controller
                                     DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
                             ->groupby('produtos_ajustes_view.lot','produtos.name','produtos.id','produtos_entradas_view.entrada_lot','entrada_preco')
                             ->get();
-                     
-                            
+
+
         return view('report.movimentos.report',compact('movimentos'));
     	}
 
@@ -119,10 +119,10 @@ class ReportController extends Controller
                                     DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
                             ->groupby('produtos.name','produtos.id','produtos.stock','produtos.image')
                             ->get();
-                     
-                            
+
+
         return view('report.movimentos.stockAtual',compact('movimentos'));
-            
+
         }elseif ($radio=="ajuste") {
 
         $movimentos=DB::table('produtos_entradas_view')
@@ -133,15 +133,15 @@ class ReportController extends Controller
                                     DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada'))
                             ->groupby('produtos.name','produtos.id','produtos.stock','produtos.image')
                             ->get();
-                     
-                            
+
+
         return view('report.movimentos.stockAtual',compact('movimentos'));
         }
 
     }
 
     public function reportPagamento()
-    {   
+    {
         $this->authorize('report');
 
         $pagamentos=Vendas::select('fpagamento',DB::raw('Sum(valor) as total_venda'))->groupby('fpagamento')->get();
@@ -164,12 +164,12 @@ class ReportController extends Controller
           $fim=Carbon::parse($request->fim)->addHours(23)->addMinutes(59)->addSecond(59);
 
 
-      $pagamentos=Vendas::whereBetween('created_at',[$inicio,$fim])->select('fpagamento',DB::raw('Sum(valor) as total_venda'))->groupby('fpagamento')->get();  
-      return view('report.vendas.pagamento',compact('pagamentos')); 
+      $pagamentos=Vendas::whereBetween('created_at',[$inicio,$fim])->select('fpagamento',DB::raw('Sum(valor) as total_venda'))->groupby('fpagamento')->get();
+      return view('report.vendas.pagamento',compact('pagamentos'));
     }
 
     public function reportInflow()
-    {   
+    {
                $this->authorize('report');
 
     	        $movimentos=VendasTroco::join('mesa','venda_troco.mesa_id','mesa.id')
@@ -181,15 +181,15 @@ class ReportController extends Controller
                             		DB::raw('Sum(venda_troco.total_troco) as total_troco'))
                             ->groupby('mesa.name','users.name')
                             ->get();
-                     
-                         
+
+
         return view('report.vendas.inflow',compact('movimentos'));
     }
 
 
 
     public function reportInflowFilter(Request $request)
-    {   
+    {
                $this->authorize('report');
     	$data=$request->all();
     	$this->validate($request, [
@@ -211,8 +211,8 @@ class ReportController extends Controller
                             		DB::raw('Sum(venda_troco.total_troco) as total_troco'))
                             ->groupby('mesa.name','users.name')
                             ->get();
-                     
-                         
+
+
         return view('report.vendas.inflow',compact('movimentos'));
     }
 
@@ -223,15 +223,15 @@ class ReportController extends Controller
                             		DB::raw('Sum(produtos_ajustes.quantidade_unidade) as quantidade'))
                             ->groupby('produtos.name','produtos_ajustes.preco_uni')
                             ->get();
-                     
-                  
+
+
         return view('report.vendas.produtos',compact('movimentos'));
-    }        
+    }
 
 
     	public function reportProdutoVendaFilter(Request $request)
 
-    {	
+    {
                $this->authorize('report');
 
     	$data=$request->all();
@@ -251,8 +251,8 @@ class ReportController extends Controller
                             		DB::raw('Sum(produtos_ajustes.quantidade_unidade) as quantidade'))
                             ->groupby('produtos.name','produtos_ajustes.preco_uni')
                             ->get();
-                return view('report.vendas.produtos',compact('movimentos'));            
-	       		
+                return view('report.vendas.produtos',compact('movimentos'));
+
 	       	}elseif ($radio=="atualizacao") {
 	       		$movimentos=Ajustes::whereBetween('produtos_ajustes.updated_at',[$inicio,$fim])
     	        			->join('produtos','produtos_ajustes.produto_id','produtos.id')
@@ -264,12 +264,12 @@ class ReportController extends Controller
                 return view('report.vendas.produtos',compact('movimentos'));
 	       	}
 
-                     
-                  
+
+
 
     }
             public function reportAuditar()
-    {   
+    {
                $this->authorize('report');
     			$user=User::get();
 
@@ -278,15 +278,15 @@ class ReportController extends Controller
                             		DB::raw('Sum(produtos_ajustes.quantidade_unidade) as quantidade'))
                             ->groupby('produtos.name','produtos_ajustes.preco_uni')
                             ->get();
-                     
-                  
+
+
         return view('report.vendas.auditar',compact('movimentos','user'));
-    }   
+    }
 
 
         	public function reportAuditarFilter(Request $request)
 
-    {	
+    {
                $this->authorize('report');
 
     	$data=$request->all();
@@ -300,7 +300,7 @@ class ReportController extends Controller
 	      	$fim=Carbon::parse($request->fim)->addHours(23)->addMinutes(59)->addSecond(59);
 	       	$radio=$request->radio;
 	       	$agent=$request->agent;
-	       	$user=User::get(); 
+	       	$user=User::get();
 
 
 
@@ -312,8 +312,8 @@ class ReportController extends Controller
                             		DB::raw('Sum(produtos_ajustes.quantidade_unidade) as quantidade'))
                             ->groupby('produtos.name','produtos_ajustes.preco_uni')
                             ->get();
-                          
-                  
+
+
 	       		return view('report.vendas.auditar',compact('movimentos','user'));
 	       	}elseif ($radio=="atualizacao") {
 	       		$movimentos=Ajustes::whereBetween('produtos_ajustes.updated_at',[$inicio,$fim])
@@ -323,55 +323,54 @@ class ReportController extends Controller
                             		DB::raw('Sum(produtos_ajustes.quantidade_unidade) as quantidade'))
                             ->groupby('produtos.name','produtos_ajustes.preco_uni')
                             ->get();
-                return view('report.vendas.auditar',compact('movimentos','user'));            
+                return view('report.vendas.auditar',compact('movimentos','user'));
 
-               
+
 	       	}
 
-                  
-                  
-	       	 
+
+
+
     }
 
     public function vendascredito ()
     {
        $this->authorize('report');
 
-    $venda=ClienteVenda::join('cliente','cliente_venda.cliente_id','cliente.id')
+    $venda=ClienteVenda::select('cliente.nome as cname','cliente.apelido as clname','cliente.contacto1','cliente.contacto2','cliente_venda.created_at','users.name as uname','cliente_venda.codigo_venda', 'venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')
+        ->join('cliente', 'cliente_venda.cliente_id', 'cliente.id')
         ->join('users','cliente_venda.user_id','users.id')
-        ->where('form_type','credito')
         ->join('venda_troco','cliente_venda.codigo_venda','venda_troco.codigo_venda')
-        ->select('cliente.nome as cname','cliente.apelido as clname','cliente.contacto1','cliente.contacto2','cliente_venda.created_at','users.name as uname','cliente_venda.codigo_venda', 'venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')
+        ->where('form_type','credito')
+        ->orderBy('cliente_venda.id','desc')
         ->get();
 
 
 
-    return view('report.vendas.vendascredito',compact('venda'));        
+    return view('report.vendas.vendascredito',compact('venda'));
     }
 
 
-        public function vendascreditofiltre (Request $request)
+    public function vendascreditofiltre(Request $request)
     {
-       $this->authorize('report');
+        $this->authorize('report');
 
-        $data=$request->all();
+        $data = $request->all();
         $this->validate($request, [
-            'inicio'=>'required',
-            'fim'=>'required',
-            ]);
-          $inicio=Carbon::parse($request->inicio);
-          $fim=Carbon::parse($request->fim)->addHours(23)->addMinutes(59)->addSecond(59);    
+            'inicio' => 'required',
+            'fim' => 'required',
+        ]);
 
-    $venda=ClienteVenda::whereBetween('cliente_venda.updated_at',[$inicio,$fim])
-    ->join('cliente','cliente_venda.cliente_id','cliente.id')
-    ->join('users','cliente_venda.user_id','users.id')
-    ->join('venda_troco','cliente_venda.codigo_venda','venda_troco.codigo_venda')
-         ->select('cliente.nome as cname','cliente.apelido as clname','cliente.contacto1','cliente.contacto2','cliente_venda.created_at','users.name as uname','cliente_venda.codigo_venda', 'venda_troco.total_venda','venda_troco.total_pago','venda_troco.total_porpagar','venda_troco.total_troco')
-    ->get();
+        $inicio = Carbon::parse($request->inicio);
+        $fim = Carbon::parse($request->fim)->addHours(23)->addMinutes(59)->addSecond(59);
 
-
-
-    return view('report.vendas.vendascredito',compact('venda'));        
+        $venda = ClienteVenda::whereBetween('cliente_venda.updated_at', [$inicio, $fim])
+        ->join('cliente', 'cliente_venda.cliente_id', 'cliente.id')
+        ->join('users', 'cliente_venda.user_id', 'users.id')
+        ->join('venda_troco', 'cliente_venda.codigo_venda', 'venda_troco.codigo_venda')
+        ->select('cliente.nome as cname', 'cliente.apelido as clname', 'cliente.contacto1', 'cliente.contacto2', 'cliente_venda.created_at', 'users.name as uname', 'cliente_venda.codigo_venda', 'venda_troco.total_venda', 'venda_troco.total_pago', 'venda_troco.total_porpagar', 'venda_troco.total_troco')
+        ->get();
+        return view('report.vendas.vendascredito', compact('venda'));
     }
 
 
@@ -379,11 +378,11 @@ class ReportController extends Controller
 
         public function listapedidos(Request $request)
     {
-               $this->authorize('report'); 
+               $this->authorize('report');
 
       if($request->ajax())
       {
-        $request->except('_token'); 
+        $request->except('_token');
           $data=$request->all();
 
           $output="";
@@ -413,17 +412,17 @@ class ReportController extends Controller
 
         public function pagamentocliente(Request $request)
     {
-               $this->authorize('report');
+        $this->authorize('report');
 
-      if($request->ajax())
-      {
-        $request->except('_token'); 
-            $data=$request->all();
+        if($request->ajax())
+        {
+            $request->except('_token');
+                $data=$request->all();
 
-            $data_mesa=VendasTroco::where('codigo_venda',$data['codigo_venda'])->latest()->get();
+                $data_mesa=VendasTroco::where('codigo_venda',$data['codigo_venda'])->latest()->first();
 
-             return response($data_mesa);
-      }
+                return response($data_mesa);
+        }
     }
 
 
@@ -440,14 +439,14 @@ class ReportController extends Controller
     $venda=VendasTempMesa::join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
               ->join('paciente','vendas_temp_mesa.car_id','paciente.id')
-              ->join('cliente','cliente.id','paciente.cliente_id')  
+              ->join('cliente','cliente.id','paciente.cliente_id')
               ->select('vendas_temp_mesa.created_at','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id', 'paciente.nome','paciente.numero_ficha','paciente.caderneta','paciente.raca','cliente.nome as cliente_nome','cliente.apelido','cliente.contacto1', 'cliente.contacto2')
               ->orderBy('vendas_temp_mesa.created_at','desc')
               ->get();
 
 
-    
-    return view('report.vendas.vendascar',compact('venda'));        
+
+    return view('report.vendas.vendascar',compact('venda'));
     }
 
     public function vendascarfilter (Request $request)
@@ -460,20 +459,20 @@ class ReportController extends Controller
             'fim'=>'required',
             ]);
           $inicio=Carbon::parse($request->inicio);
-          $fim=Carbon::parse($request->fim)->addHours(23)->addMinutes(59)->addSecond(59);  
+          $fim=Carbon::parse($request->fim)->addHours(23)->addMinutes(59)->addSecond(59);
 
     $venda=VendasTempMesa::whereBetween('vendas_temp_mesa.updated_at',[$inicio,$fim])
               ->join('produtos_entradas','vendas_temp_mesa.produto_id','produtos_entradas.id')
               ->join('produtos','produtos_entradas.produto_id','produtos.id')
               ->join('paciente','vendas_temp_mesa.car_id','paciente.id')
-              ->join('cliente','cliente.id','paciente.cliente_id')  
+              ->join('cliente','cliente.id','paciente.cliente_id')
               ->select('vendas_temp_mesa.created_at','produtos.name','vendas_temp_mesa.quantidade','produtos_entradas.preco_final','vendas_temp_mesa.id', 'paciente.nome','paciente.numero_ficha','paciente.caderneta','paciente.raca','cliente.nome as cliente_nome','cliente.apelido','cliente.contacto1', 'cliente.contacto2')
               ->orderBy('vendas_temp_mesa.created_at','desc')
               ->get();
 
 
-    
-    return view('report.vendas.vendascar',compact('venda'));        
+
+    return view('report.vendas.vendascar',compact('venda'));
     }
 
 

@@ -25,7 +25,7 @@
         <div class="login-logo">
             <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}"><!--{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}-->
                 <div class="logo">
-                    <!--<img src="{{asset('imglogo/pp.jpg') }}"  alt="logo" width="120" height="80">-->
+                    <img src="{{asset('imglogo/pp.jpg') }}"  alt="logo" width="120" height="80">
                 <div class="clearfix"></div>
                 </div>
             </a>

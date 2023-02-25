@@ -27,39 +27,39 @@
     <div class="">
         <div class="form-group col-sm-2">
                 <label >Data Inicio</label>
-                
+
                         <input class="form-control" type="date" tyle="width: 100%"  id="inicio"  name="inicio" required autofocus>
-                
+
 
         </div>
 
         <div class="form-group  col-sm-2 ">
                 <label >Data Fim</label>
-            
+
                         <input class="form-control" type="date" tyle="width: 100%"  id="fim"  name="fim" required autofocus >
-                
+
 
         </div>
 
         </div>
 
-        <div class="form-group  col-sm-2  "><br>
+        <div class="form-group  col-sm-2 " style="padding-top: 20px"><br>
         <p class="submit col">
             <strong>
             <button type="submit" class="btnEmidio btn btn-primary bord0" value="1" id="gravar">Atualizar </button>
             </strong>
         </p>
 
-        </div>   
+        </div>
 
 
     <input hidden="" htype="" name="idusuario" id="idusuario" value="{{ Auth::user()->id }}">
-           
 
 
-    </form> 
 
-    
+    </form>
+
+
 
     <div class="col-lg-12">
     <div class="panel panel-default">
@@ -71,7 +71,7 @@
 
     <div class="panel-body">
 
-    <div class="box-body table-responsive no-padding">     
+    <div class="box-body table-responsive no-padding">
         <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
             <thead >
             <tr>
@@ -90,31 +90,29 @@
             </tr>
             </thead>
             <tbody>
-            @if(isset($venda))  
- 
+            @if(isset($venda))
+
             @foreach($venda as $cil)
                 <tr>
-                <td>{{$cil->cliente_nome}}</td> 
-                <td>{{$cil->apelido}}</td> 
+                <td>{{$cil->cliente_nome}}</td>
+                <td>{{$cil->apelido}}</td>
                 <td>{{$cil->contacto1}} & {{$cil->contacto2}}</td>
                 <td>{{$cil->caderneta}}</td>
                 <td>{{$cil->numero_ficha}}</td>
-                <td>{{$cil->nome}}</td> 
-                <td>{{$cil->raca}}</td> 
+                <td>{{$cil->nome}}</td>
+                <td>{{$cil->raca}}</td>
                 <td>{{$cil->created_at}}</td>
                 <td>{{$cil->name}}</td>
                 <td>{{$cil->quantidade}}</td>
                 <td>{{$cil->preco_final}}</td>
                 <td>{{$cil->preco_final * $cil->quantidade}}</td>
-
-
                 </tr>
-            @endforeach 
+            @endforeach
 
-            @endif   
+            @endif
             </tbody>
         </table>
-    </div>    
+    </div>
         </div>
     </div>
 </div>
@@ -126,7 +124,7 @@
 
 
 
-        </div> 
+        </div>
 @stop
 @section('js')
 
@@ -143,7 +141,7 @@
 
 
     <script>
-         
+
     $(document).ready(function() {
         $('#reclatodas').DataTable( {
             columnDefs: [
@@ -198,22 +196,22 @@
                                     grandTotal += isNaN(stval) ? 0 : stval;
                                 });
 
-                       
+
                               $('.grdtot').val(grandTotal.toFixed(2));
-                         
+
                         });
                       } else{
                         $('.grdtot').val(0)
-                      }     
+                      }
 
 
                 }});
 
-                
+
             }));
             $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 
-        </script> 
+        </script>
 
         <script>
             var jqxhr = {abort: function () {}};
@@ -241,14 +239,14 @@
 
                 }});
 
-                
+
             }));
             $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 
-        </script> 
+        </script>
 
                     <script type="text/javascript">
-                
+
             $(document).ready(function(){
 
                 $('.valor').change(function(){
@@ -320,15 +318,15 @@
                         _detalhes.push($(detalhes).eq(i).val())
                         _referencia.push($(referencia).eq(i).val());
                         _valor.push($(valor).eq(i).val())
-                        
+
                     }
 
 
                 if (confirm("Tens a certeza que pretendes Efectuar o credito : " + $porpagar + "?"))
-                {   
+                {
 
-                 
-                
+
+
                 $.ajax({
                   url: "{{URL('efectuarpagamentocredito')}}",
                   type:'POST',
@@ -357,7 +355,7 @@
                     alert("Atenção algo de errado com a sua requizição, verfique se todos campos estão preenchidos. Contacte o administrador");
                 }
                 });
-                     
+
                 }//end confirmation
 
 
@@ -368,12 +366,12 @@
 @stop
 
 @section('css')
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"> 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">   
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">
 
 <style type="text/css">
     .dataTables_wrapper .dt-buttons {
-  float:none;  
+  float:none;
   text-align:center;
   margin-bottom: 30px;
 }
@@ -392,6 +390,6 @@
         border-radius: 0;
         }
 
-        
+
     </style>
 @stop
