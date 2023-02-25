@@ -159,6 +159,7 @@
                              /.row -->
                           </li>
                           <!-- Menu Footer-->
+                          <!--
                           <li class="user-footer">
                             <div class="pull-left">
                               <a href="#" class="btn btn-default btn-flat">Profile</a>
@@ -167,6 +168,7 @@
                               <a href="{{ url(config('adminlte.logout_url', 'auth/logout')) }}" class="btn btn-default btn-flat">{{ trans('adminlte::adminlte.log_out') }}</a>
                             </div>
                           </li>
+                          -->
                         </ul>
                       </li>
                         <li>

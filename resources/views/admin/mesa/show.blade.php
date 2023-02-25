@@ -7,7 +7,6 @@
 @stop
 
 @section('content')
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 <div class="">
@@ -31,15 +30,15 @@
                         <label>Nome</label>
                         <input type="text" name="name" id="name" class="form-control" value="{{$mesa->name}}" required autofocus>
                     </div>
-            </div>        
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                        <label><a href="#" data-toggle="tooltip" title="Escreva banho caso seja Sala-de-Banho/consultorio">Descrição</a></label>
                         <input type="text" name="description" id="description" class="form-control" value="{{$mesa->description}}" required autofocus>
                     </div>
-            </div>       
-     
+            </div>
+
 
             <div class="row">
 
@@ -47,21 +46,21 @@
                      <label></label>
                     <input class="btn btn-primary" type="submit" value="Update">
                 </div>
-            </div>   
-                
-           
+            </div>
+
+
         </form>
-        
+
 
     </div>
-    
+
 </div>
 
 </div>
 <script type="text/javascript">
 
 $(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip(); 
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 </script>

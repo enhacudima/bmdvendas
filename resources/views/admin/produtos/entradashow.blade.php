@@ -2,7 +2,7 @@
 
 @section('title', ' | Edit Entrada')
 
-@section('content_header')    
+@section('content_header')
     <h1><a class="btn btn-social-icon btn-github"  href="{{ url()->previous() }}"><i class="fa  fa-arrow-left"></i></a>
     </h1>
     <ol class="breadcrumb">
@@ -14,7 +14,6 @@
 @stop
 
 @section('content')
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 <div class="">
@@ -59,20 +58,20 @@
                         <label>Quantidade</label>
                         <input step="any" type="number"  name="quantidade" id="quantidade" class="form-control quantidade" value="{{$produtos[0]->quantidade}}" required autofocus>
                     </div>
-            </div> 
+            </div>
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Custo Total de aquisição</label>
                         <input step="any" type="number" name="precodecompra" id="precodecompra" class="form-control precodecompra" value="{{$produtos[0]->precodecompra}}"  autofocus>
                     </div>
-            </div> 
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Margem (%)</label>
                         <input  step="any" type="number" name="margem_per" id="margem_per" class="form-control" value="{{$produtos[0]->margem_per}}" required autofocus>
                     </div>
-            </div> 
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
@@ -86,28 +85,28 @@
                         <label>Data Expiração</label>
                         <input  type="date" name="data_exp"  class="form-control " value="{{$produtos[0]->data_exp}}"  >
                     </div>
-            </div> 
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Fornecedor</label>
                         <input  type="text" name="fornecedor"  class="form-control " value="{{$produtos[0]->fornecedor}}"  >
                     </div>
-            </div> 
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Telefone Fornecedor</label>
                         <input  type="number" name="telefone"  class="form-control " value="{{$produtos[0]->telefone}}"  >
                     </div>
-            </div> 
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Email Fornecedor</label>
                         <input  type="Email" name="email_fornecedor"  class="form-control " value="{{$produtos[0]->email_fornecedor}}"  >
                     </div>
-            </div>       
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
@@ -115,36 +114,36 @@
                         <select name="status" id="status" class="form-control" value="{{$produtos[0]->status}}" required autofocus>
                             @if($produtos[0]->status==0)
                             <option selected="" value="{{$produtos[0]->status}}">Desativado </option>
-                            <option  value="1">Ativado </option> 
+                            <option  value="1">Ativado </option>
                             @elseif($produtos[0]->status=1)
-                            <option selected="" value="{{$produtos[0]->status}}">Ativado </option> 
-                            <option  value="0">Desativado </option> 
-                           
+                            <option selected="" value="{{$produtos[0]->status}}">Ativado </option>
+                            <option  value="0">Desativado </option>
+
                             @endif
                         </select>
 
                     </div>
-            </div> 
+            </div>
             <div class="row">
 
                 <div class="from-group text-right col-md-12">
                      <label></label>
                     <input class="btn btn-primary" type="submit" value="Atualizar">
                 </div>
-            </div>   
-                
-           
+            </div>
+
+
         </form>
-        
+
 
     </div>
-    
+
 </div>
 
 </div>
 <input type="hidden" id="unidadedemedida" value="{{$produtos[0]->unidadedemedida}}">
     <script>
-         
+
     $(document).ready(function() {
         $('#reclatodas').DataTable( {
             columnDefs: [
@@ -170,12 +169,12 @@
         var precodecompra =  parseFloat($('#precodecompra').val());
         var margem_per = parseFloat($('#margem_per').val());
         var unidadedemedida = parseFloat($('#unidadedemedida').val());
-     
+
         $custo_unitario=(precodecompra/quantidade/unidadedemedida);
         $margem=$custo_unitario*(margem_per/100);
         $preco_final=$custo_unitario+$margem;
 
-         $('#final_p').val(roundN($preco_final,2)); 
+         $('#final_p').val(roundN($preco_final,2));
 
     });
 
@@ -186,12 +185,12 @@
         var margem_per = parseFloat($('#margem_per').val());
         var unidadedemedida = parseFloat($('#unidadedemedida').val());
         console.log(unidadedemedida);
-     
+
         $custo_unitario=(precodecompra/quantidade/unidadedemedida);
         $margem=$custo_unitario*(margem_per/100);
         $preco_final=$custo_unitario+$margem;
 
-         $('#final_p').val(roundN($preco_final,2)); 
+         $('#final_p').val(roundN($preco_final,2));
 
     });
 
@@ -201,28 +200,28 @@
         var precodecompra =  parseFloat($('#precodecompra').val());
         var margem_per = parseFloat($('#margem_per').val());
         var unidadedemedida = parseFloat($('#unidadedemedida').val());
-     
+
         $custo_unitario=(precodecompra/quantidade/unidadedemedida);
         $margem=$custo_unitario*(margem_per/100);
         $preco_final=$custo_unitario+$margem;
-        
-       $('#final_p').val(roundN($preco_final,2)); 
+
+       $('#final_p').val(roundN($preco_final,2));
 
     });
 
-    $('#final_p').keyup(function(){       
+    $('#final_p').keyup(function(){
         var quantidade =   parseFloat($('#quantidade').val());
         var precodecompra =  parseFloat($('#precodecompra').val());
         var custo_unitario = parseFloat($('#final_p').val());
         var unidadedemedida = parseFloat($('#unidadedemedida').val());
-     
+
         var E2=custo_unitario;
         var B2=quantidade*unidadedemedida;
         var C2=precodecompra;
 
         $preco_final=(((E2*B2)-C2)/C2)*100;
 
-       $('#margem_per').val(roundN($preco_final,5)); 
+       $('#margem_per').val(roundN($preco_final,5));
 
     });
 
@@ -230,7 +229,7 @@
     function roundN(num,n){
       return parseFloat(Math.round(num * Math.pow(10, n)) /Math.pow(10,n)).toFixed(n);
     }
-    
+
     </script>
 
 @stop

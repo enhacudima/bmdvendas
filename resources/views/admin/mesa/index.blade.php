@@ -7,7 +7,6 @@
 @stop
 
 @section('content')
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 <div class="">
@@ -30,7 +29,7 @@
                         <label>Name</label>
                         <input type="text" name="name" id="name" class="form-control" value="{{old('name')}}" required autofocus>
                     </div>
-            </div>        
+            </div>
 
             <div class="row">
 
@@ -40,7 +39,7 @@
                         <input type="text" name="description" id="description" class="form-control" value="{{old('description')}}" for="FirstName" title="Hooray!" required autofocus>
                     </div>
 
-            </div>       
+            </div>
 
 
             <div class="row">
@@ -49,13 +48,13 @@
                      <label></label>
                     <input class="btn btn-primary" type="submit" value="Submit">
                 </div>
-            </div>         
-           
+            </div>
+
         </form>
-        
+
 
     </div>
-    
+
 
     <div class="col-lg-9">
     <div class="panel panel-default">
@@ -67,7 +66,7 @@
 
     <div class="panel-body">
 
-        
+
     <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
         <thead >
         <tr>
@@ -79,15 +78,15 @@
         </tr>
         </thead>
         <tbody>
-        @if(isset($mesas))    
+        @if(isset($mesas))
         @foreach($mesas as $cil)
             <tr>
              <td>{{$cil->id}}</td>
-             <td>             
+             <td>
                 <a class="btn btn btn-success btn-xs" href="{{action('MesaController@show', $cil->id)}}">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
                 </a>
-            </td> 
+            </td>
              <td>{{$cil->description}}</td>
 
              <td>{{$cil->updated_at}}</td>
@@ -101,8 +100,8 @@
                  @endif
              </td>
             </tr>
-        @endforeach 
-        @endif   
+        @endforeach
+        @endif
         </tbody>
     </table>
         </div>
@@ -114,7 +113,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip(); 
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 </script>
@@ -134,6 +133,6 @@ $(document).ready(function(){
 
     </style>
 
-    
+
 @stop
 @stop

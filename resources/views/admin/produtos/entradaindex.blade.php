@@ -13,7 +13,6 @@
 @stop
 
 @section('content')
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!--model-->
 <div class="modal fade bd-example-modal-lg" id="modal-default"  tabindex="-1" role="dialog">
   <div class="modal-dialog">
@@ -23,7 +22,7 @@
           <span aria-hidden="true">×</span></button>
         <h4 class="modal-title">Novo Entrada</h4>
       </div>
-      
+
         <form method="post" action="{{url('store_produto_entrada')}}" autocomplete="Active" accept-charset="UTF-8" enctype="multipart/form-data" style="margin:15px">
             <div class="modal-body">
             {{ csrf_field() }}
@@ -40,7 +39,7 @@
                             @endif
                         </select>
                     </div>
-            </div> 
+            </div>
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Tipo de unidade de medida</label>
@@ -58,58 +57,58 @@
                         <label>Quantidade</label>
                         <input step="any" type="number"  name="quantidade" id="quantidade" class="form-control quantidade" value="{{old('quantidade')}}" required autofocus>
                     </div>
-            </div> 
+            </div>
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Custo Total de aquisição</label>
                         <input step="any" type="number"  name="precodecompra" id="precodecompra" class="form-control precodecompra" value="{{old('precodecompra')}}" required autofocus>
                     </div>
-            </div> 
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Margem (%)</label>
                         <input step="any" type="number"  name="margem_per" id="margem_per" class="form-control margem_per" value="{{old('margem_per')}}" required autofocus>
                     </div>
-            </div> 
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Preço de revenda</label>
                         <input step="any" type="number"  name="final_p" id="final_p" class="form-control final_p"  required autofocus >
                     </div>
-            </div>  
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Data Expiração</label>
                         <input  type="date" name="data_exp"  class="form-control " value="{{old('data_exp')}}"  >
                     </div>
-            </div> 
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Fornecedor</label>
                         <input  type="text" name="fornecedor"  class="form-control " value="{{old('fornecedor')}}"  >
                     </div>
-            </div> 
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Telefone Fornecedor</label>
                         <input  type="number" name="telefone"  class="form-control " value="{{old('telefone')}}"  >
                     </div>
-            </div> 
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Email Fornecedor</label>
                         <input  type="Email" name="email_fornecedor"  class="form-control " value="{{old('email_fornecedor')}}"  >
                     </div>
-            </div> 
-            
-          
-        
+            </div>
+
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -137,7 +136,7 @@
 
     <div class="panel-body">
 
-    <div class="box-body table-responsive no-padding">     
+    <div class="box-body table-responsive no-padding">
         <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
             <thead >
             <tr>
@@ -165,13 +164,13 @@
             </tr>
             </thead>
             <tbody>
-            @if(isset($entradas))    
+            @if(isset($entradas))
             @foreach($entradas as $cil)
                 <tr>
                  <td>{{$cil->id}}</td>
                  <td><img src="{{asset('storage/'.$cil->image)}}" style="width:80px;  clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
-                 
-                 <td>   
+
+                 <td>
                      <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->produto_id)}}">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
                     </a>
@@ -182,7 +181,7 @@
                 <td>             <a class="btn btn btn-primary btn-xs" href="{{action('ProdutoController@lotshow', $cil->id)}}">
                     <i class="fa fa-pencil fa-fw"></i> {{$cil->lot}}
                  </a>
-                </td>  
+                </td>
                  <td>{{$cil->quantidade}}</td>
                  <td>{{number_format($cil->precodecompra, 2, ".", "")}} Mt</td>
                  <td>{{number_format($cil->margem_per, 2, ".", "")}} %</td>
@@ -203,8 +202,8 @@
                  <td>{{$cil->fornecedor}}</td>
                  <td>{{$cil->email_fornecedor}}</td>
                 </tr>
-            @endforeach 
-            @endif   
+            @endforeach
+            @endif
             </tbody>
         </table>
     </div>
@@ -216,20 +215,9 @@
 @stop
 @section('js')
 
-<script src="//cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
-
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
-
 
     <script>
-         
+
     $(document).ready(function() {
         $('#reclatodas').DataTable( {
             columnDefs: [
@@ -251,12 +239,12 @@
 
     <script>
     $('#produto_id').on('change',function(){
-    var id = $(this).val();    
+    var id = $(this).val();
     if(id){
             $.ajax({
                type:"GET",
                url:"{{url('get-produt')}}?id="+id,
-               success:function(res){               
+               success:function(res){
                 if(res){
                     console.log(res);
                     var unidadedemedida =res.unidadedemedida;
@@ -273,10 +261,10 @@
              var unidadedemedida='';
              var tipodeunidadedemedida='';
         }
-            
+
        });
 
-                        
+
 
 
     $('#margem_per').keyup(function(){
@@ -286,12 +274,12 @@
         var precodecompra =  parseFloat($('#precodecompra').val());
         var margem_per = parseFloat($('#margem_per').val());
         var unidadedemedida = parseFloat($('#unidadedemedida').val());
-     
+
         $custo_unitario=(precodecompra/quantidade/unidadedemedida);
         $margem=$custo_unitario*(margem_per/100);
         $preco_final=$custo_unitario+$margem;
 
-      $('#final_p').val(roundN($preco_final,2)); 
+      $('#final_p').val(roundN($preco_final,2));
 
     });
 
@@ -303,12 +291,12 @@
         var precodecompra =  parseFloat($('#precodecompra').val());
         var margem_per = parseFloat($('#margem_per').val());
         var unidadedemedida = parseFloat($('#unidadedemedida').val());
-     
+
         $custo_unitario=(precodecompra/quantidade/unidadedemedida);
         $margem=$custo_unitario*(margem_per/100);
         $preco_final=$custo_unitario+$margem;
 
-         $('#final_p').val(roundN($preco_final,2)); 
+         $('#final_p').val(roundN($preco_final,2));
 
     });
 
@@ -320,48 +308,48 @@
         var precodecompra =  parseFloat($('#precodecompra').val());
         var margem_per = parseFloat($('#margem_per').val());
         var unidadedemedida = parseFloat($('#unidadedemedida').val());
-     
+
         $custo_unitario=(precodecompra/quantidade/unidadedemedida);
         $margem=$custo_unitario*(margem_per/100);
         $preco_final=$custo_unitario+$margem;
 
-       $('#final_p').val(roundN($preco_final,2)); 
+       $('#final_p').val(roundN($preco_final,2));
 
     });
 
     $('#final_p').keyup(function(){
-        
+
         var quantidade =   parseFloat($('#quantidade').val());
         var precodecompra =  parseFloat($('#precodecompra').val());
         var custo_unitario = parseFloat($('#final_p').val());
         var unidadedemedida = parseFloat($('#unidadedemedida').val());
-     
+
         var E2=custo_unitario;
         var B2=quantidade*unidadedemedida;
         var C2=precodecompra;
 
         $preco_final=(((E2*B2)-C2)/C2)*100;
 
-       $('#margem_per').val(roundN($preco_final,5)); 
+       $('#margem_per').val(roundN($preco_final,5));
 
     });
 
     function roundN(num,n){
       return parseFloat(Math.round(num * Math.pow(10, n)) /Math.pow(10,n)).toFixed(n);
     }
-        
+
     </script>
 
 
 @stop
 
 @section('css')
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"> 
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">   
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">
 
         <style type="text/css">
             .dataTables_wrapper .dt-buttons {
-          float:none;  
+          float:none;
           text-align:center;
           margin-bottom: 30px;
         }

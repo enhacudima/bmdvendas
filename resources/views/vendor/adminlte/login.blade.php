@@ -8,7 +8,7 @@
 
     <style type="text/css">
           .login-page {
-          background: linear-gradient(to right, #b06ab3, #4568dc );
+          background: linear-gradient(to right, #ae8f30, #f6e3bd );
           transition: 0.2s;
           &.is-active {
             background-color: rgba(255, 255, 255, 0.05);

@@ -3,14 +3,13 @@
 @section('title', ' | Home')
 
 @section('content_header')
-     
+
 @stop
 
 @section('content')
-    <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
 <div class="row">
-  
+
 
 	@if($mesa)
 		@foreach($mesa as $key => $cil)
@@ -22,7 +21,7 @@
             <div class="small-box bg-gray">
               <div class="inner">
                 @if($cil->status==0)
-                
+
                   @if($cil->description=="banho")
                   <h3 style="" ><a  href="{{url('carindex',$cil->id)}}" style="color: red">{{$cil->name}}</a></h3>
                   @elseif($cil->description=="consultorio")
@@ -30,7 +29,7 @@
                   @else
                   <h3 style="" ><a  href="{{url('vendasindex',$cil->id)}}" style="color: red">{{$cil->name}}</a></h3>
                   @endif
-                  
+
                 @else
 
                   @if($cil->description=="banho")
@@ -39,8 +38,8 @@
                   <h3><a  href="{{url('ficha-clinica')}}" style="color: #FFFFFF">{{$cil->name}}</a></h3>
                   @else
                   <h3><a  href="{{url('vendasindex',$cil->id)}}" style="color: #FFFFFF">{{$cil->name}}</a></h3>
-                  @endif  
-                                  
+                  @endif
+
                 @endif
                 <p>{{$cil->username}}</p>
                 <p>{{$cil->updated_at->diffForHumans()}}</p>
@@ -58,7 +57,7 @@
               <a href="#ticket-edit-mesa-modal" type="submit"  class=" small-box-footer" data-toggle="modal" data-target="#ticket-edit-mesa-modal"  data-value="{{$cil->id}}" id="droplist">
                 More info <i class="fa fa-arrow-circle-right"></i>
               </a>
-        
+
             </div>
             <!-- ./col -->
             <!-- /.info-box -->
@@ -74,8 +73,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title" id="ticket-edit-mesa-modal-Label">Detalhes </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        
-                    </div> 
+
+                    </div>
 
                     <div class="modal-body">
                         <div class="row">
@@ -116,7 +115,7 @@
                                           </tr>
                                       </thead>
                                       <tbody>
- 
+
                                       </tbody>
                                       <tfoot>
                                           <tr>
@@ -146,20 +145,20 @@
                             <!-- /.col -->
 
                     </div>
-                          
+
 
                             <div class="clearfix"></div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                               
+
                             </div>
                         </div>
                     </div>
         </div>
-        </div>   
+        </div>
 
-          
+
 
 
             <!-- JavaScript de Popup de List -->
@@ -196,22 +195,22 @@
                                     grandTotal += isNaN(stval) ? 0 : stval;
                                 });
 
-                       
+
                               $('.grdtot').val(grandTotal.toFixed(2));
-                         
+
                         });
                       } else{
                         $('.grdtot').val(0)
-                      }     
+                      }
 
 
                 }});
 
-                
+
             }));
             $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 
-        </script> 
+        </script>
 
 
 
