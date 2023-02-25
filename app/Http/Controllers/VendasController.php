@@ -457,19 +457,22 @@ class VendasController extends Controller
     	}
     }
     public function ultimaVenda($pagamento){
-       $this->authorize('venda');
+        $this->authorize('venda');
 
-      $itens=$this->data_ultima_venda($pagamento);
-      $trocos=VendasTroco::where('codigo_venda',$pagamento)->first();
+        $itens=$this->data_ultima_venda($pagamento, "vendas_temp_mesa.codigo_venda");
+        if(empty($itens)){
+            return back()->with('error',"Venda não encotrada");
+        }
+        $trocos=VendasTroco::where('codigo_venda',$pagamento)->first();
 
-          $pdf = app('dompdf.wrapper')->loadView('documentos.recipt', compact('itens','trocos'));
-          return $pdf->stream('invoice.pdf');
+        $pdf = app('dompdf.wrapper')->loadView('documentos.recipt', compact('itens','trocos'));
+        return $pdf->stream('invoice.pdf');
     }
 
     public function ultimaPrint($pagamento){
         $this->authorize('venda');
-        $itens=$this->data_ultima_venda($pagamento);
-        if(isset($itens)){
+        $itens=$this->data_ultima_venda($pagamento, "vendas_temp_mesa.codigo_venda");
+        if(empty($itens)){
             return back()->with('error',"Venda não encotrada.");
         }
         $trocos=VendasTroco::where('codigo_venda',$pagamento)->first();

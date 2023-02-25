@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@pataspelos.com'),
-        'name' => env('MAIL_FROM_NAME', 'Pelos&Patas'),
+        'address' => env('MAIL_FROM_ADDRESS', 'mcacosmeticos@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'MCA Cosméticos'),
     ],
 
     /*
