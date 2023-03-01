@@ -121,8 +121,6 @@
                                                 <i class="fa fa-trash-o fa-lg" ></i>
                                             </a>
                                         </td>
-
-
                                         </tr>
                                     @endforeach
 
@@ -598,14 +596,13 @@
                 //atualizando os dados na tabela temporaria
                 $("#carrinhoform").submit(function(e){
                     e.preventDefault();
-
                     var id = $('[name="id[]"]');
                     var quantidade = $('[name="quantidade[]"]');
-                    $idbulk=($('[name="idbulk"]').val());
-                    $mesa_id=($('[name="mesa_id"]').val());
                     var _id = [];
                     var _quantidade=[];
 
+                    $idbulk=($('[name="idbulk"]').val());
+                    $mesa_id=($('[name="mesa_id"]').val());
 
                     for (var i = 0; i < id.length; i++) {
                         _id.push($(id).eq(i).val());

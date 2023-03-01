@@ -59,6 +59,7 @@ class VendasController extends Controller
       ->Where(function($query) use ($term){
           $query->orwhere('codigoproduto','like','%'.$term.'%')
                 ->orwhere('name','like','%'.$term.'%')
+                ->orwhere('brand', 'like', '%' . $term . '%')
                 ->orwhere('codigoproduto','like','%'.$term.'%')
                 ->orwhere('entrada_preco','like','%'.$term.'%');
       })
@@ -81,7 +82,8 @@ class VendasController extends Controller
 
         $output.='<tr><td><img src="'.$url.$value->image.'" style="width:85px;  clear:both; display:block;  border:1px solid #ddd; margin-bottom:10px;"></td>
         <td>
-        <b>Nome:</b> '.$value->name.'<br>
+        <b>Nome:</b> '.$value->name. '<br>
+        <b>Marca:</b> ' . $value->brand . '<br>
         <b>Codigo:</b> '.$value->codigoproduto.'<br>
         <b style="color:red">Preço: '.number_format(round($value->entrada_preco,2), 2, ',', ' ').' MT</b><br>
         <b>Em Stock:</b> '.number_format(round($value->total_entrada-$value->total_saida,2), 2, ',', ' ').' Unt '.$msg.'
