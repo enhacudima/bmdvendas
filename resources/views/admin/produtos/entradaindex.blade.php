@@ -81,6 +81,19 @@
 
             <div class="row">
                     <div class="from-group col-lg-12">
+                        <label>Quantidade minima para revendedor</label>
+                        <input step="any" type="number"  name="min_quantidade_revendedor" id="min_quantidade_revendedor" class="form-control">
+                    </div>
+            </div>
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Preço de revendedor</label>
+                        <input step="any" type="number"  name="preco_final_revendedor" id="preco_final_revendedor" class="form-control ">
+                    </div>
+            </div>
+
+            <div class="row">
+                    <div class="from-group col-lg-12">
                         <label>Data Expiração</label>
                         <input  type="date" name="data_exp"  class="form-control " value="{{old('data_exp')}}"  >
                     </div>
@@ -154,6 +167,8 @@
                 <th scope="col">Custo unitario</th>
                 <th scope="col">Margem</th>
                 <th scope="col">Preço de revenda</th>
+                <th scope="col">Quandidade minima revendedor</th>
+                <th scope="col">Preço de revendedor</th>
                 <th scope="col">Criado em</th>
                 <th scope="col">atualizado em</th>
                 <th scope="col">Estado</th>
@@ -189,6 +204,8 @@
                  <td>{{number_format($cil->custo_unitario, 2, ".", "")}} Mt</td>
                  <td>{{number_format($cil->margem, 2, ".", "")}} Mt</td>
                  <td>{{number_format($cil->preco_final, 2, ".", "")}} Mt</td>
+                 <td>{{number_format($cil->min_quantidade_revendedor, 2, ".", "")}}</td>
+                 <td>{{number_format($cil->preco_final_revendedor, 2, ".", "")}} Mt</td>
                  <td>{{$cil->created_at}}</td>
                  <td>{{$cil->updated_at}}</td>
                  @if($cil->status==1)

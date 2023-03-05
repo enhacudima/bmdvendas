@@ -21,7 +21,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Edit Entrada: {{$produtos[0]->lot}}
+        <h4>Edit Entrada: {{$produtos->lot}}
         </h4>
     </div>
 
@@ -31,92 +31,106 @@
             {{ csrf_field() }}
 
             <input   name="idusuario" type="hidden" id="idusuario" value="{{ Auth::user()->id }}" required autofocus>
-            <input   name="id" type="hidden" id="id" value="{{$produtos[0]->id}}" required autofocus>
+            <input   name="id" type="hidden" id="id" value="{{$produtos->id}}" required autofocus>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Produto</label>
-                        <input type="text" value="{{$produtos[0]->name}}">
-                        <input type="text" name="produto_id" id="produto_id" value="{{$produtos[0]->produto_id}}" hidden="">
+                        <input type="text" value="{{$produtos->name}}">
+                        <input type="text" name="produto_id" id="produto_id" value="{{$produtos->produto_id}}" hidden="">
                     </div>
             </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Tipo de unidade de medida</label>
-                        <input   value="{{$produtos[0]->tipodeunidadedemedida}}" disabled="">
+                        <input   value="{{$produtos->tipodeunidadedemedida}}" disabled="">
                     </div>
             </div>
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Unidade de Medida</label>
-                        <input   value="{{$produtos[0]->unidadedemedida}}" disabled="">
+                        <input   value="{{$produtos->unidadedemedida}}" disabled="">
                     </div>
             </div>
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Quantidade</label>
-                        <input step="any" type="number"  name="quantidade" id="quantidade" class="form-control quantidade" value="{{$produtos[0]->quantidade}}" required autofocus>
+                        <input step="any" type="number"  name="quantidade" id="quantidade" class="form-control quantidade" value="{{$produtos->quantidade}}" required autofocus>
                     </div>
             </div>
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Custo Total de aquisição</label>
-                        <input step="any" type="number" name="precodecompra" id="precodecompra" class="form-control precodecompra" value="{{$produtos[0]->precodecompra}}"  autofocus>
+                        <input step="any" type="number" name="precodecompra" id="precodecompra" class="form-control precodecompra" value="{{$produtos->precodecompra}}"  autofocus>
                     </div>
             </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Margem (%)</label>
-                        <input  step="any" type="number" name="margem_per" id="margem_per" class="form-control" value="{{$produtos[0]->margem_per}}" required autofocus>
+                        <input  step="any" type="number" name="margem_per" id="margem_per" class="form-control" value="{{$produtos->margem_per}}" required autofocus>
                     </div>
             </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Preço de revenda</label>
-                        <input step="any" type="number"  name="final_p" id="final_p" class="form-control final_p" value="{{$produtos[0]->preco_final}}" required autofocus >
+                        <input step="any" type="number"  name="final_p" id="final_p" class="form-control final_p" value="{{$produtos->preco_final}}" required autofocus >
+                    </div>
+            </div>
+
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Quantidade minima para revendedor</label>
+                        <input step="any" type="number"  name="min_quantidade_revendedor" id="min_quantidade_revendedor" value="{{$produtos->min_quantidade_revendedor}}" class="form-control">
+                    </div>
+            </div>
+
+            <div class="row">
+                    <div class="from-group col-lg-12">
+                        <label>Preço de revendedor</label>
+                        <input step="any" type="number"  name="preco_final_revendedor" id="preco_final_revendedor" value="{{$produtos->preco_final_revendedor}}" class="form-control ">
                     </div>
             </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Data Expiração</label>
-                        <input  type="date" name="data_exp"  class="form-control " value="{{$produtos[0]->data_exp}}"  >
+                        <input  type="date" name="data_exp"  class="form-control " value="{{$produtos->data_exp}}"  >
                     </div>
             </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Fornecedor</label>
-                        <input  type="text" name="fornecedor"  class="form-control " value="{{$produtos[0]->fornecedor}}"  >
+                        <input  type="text" name="fornecedor"  class="form-control " value="{{$produtos->fornecedor}}"  >
                     </div>
             </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Telefone Fornecedor</label>
-                        <input  type="number" name="telefone"  class="form-control " value="{{$produtos[0]->telefone}}"  >
+                        <input  type="number" name="telefone"  class="form-control " value="{{$produtos->telefone}}"  >
                     </div>
             </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Email Fornecedor</label>
-                        <input  type="Email" name="email_fornecedor"  class="form-control " value="{{$produtos[0]->email_fornecedor}}"  >
+                        <input  type="Email" name="email_fornecedor"  class="form-control " value="{{$produtos->email_fornecedor}}"  >
                     </div>
             </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Status</label>
-                        <select name="status" id="status" class="form-control" value="{{$produtos[0]->status}}" required autofocus>
-                            @if($produtos[0]->status==0)
-                            <option selected="" value="{{$produtos[0]->status}}">Desativado </option>
+                        <select name="status" id="status" class="form-control" value="{{$produtos->status}}" required autofocus>
+                            @if($produtos->status==0)
+                            <option selected="" value="{{$produtos->status}}">Desativado </option>
                             <option  value="1">Ativado </option>
-                            @elseif($produtos[0]->status=1)
-                            <option selected="" value="{{$produtos[0]->status}}">Ativado </option>
+                            @elseif($produtos->status=1)
+                            <option selected="" value="{{$produtos->status}}">Ativado </option>
                             <option  value="0">Desativado </option>
 
                             @endif
@@ -141,7 +155,7 @@
 </div>
 
 </div>
-<input type="hidden" id="unidadedemedida" value="{{$produtos[0]->unidadedemedida}}">
+<input type="hidden" id="unidadedemedida" value="{{$produtos->unidadedemedida}}">
     <script>
 
     $(document).ready(function() {

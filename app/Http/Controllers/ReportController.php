@@ -365,7 +365,7 @@ class ReportController extends Controller
     {
         $this->authorize('report');
 
-        $venda = ClienteVenda::select('cliente.nome as cname', 'cliente.apelido as clname', 'cliente.contacto1', 'cliente.contacto2', 'cliente_venda.created_at', 'users.name as uname', 'cliente_venda.codigo_venda', 'venda_troco.total_venda', 'venda_troco.total_pago', 'venda_troco.total_porpagar', 'venda_troco.total_troco')
+        $venda = ClienteVenda::select('cliente.nome as cname', 'cliente.tipo as clname', 'cliente.contacto1', 'cliente.contacto2', 'cliente_venda.created_at', 'users.name as uname', 'cliente_venda.codigo_venda', 'venda_troco.total_venda', 'venda_troco.total_pago', 'venda_troco.total_porpagar', 'venda_troco.total_troco')
             ->join('cliente', 'cliente_venda.cliente_id', 'cliente.id')
             ->join('users', 'cliente_venda.user_id', 'users.id')
             ->join('venda_troco', 'cliente_venda.codigo_venda', 'venda_troco.codigo_venda')
@@ -396,7 +396,7 @@ class ReportController extends Controller
             ->join('cliente', 'cliente_venda.cliente_id', 'cliente.id')
             ->join('users', 'cliente_venda.user_id', 'users.id')
             ->join('venda_troco', 'cliente_venda.codigo_venda', 'venda_troco.codigo_venda')
-            ->select('cliente.nome as cname', 'cliente.apelido as clname', 'cliente.contacto1', 'cliente.contacto2', 'cliente_venda.created_at', 'users.name as uname', 'cliente_venda.codigo_venda', 'venda_troco.total_venda', 'venda_troco.total_pago', 'venda_troco.total_porpagar', 'venda_troco.total_troco')
+            ->select('cliente.nome as cname', 'cliente.tipo as clname', 'cliente.contacto1', 'cliente.contacto2', 'cliente_venda.created_at', 'users.name as uname', 'cliente_venda.codigo_venda', 'venda_troco.total_venda', 'venda_troco.total_pago', 'venda_troco.total_porpagar', 'venda_troco.total_troco')
             ->get();
         return view('report.vendas.vendascredito', compact('venda'));
     }
@@ -466,7 +466,7 @@ class ReportController extends Controller
             ->join('produtos', 'produtos_entradas.produto_id', 'produtos.id')
             ->join('paciente', 'vendas_temp_mesa.car_id', 'paciente.id')
             ->join('cliente', 'cliente.id', 'paciente.cliente_id')
-            ->select('vendas_temp_mesa.created_at', 'produtos.name', 'vendas_temp_mesa.quantidade', 'produtos_entradas.preco_final', 'vendas_temp_mesa.id', 'paciente.nome', 'paciente.numero_ficha', 'paciente.caderneta', 'paciente.raca', 'cliente.nome as cliente_nome', 'cliente.apelido', 'cliente.contacto1', 'cliente.contacto2')
+            ->select('vendas_temp_mesa.created_at', 'produtos.name', 'vendas_temp_mesa.quantidade', 'produtos_entradas.preco_final', 'vendas_temp_mesa.id', 'paciente.nome', 'paciente.numero_ficha', 'paciente.caderneta', 'paciente.raca', 'cliente.nome as cliente_nome', 'cliente.tipo', 'cliente.contacto1', 'cliente.contacto2')
             ->orderBy('vendas_temp_mesa.created_at', 'desc')
             ->get();
 
@@ -492,7 +492,7 @@ class ReportController extends Controller
             ->join('produtos', 'produtos_entradas.produto_id', 'produtos.id')
             ->join('paciente', 'vendas_temp_mesa.car_id', 'paciente.id')
             ->join('cliente', 'cliente.id', 'paciente.cliente_id')
-            ->select('vendas_temp_mesa.created_at', 'produtos.name', 'vendas_temp_mesa.quantidade', 'produtos_entradas.preco_final', 'vendas_temp_mesa.id', 'paciente.nome', 'paciente.numero_ficha', 'paciente.caderneta', 'paciente.raca', 'cliente.nome as cliente_nome', 'cliente.apelido', 'cliente.contacto1', 'cliente.contacto2')
+            ->select('vendas_temp_mesa.created_at', 'produtos.name', 'vendas_temp_mesa.quantidade', 'produtos_entradas.preco_final', 'vendas_temp_mesa.id', 'paciente.nome', 'paciente.numero_ficha', 'paciente.caderneta', 'paciente.raca', 'cliente.nome as cliente_nome', 'cliente.tipo', 'cliente.contacto1', 'cliente.contacto2')
             ->orderBy('vendas_temp_mesa.created_at', 'desc')
             ->get();
 

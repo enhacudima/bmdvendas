@@ -12,7 +12,6 @@
 @stop
 
 @section('content')
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!--model-->
 <div class="modal fade bd-example-modal-lg" id="modal-default"  tabindex="-1" role="dialog">
   <div class="modal-dialog">
@@ -22,29 +21,29 @@
           <span aria-hidden="true">×</span></button>
         <h4 class="modal-title">Novo Cliente</h4>
       </div>
-      
+
         <form method="post" action="{{url('storcliente')}}" autocomplete="Active" accept-charset="UTF-8" enctype="multipart/form-data" style="margin:15px">
             <div class="modal-body">
             {{ csrf_field() }}
             <input   name="user_id" type="hidden" id="user_id" value="{{ Auth::user()->id }}" required autofocus>
             <div class="row">
                     <div class="from-group col-lg-12">
-                        <label>Nome</label>
+                        <label>Nome Completo</label>
                         <input type="text" name="nome" id="nome" class="form-control" value="{{old('nome')}}" required autofocus>
                     </div>
             </div>
             <div class="row">
                     <div class="from-group col-lg-12">
-                        <label>Apelido</label>
-                        <input type="text" name="apelido" id="apelido" class="form-control" value="{{old('apelido')}}" required autofocus>
+                        <label>Tipo e Cliente</label>
+                        <input type="text" name="tipo" id="tipo" class="form-control" value="{{old('tipo')}}" required autofocus>
                     </div>
-            </div> 
+            </div>
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>NUIT</label>
                         <input type="text" name="nuit" id="nuit" class="form-control" value="{{old('nuit')}}"  >
                     </div>
-            </div>         
+            </div>
 
             <div class="row">
                     <div class="from-group col-lg-12">
@@ -98,13 +97,13 @@
 
     <div class="panel-body">
 
-    <div class="box-body table-responsive no-padding">      
+    <div class="box-body table-responsive no-padding">
     <table id="reclatodas" class="table table-striped  table-hover" cellspacing="0" width="100%">
         <thead >
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Apelido</th>
+            <th scope="col">Nome completo</th>
+            <th scope="col">Tipo de Cliente</th>
             <th scope="col">NUIT</th>
             <th scope="col">Morada</th>
             <th scope="col">Contacto 1</th>
@@ -114,16 +113,16 @@
         </tr>
         </thead>
         <tbody>
-        @if(isset($cliente))    
+        @if(isset($cliente))
         @foreach($cliente as $cil)
             <tr>
              <td>{{$cil->id}}</td>
-             <td>             
+             <td>
                 <a class="btn btn btn-success btn-xs" href="{{action('ClienteController@clienteshow', $cil->id)}}">
                     <i class="fa fa-eye fa-fw"></i> {{$cil->nome}}
                 </a>
-            </td> 
-             <td>{{$cil->apelido}}</td>
+            </td>
+             <td>{{$cil->tipo}}</td>
              <td>{{$cil->nuit}}</td>
              <td>{{$cil->endereco}}</td>
              <td>{{$cil->contacto1}}</td>
@@ -131,8 +130,8 @@
              <td>{{$cil->email}}</td>
              <td>{{$cil->updated_at}}</td>
             </tr>
-        @endforeach 
-        @endif   
+        @endforeach
+        @endif
         </tbody>
     </table>
     </div>
@@ -142,13 +141,13 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip(); 
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 </script>
 
     <script>
-         
+
     $(document).ready(function() {
         $('#reclatodas').DataTable( {
 
@@ -165,7 +164,7 @@ $(document).ready(function(){
                 'excel', 'print'
             ],
 
-        } 
+        }
         );
     } );
     </script>
@@ -185,6 +184,6 @@ $(document).ready(function(){
 
     </style>
 
-    
+
 @stop
 @stop

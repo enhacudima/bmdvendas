@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Produtos;
 use App\Entradas;
 use App\Ajustes;
+use App\Traits\UniqueIDTrait;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -14,13 +15,14 @@ use Auth;
 
 class ProdutoController extends Controller
 {
+    use UniqueIDTrait;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
 
-        public function __construct()
+    public function __construct()
     {
 
         return Auth::guard(app('VoyagerGuard'));
@@ -29,9 +31,9 @@ class ProdutoController extends Controller
 
     public function index()
     {
-      $this->authorize('produtos');
-      $produtos=Produtos::orderby('name','asc')->get();
-        return view('admin.produtos.index',compact('produtos'));
+        $this->authorize('produtos');
+        $produtos = Produtos::orderby('name', 'asc')->get();
+        return view('admin.produtos.index', compact('produtos'));
     }
 
 
@@ -53,35 +55,33 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-      $this->authorize('store_produtos');
+        $this->authorize('store_produtos');
         $this->validate($request, [
-            'name'=>'required|min:3|unique:produtos,name|max:192',
-            'codigoproduto'=>'required|max:192|unique:produtos,codigoproduto',
-            'codigobarra'=>'required|max:192|unique:produtos,codigobarra',
-            'brand'=>'required|max:192',
-            'description'=>'required|string|max:192',
-            'tipodeunidadedemedida'=>'required|string|max:192',
-            'unidadedemedida'=>'required|regex:/^\d+(\.\d{1,2})?$/|numeric',
-            'stock'=>'required|regex:/^\d+(\.\d{1,2})?$/|numeric',
-            'peso'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
-            'image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000'
+            'name' => 'required|min:3|unique:produtos,name|max:192',
+            'codigoproduto' => 'required|max:192|unique:produtos,codigoproduto',
+            'codigobarra' => 'nullable|max:192|unique:produtos,codigobarra',
+            'brand' => 'required|max:192',
+            'description' => 'nullable|string|max:192',
+            'tipodeunidadedemedida' => 'required|string|max:192',
+            'unidadedemedida' => 'required|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'stock' => 'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'peso' => 'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000'
 
         ]);
 
-      $file_name="product/default.jpg";
-      if (isset($request->image))
-      {
-          $file_name='product/'.time() .'.'. $request->file('image')->getClientOriginalExtension();
-          $request->image->storeAs('public', $file_name);
-
-      }
-        $data=$request->all();
-        $data['image']=$file_name;
+        $file_name = "product/default.jpg";
+        if (isset($request->image)) {
+            $file_name = 'product/' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->image->storeAs('public', $file_name);
+        }
+        $data = $request->all();
+        $data['image'] = $file_name;
 
 
         Produtos::create($data);
 
-        return back()->with('success','Successfully Added to List');
+        return back()->with('success', 'Successfully Added to List');
     }
 
     /**
@@ -92,10 +92,10 @@ class ProdutoController extends Controller
      */
     public function show($id)
     {
-      $this->authorize('show_produtos');
+        $this->authorize('show_produtos');
 
-        $produtos=Produtos::find($id);
-        return view ('admin.produtos.show',compact('produtos'));
+        $produtos = Produtos::find($id);
+        return view('admin.produtos.show', compact('produtos'));
     }
 
     /**
@@ -106,7 +106,6 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-
     }
 
     /**
@@ -119,50 +118,43 @@ class ProdutoController extends Controller
     public function update(Request $request, $id)
     {
 
-      $this->authorize('edit_produtos');
+        $this->authorize('edit_produtos');
 
-        $produtos=request()->except(['_token']);
-            $this->validate($request, [
-            'name'=>['nullable','min:3','max:192',Rule::unique('produtos','name')->ignore($id,'id')],
-            'codigoproduto'=>['required','max:192',Rule::unique('produtos','codigoproduto')->ignore($id,'id')],
-            'codigobarra'=>['nullable','max:192',Rule::unique('produtos','codigobarra')->ignore($id,'id')],
-            'brand'=>'nullable|max:192',
-            'description'=>'nullable|string|max:192',
-            'tipodeunidadedemedida'=>'nullable|string|max:192',
-            'unidadedemedida'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
-            'peso'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
-            'stock'=>'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
-            'image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
-            'status'=>'required',
+        $produtos = request()->except(['_token']);
+        $this->validate($request, [
+            'name' => ['nullable', 'min:3', 'max:192', Rule::unique('produtos', 'name')->ignore($id, 'id')],
+            'codigoproduto' => ['required', 'max:192', Rule::unique('produtos', 'codigoproduto')->ignore($id, 'id')],
+            'codigobarra' => ['nullable', 'max:192', Rule::unique('produtos', 'codigobarra')->ignore($id, 'id')],
+            'brand' => 'nullable|max:192',
+            'description' => 'nullable|string|max:192',
+            'tipodeunidadedemedida' => 'nullable|string|max:192',
+            'unidadedemedida' => 'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'peso' => 'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'stock' => 'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
+            'status' => 'required',
 
         ]);
-      $produtos=Produtos::find($id);
-      $file_name=$produtos->image;
-      if (isset($request->image))
-      {
+        $produtos = Produtos::find($id);
+        $file_name = $produtos->image;
+        if (isset($request->image)) {
 
-        $newFilename=$request->file('image')->getClientOriginalName();
+            $newFilename = $request->file('image')->getClientOriginalName();
 
-          if ($produtos->image!="product/default.jpg") {
+            if ($produtos->image != "product/default.jpg") {
 
-            Storage::delete('/public/'.$produtos->image);
-          }
-            $file_name='product/'.time() .'.'. $request->file('image')->getClientOriginalExtension();
+                Storage::delete('/public/' . $produtos->image);
+            }
+            $file_name = 'product/' . time() . '.' . $request->file('image')->getClientOriginalExtension();
             $request->image->storeAs('public', $file_name);
+        }
+        $data = $request->except(['_token']);
+        $data['image'] = $file_name;
 
+        Produtos::where('id', $id)
+            ->update($data);
 
-
-      }
-        $data=$request->except(['_token']);
-        $data['image']=$file_name;
-
-        Produtos::where('id',$id)
-                ->update($data);
-
-        return back()->with('success','Successfully Updated');
-
-
-
+        return back()->with('success', 'Successfully Updated');
     }
 
     /**
@@ -176,167 +168,174 @@ class ProdutoController extends Controller
         //
     }
 
-    public function entradaindex(){
-      $this->authorize('entradas');
-        $produtos=Produtos::orderby('name','asc')->where('status',1)->get();
-        $entradas=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
-                            ->select('produtos_entradas.*','produtos.name','produtos.tipodeunidadedemedida','produtos.unidadedemedida','produtos.codigoproduto','produtos.image')
-                            ->orderby('produtos.name','asc')
-                            ->get();
-        return view('admin.produtos.entradaindex', compact('produtos','entradas'));
+    public function entradaindex()
+    {
+        $this->authorize('entradas');
+        $produtos = Produtos::orderby('name', 'asc')->where('status', 1)->get();
+        $entradas = Entradas::join('produtos', 'produtos_entradas.produto_id', 'produtos.id')
+            ->select('produtos_entradas.*', 'produtos.name', 'produtos.tipodeunidadedemedida', 'produtos.unidadedemedida', 'produtos.codigoproduto', 'produtos.image')
+            ->orderby('produtos.name', 'asc')
+            ->get();
+        return view('admin.produtos.entradaindex', compact('produtos', 'entradas'));
     }
 
     public function entradastore(Request $request)
     {
 
-      $this->authorize('store_entradas');
+        $this->authorize('store_entradas');
 
-        $this->validate($request,[
-          'produto_id'=>'required',
-          'quantidade'=>'required',
-          'precodecompra'=>'required|numeric',
-          'margem_per'=>'required|numeric',
-          'quantidade'=>'required|numeric',
-          'data_exp'=>'nullable|date',
-          'fornecedor'=>'nullable|string|max:255',
-          'telefone'=>'nullable|numeric',
-          'email_fornecedor'=>'nullable|email',
-          'final_p' =>'required|numeric',
+        $this->validate($request, [
+            'produto_id' => 'required',
+            'quantidade' => 'required',
+            'precodecompra' => 'required|numeric',
+            'margem_per' => 'required|numeric',
+            'quantidade' => 'required|numeric',
+            'data_exp' => 'nullable|date',
+            'fornecedor' => 'nullable|string|max:255',
+            'telefone' => 'nullable|numeric',
+            'email_fornecedor' => 'nullable|email',
+            'final_p' => 'required|numeric',
+            'min_quantidade_revendedor' => 'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'preco_final_revendedor' => 'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
         ]);
-        $produto=Produtos::find($request->produto_id);
-        $entrada= new Entradas;
-        $entrada->produto_id=$request->produto_id;
-        $entrada->lot=time().auth()->user()->id;
-        $entrada->quantidade=$request->quantidade;
-        $entrada->precodecompra=$request->precodecompra;
-        $entrada->margem_per=$request->margem_per;
-        $entrada->idusuario=$request->idusuario;
-        $entrada->quantidade_unitaria=$request->quantidade*$produto->unidadedemedida;
-        $entrada->custo_unitario=($request->precodecompra/$request->quantidade/$produto->unidadedemedida);
-        $entrada->margem=$entrada->custo_unitario*($request->margem_per/100);
-        $entrada->preco_final=$request->final_p;
+        $produto = Produtos::find($request->produto_id);
+        $entrada = new Entradas;
+        $entrada->produto_id = $request->produto_id;
+        $entrada->lot = $this->Unqid(12);
+        $entrada->quantidade = $request->quantidade;
+        $entrada->precodecompra = $request->precodecompra;
+        $entrada->margem_per = $request->margem_per;
+        $entrada->idusuario = $request->idusuario;
+        $entrada->quantidade_unitaria = $request->quantidade * $produto->unidadedemedida;
+        $entrada->custo_unitario = ($request->precodecompra / $request->quantidade / $produto->unidadedemedida);
+        $entrada->margem = $entrada->custo_unitario * ($request->margem_per / 100);
+        $entrada->preco_final = $request->final_p;
+        $entrada->min_quantidade_revendedor = $request->min_quantidade_revendedor;
+        $entrada->preco_final_revendedor = $request->preco_final_revendedor;
 
 
-        $entrada->data_exp=$request->data_exp;
-        $entrada->fornecedor=$request->fornecedor;
-        $entrada->telefone=$request->telefone;
-        $entrada->email_fornecedor=$request->email_fornecedor;
+        $entrada->data_exp = $request->data_exp;
+        $entrada->fornecedor = $request->fornecedor;
+        $entrada->telefone = $request->telefone;
+        $entrada->email_fornecedor = $request->email_fornecedor;
 
         $entrada->save();
 
-        return back()->with('success','Successfully Added');
+        return back()->with('success', 'Successfully Added');
     }
 
     public function ajustindex()
     {
 
-      $this->authorize('ajuste');
+        $this->authorize('ajuste');
 
-      $produtos=Produtos::all();
-      $lot=Entradas::distinct('lot')->get();
-      $ajustes=Ajustes::join('produtos','produtos_ajustes.produto_id','produtos.id')
-                      ->join('produtos_entradas','produtos_ajustes.lot_id','produtos_entradas.id')
-                      ->select('produtos_ajustes.*','produtos_entradas.lot','produtos.name','produtos.tipodeunidadedemedida','produtos.unidadedemedida','produtos.codigoproduto','produtos.image')
-                      ->get();
+        $produtos = Produtos::all();
+        $lot = Entradas::distinct('lot')->get();
+        $ajustes = Ajustes::join('produtos', 'produtos_ajustes.produto_id', 'produtos.id')
+            ->join('produtos_entradas', 'produtos_ajustes.lot_id', 'produtos_entradas.id')
+            ->select('produtos_ajustes.*', 'produtos_entradas.lot', 'produtos.name', 'produtos.tipodeunidadedemedida', 'produtos.unidadedemedida', 'produtos.codigoproduto', 'produtos.image')
+            ->get();
 
-      return view('admin.produtos.ajustindex',compact('produtos','lot','ajustes'));
+        return view('admin.produtos.ajustindex', compact('produtos', 'lot', 'ajustes'));
     }
 
-        public function lotid(Request $request)
+    public function lotid(Request $request)
 
     {
 
-        if($request->ajax())
-        {
-        $output="";
+        if ($request->ajax()) {
+            $output = "";
 
-        $data=Entradas::where('produto_id',$request->search)->get();
+            $data = Entradas::where('produto_id', $request->search)->get();
 
-        if($data)
-        {   foreach ($data as $key => $cil) {
-            $output.='<option value="'.$cil->id.'">' .$cil->lot.'</option>';
+            if ($data) {
+                foreach ($data as $key => $cil) {
+                    $output .= '<option value="' . $cil->id . '">' . $cil->lot . '</option>';
+                }
+
+                return Response($output);
             }
-
-            return Response($output);
-        }
         }
     }
 
     public function ajustestore(Request $request)
     {
-       $this->authorize('store_ajuste');
+        $this->authorize('store_ajuste');
 
-        $data=$request->all();
+        $data = $request->all();
         $this->validate($request, [
-            'produto_id'=>'required',
-            'lot_id'=>'required',
-            'quantidade_unidade'=>'required',
-            'decricao'=>'required|max:192',
+            'produto_id' => 'required',
+            'lot_id' => 'required',
+            'quantidade_unidade' => 'required',
+            'decricao' => 'required|max:192',
 
         ]);
 
         Ajustes::create($data);
 
-        return back()->with('success','Successfully Added');
+        return back()->with('success', 'Successfully Added');
     }
 
 
     public function lotshow($id)
     {
-       $this->authorize('show_lot');
+        $this->authorize('show_lot');
 
-        $produtos=Entradas::join('produtos','produtos_entradas.produto_id','produtos.id')
-                            ->where('produtos_entradas.id',$id)
-                            ->select('produtos_entradas.*','produtos.name','produtos.unidadedemedida')
-                            ->get();
+        $produtos = Entradas::join('produtos', 'produtos_entradas.produto_id', 'produtos.id')
+            ->where('produtos_entradas.id', $id)
+            ->select('produtos_entradas.*', 'produtos.name', 'produtos.unidadedemedida')
+            ->first();
 
-        return view('admin.produtos.entradashow',compact('produtos'));
+        return view('admin.produtos.entradashow', compact('produtos'));
     }
 
-    public function loteupdate (Request $request)
+    public function loteupdate(Request $request)
     {
-         $this->authorize('edit_lot');
+        $this->authorize('edit_lot');
 
-        $this->validate($request,[
-          'produto_id'=>'required',
-          'quantidade'=>'required',
-          'precodecompra'=>'required|numeric',
-          'margem_per'=>'required|numeric',
-          'quantidade'=>'required|numeric',
-          'data_exp'=>'nullable|date',
-          'fornecedor'=>'nullable|string|max:255',
-          'telefone'=>'nullable|numeric',
-          'email_fornecedor'=>'nullable|email',
-          'final_p' =>'required|numeric',
+        $this->validate($request, [
+            'produto_id' => 'required',
+            'quantidade' => 'required',
+            'precodecompra' => 'required|numeric',
+            'margem_per' => 'required|numeric',
+            'quantidade' => 'required|numeric',
+            'data_exp' => 'nullable|date',
+            'fornecedor' => 'nullable|string|max:255',
+            'telefone' => 'nullable|numeric',
+            'email_fornecedor' => 'nullable|email',
+            'final_p' => 'required|numeric',
+            'min_quantidade_revendedor' => 'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
+            'preco_final_revendedor' => 'nullable|regex:/^\d+(\.\d{1,2})?$/|numeric',
         ]);
 
-        $produto=Produtos::find($request->produto_id);
-        $entrada= new Entradas;
-        $quantidade=$entrada->quantidade=$request->quantidade;
-        $precodecompra=$entrada->precodecompra=$request->precodecompra;
-        $margem_per=$entrada->margem_per=$request->margem_per;
-        $idusuario=$entrada->idusuario=$request->idusuario;
-        $quantidade_unitaria=$entrada->quantidade_unitaria=$request->quantidade*$produto->unidadedemedida;
-        $custo_unitario=$entrada->custo_unitario=($request->precodecompra/$request->quantidade/$produto->unidadedemedida);
-        $margem=$entrada->margem=$entrada->custo_unitario*($request->margem_per/100);
-        $preco_final=$entrada->preco_final=$request->final_p;
-        $status=$entrada->status=$request->status;
+        $produto = Produtos::find($request->produto_id);
+        $entrada = new Entradas;
+        $quantidade = $entrada->quantidade = $request->quantidade;
+        $precodecompra = $entrada->precodecompra = $request->precodecompra;
+        $margem_per = $entrada->margem_per = $request->margem_per;
+        $idusuario = $entrada->idusuario = $request->idusuario;
+        $quantidade_unitaria = $entrada->quantidade_unitaria = $request->quantidade * $produto->unidadedemedida;
+        $custo_unitario = $entrada->custo_unitario = ($request->precodecompra / $request->quantidade / $produto->unidadedemedida);
+        $margem = $entrada->margem = $entrada->custo_unitario * ($request->margem_per / 100);
+        $preco_final = $entrada->preco_final = $request->final_p;
+        $min_quantidade_revendedor = $entrada->min_quantidade_revendedor = $request->min_quantidade_revendedor;
+        $preco_final_revendedor = $entrada->preco_final_revendedor = $request->preco_final_revendedor;
+        $status = $entrada->status = $request->status;
 
-        $data_exp=$request->data_exp;
-        $fornecedor=$request->fornecedor;
-        $telefone=$request->telefone;
-        $email_fornecedor=$request->email_fornecedor;
+        $data_exp = $request->data_exp;
+        $fornecedor = $request->fornecedor;
+        $telefone = $request->telefone;
+        $email_fornecedor = $request->email_fornecedor;
 
-        $temp_name=Entradas::where('produto_id',$request->produto_id)->get();
+        $temp_name = Entradas::where('produto_id', $request->produto_id)->get();
 
-        $ver=0;
-        if ($status==1)
-        {
-          Entradas::where('produto_id',$request->produto_id)
-                    ->where('status',1)
-                    ->update([
-                      'status' => 0,
-                    ]);
+        $ver = 0;
+        if ($status == 1) {
+            Entradas::where('produto_id', $request->produto_id)
+                ->where('status', 1)
+                ->update([
+                    'status' => 0,
+                ]);
             /*foreach ($temp_name as $value) {
             if ($value->status==1) {
                 $ver=$value->status;
@@ -352,30 +351,26 @@ class ProdutoController extends Controller
 
 
 
-        Entradas::where('id',$request->id)
-                ->update(['quantidade'=>$quantidade,
-                        'precodecompra'=>$precodecompra,
-                        'margem_per'=>$margem_per,
-                        'idusuario'=>$idusuario,
-                        'quantidade_unitaria'=>$quantidade_unitaria,
-                        'custo_unitario'=>$custo_unitario,
-                        'margem'=>$margem,
-                        'preco_final'=>$preco_final,
-                        'status'=>$status,
-                        'data_exp'=>$data_exp,
-                        'fornecedor'=>$fornecedor,
-                        'telefone'=>$telefone,
-                        'email_fornecedor'=>$email_fornecedor,
-                    ]);
+        Entradas::where('id', $request->id)
+            ->update([
+                'quantidade' => $quantidade,
+                'precodecompra' => $precodecompra,
+                'margem_per' => $margem_per,
+                'idusuario' => $idusuario,
+                'quantidade_unitaria' => $quantidade_unitaria,
+                'custo_unitario' => $custo_unitario,
+                'margem' => $margem,
+                'preco_final' => $preco_final,
+                'status' => $status,
+                'data_exp' => $data_exp,
+                'fornecedor' => $fornecedor,
+                'telefone' => $telefone,
+                'email_fornecedor' => $email_fornecedor,
+                'min_quantidade_revendedor' => $min_quantidade_revendedor,
+                'preco_final_revendedor' => $preco_final_revendedor,
+            ]);
 
-        return redirect('produto_entrada')->with('success','Successfully update');
-
-
-
-
-
-
-
+        return redirect('produto_entrada')->with('success', 'Successfully update');
     }
     public function getprodut(Request $request)
     {

@@ -144,7 +144,7 @@ return [
             'url'         => 'email/all',
             'icon'        => 'envelope-open',
             'can'         => 'emails',
-        ],*/
+        ],
         [
 
             'text'        => 'Extract',
@@ -165,7 +165,7 @@ return [
 
                 ],
             ]
-        ],
+        ],*/
         [
         'text' => 'Reporte',
         'icon' => 'bar-chart',

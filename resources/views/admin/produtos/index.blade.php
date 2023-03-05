@@ -49,7 +49,7 @@
             <div class="row">
                     <div class="from-group ">
                         <label>Codigo de Barras</label>
-                        <input type="text" name="codigobarra" id="codigobarra"  value="{{old('codigobarra')}}"  autofocus>
+                        <input type="text" name="codigobarra" id="codigobarra"  value="{{old('codigobarra')}}"  >
                     </div>
             </div>
 
@@ -63,7 +63,7 @@
             <div class="row">
                     <div class="from-group ">
                         <label>Descrição</label>
-                        <input type="text" name="description" id="description"  value="{{old('description')}}" required autofocus>
+                        <input type="text" name="description" id="description"  value="{{old('description')}}" >
                     </div>
             </div>
 

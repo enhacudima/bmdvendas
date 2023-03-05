@@ -43,7 +43,7 @@ class ClienteController extends Controller
     	$this->validate($request, [
             'nome'=>'required|min:3|max:50|string',
             'user_id'=>'required',
-            'apelido'=>'required|min:3|max:50|string',
+            'tipo'=>'required|min:3|max:50|string',
             'endereco'=> 'nullable|min:5|max:255|string',
             'contacto1'=>'nullable|digits:9|unique:cliente',
             'contacto2'=>'nullable|digits:9',
@@ -68,7 +68,7 @@ class ClienteController extends Controller
     	$newdata=$this->validate($request, [
             'nome'=>'required|min:3|max:50|string',
             'user_id'=>'required',
-            'apelido'=>'required|min:3|max:50|string',
+            'tipo'=>'required|min:3|max:50|string',
             'endereco'=> 'nullable|min:5|max:100|string',
             'contacto1'=>'nullable|digits:9',
             'contacto2'=>'nullable|digits:9',
@@ -96,11 +96,11 @@ class ClienteController extends Controller
             $clientes = Cliente::where('contacto1', 'LIKE', '%' . $term .'%')
                             ->orWhere('contacto2', 'LIKE', '%' . $term .'%')
                             ->orwhere('nome','LIKE','%'.$term.'%')
-                            ->orwhere('apelido','LIKE','%'.$term.'%')
+                            ->orwhere('tipo','LIKE','%'.$term.'%')
                             ->get();
 
             foreach ($clientes as $cliente) {
-                $cliente->label   = $cliente->nome.' '.$cliente->apelido . ' (' . $cliente->contacto1 .')';
+                $cliente->label   = $cliente->nome.' '.$cliente->tipo . ' (' . $cliente->contacto1 .')';
             }
 
             return $clientes;

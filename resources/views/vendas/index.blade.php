@@ -14,15 +14,7 @@
 
 @section('content')
   <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-  <link rel="stylesheet" type="text/css" href="{{asset('src/bootstrap-duallistbox.css')}}">
-  <script src="{{ asset('src/jquery.bootstrap-duallistbox.js') }}"></script>
-  <style type="text/css">
-    .bootstrap-duallistbox-container.moveonselect .moveall, .bootstrap-duallistbox-container.moveonselect .removeall {
-        width: 95.2%;
-        border: 0.88px solid;
-    }
 
-  </style>
   <!--sweetalert-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -91,51 +83,44 @@
                                     <thead >
                                     <tr>
                                         <th class="col-md-5">Descrição do Produto</th>
-                                        <th class="col-md-2">Preço.(Mtn)</th>
-                                        <th class="col-md-2">Qua.t</th>
-                                        <th class="col-md-2">Total.(Mtn)</th>
+                                        <th class="col-md-2">Preço (Mtn)</th>
+                                        <th class="col-md-2">Quantidade</th>
+                                        <th class="col-md-2">Total (Mtn)</th>
                                         <th class="col-md-1">Apagar</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if(isset($data_mesa))
-                                    @foreach($data_mesa as $key => $value)
-                                        <tr>
-                                            <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true">
-                                            <input type="text" id="idbulk" name="idbulk" hidden="true" value="{{$value->identificador_de_bulk}}">
-                                            <input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="{{$value->id}}">
-                                        <td >
-                                            <input  class="form-control col-md-5" type="text" name="produt" id="produt"  disabled="" value="{{$value->name}} ">
-                                        </td>
-                                        <td>
-                                            <input  class="form-control col-md-2" step="any" type="number"  name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}">
-                                        </td>
-                                        <td>
-                                            <input  class="form-control col-md-2" step="any" type="number"  name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}">
-                                        </td>
-                                        <td>
-                                            <input   class="form-control col-md-2" step="any" type="number"  name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}">
-                                        </td>
-                                        <td>
-                                            <a type="submit"class="btn btn-block btn-danger btn-flat col-md-1"  data-value="{{$value->id}}" id="delete" href="#">
-                                                <i class="fa fa-trash-o fa-lg" ></i>
-                                            </a>
-                                        </td>
-                                        </tr>
-                                    @endforeach
+                                        @if(isset($data_mesa))
+                                            @foreach($data_mesa as $key => $value)
+                                                <tr>
+                                                    <input type="" name="mesa_id" value="{{$mesa_id}}" hidden="true">
+                                                    <input type="text" id="idbulk" name="idbulk" hidden="true" value="{{$value->identificador_de_bulk}}">
+                                                    <input step="0.01" type="number" id="id[]" name="id[]" hidden="true" value="{{$value->id}}">
+                                                <td >
+                                                    <input  class="form-control col-md-5" type="text" name="produt" id="produt"  disabled="" value="{{$value->name}} ">
+                                                </td>
+                                                <td>
+                                                    <input  class="form-control col-md-2" step="any" type="number"  name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="updateQuantity(this.value,{{$value->id}})"  class="form-control col-md-2 " data-id="{{$value->id}}" step="any" type="number"  name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}">
+                                                </td>
+                                                <td>
+                                                    <input   class="form-control col-md-2" step="any" type="number"  name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}">
+                                                </td>
+                                                <td>
+                                                    <a type="submit"class="btn btn-block btn-danger btn-flat col-md-1"  data-value="{{$value->id}}" id="delete" href="#">
+                                                        <i class="fa fa-trash-o fa-lg" ></i>
+                                                    </a>
+                                                </td>
+                                                </tr>
+                                            @endforeach
 
-                                    @endif
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
-                            </div>
-                            <br>
-
-                            @if ($data_mesa)
-                            <button type="submit" class="btn btn-block btn-primary btn-flat" style=" margin-bottom: 15px"><i class="fa fa-refresh" ></i> Atualizar</button>
-                            @endif
-
-
+                        </div>
                 </form>
 
                 </div>
@@ -191,7 +176,7 @@
 
             </div>
             <div class="col-md-4">
-                 <a class="btn btn-block btn-info btn-flat" href="#" id="factura"  target="_blanck"><i class="fa fa-print" aria-hidden="true"> </i></a>
+                 <a class="btn btn-block btn-info btn-flat"  id="factura"   target="_blanck"><i class="fa fa-print" aria-hidden="true"> </i></a>
             </div>
 
           </div>
@@ -282,7 +267,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <input class="form-control " type="text" name="referencia[]" value="0" disabled="" >
+                                        <input class="form-control " type="text" name="referencia[]" value="" disabled="" >
                                     </div>
 
                                     <div class="col-md-3">
@@ -356,7 +341,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <input class="form-control " type="text" name="referencia[]" value="0"  >
+                                        <input class="form-control " type="text" name="referencia[]" value=""  >
                                     </div>
 
                                     <div class="col-md-3">
@@ -374,7 +359,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <input class="form-control " type="text" name="referencia[]" value="0" >
+                                        <input class="form-control " type="text" name="referencia[]" value="" >
                                     </div>
 
                                     <div class="col-md-3">
@@ -392,7 +377,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <input class="form-control " type="text" name="referencia[]" value="0"  >
+                                        <input class="form-control " type="text" name="referencia[]" value=""  >
                                     </div>
 
                                     <div class="col-md-3">
@@ -410,7 +395,7 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <input class="form-control " type="text" name="referencia[]" value="0"  >
+                                        <input class="form-control " type="text" name="referencia[]" value=""  >
                                     </div>
 
                                     <div class="col-md-3">
@@ -495,7 +480,40 @@
         </div>
 
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.update-quantity').keyup(function(){
+            $q = this
+            updateQuantity($q.value,$q.getAttribute("data-id"))
+        })
+    });
 
+    function updateQuantity($q,$id){
+        console.log($q)
+        $idbulk=($('[name="idbulk"]').val());
+        $mesa_id=($('[name="mesa_id"]').val());
+
+        $.ajax({
+            url: "{{URL('atualizarvendatemp')}}",
+            type:'POST',
+            data: {idbulk:$idbulk,mesa_id:$mesa_id,id:[$id],quantidade:[$q]},
+
+            success: function(data) {
+                $('#reclatodas > tbody') .html(data);
+                    //retornando total
+                    var total=$('[name="total[]"]')
+                    var __total=[];
+                    var sum=0;
+                    var _total=0;
+
+                    for (var i=0;i<total.length;i++){
+                    __total=$(total).eq(i).val();
+                    _total=parseFloat(__total)+parseFloat(_total);
+                    }
+                    $(".total").val( Number(_total).toFixed(2));
+        }});
+    }
+</script>
 
         <script type="text/javascript">
             var jqxhr = {abort: function () {}};
@@ -553,7 +571,7 @@
             <script>
 
 
-              function produtostockadd($id) {
+              function produtostockadd($id,$entrada) {
                 $mesa_id=($('[name="mesa_id"]').val());
                 $formtype=($('[name="formtype"]').val());
                 $idbulk=($('[name="identificador_de_bulk"]').val());
@@ -561,7 +579,7 @@
                 $.ajax({
                   url: "{{URL('saveselection')}}",
                   type:'POST',
-                  data: {produt_id:$id,mesa_id:$mesa_id,formtype:$formtype,idbulk:$idbulk},
+                  data: {produt_id:$id, entrada_id:$entrada, mesa_id:$mesa_id, formtype:$formtype, idbulk:$idbulk},
                   success: function(data) {
                         $('#reclatodas > tbody') .html(data);
 
@@ -592,62 +610,6 @@
                 });
             </script>
 
-            <script type="text/javascript">
-                //atualizando os dados na tabela temporaria
-                $("#carrinhoform").submit(function(e){
-                    e.preventDefault();
-                    var id = $('[name="id[]"]');
-                    var quantidade = $('[name="quantidade[]"]');
-                    var _id = [];
-                    var _quantidade=[];
-
-                    $idbulk=($('[name="idbulk"]').val());
-                    $mesa_id=($('[name="mesa_id"]').val());
-
-                    for (var i = 0; i < id.length; i++) {
-                        _id.push($(id).eq(i).val());
-                        _quantidade.push($(quantidade).eq(i).val())
-
-                    }
-                    //alert(JSON.stringify(p));//or alert(p)
-                    //alert(_id+''+_quantidade+''+idbulk);
-
-                $.ajax({
-                  url: "{{URL('atualizarvendatemp')}}",
-                  type:'POST',
-                  data: {idbulk:$idbulk,mesa_id:$mesa_id,id:_id,quantidade:_quantidade},
-
-                  success: function(data) {
-                        $('#reclatodas > tbody') .html(data);
-
-                            //retornando total
-                             var total=$('[name="total[]"]')
-                             var __total=[];
-                             var sum=0;
-                             var _total=0;
-
-                             for (var i=0;i<total.length;i++){
-                                __total=$(total).eq(i).val();
-                                _total=parseFloat(__total)+parseFloat(_total);
-                             }
-                            //alert(parseFloat(_total))
-                                $(".total").val( Number(_total).toFixed(2));
-                                //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
-                                //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
-
-                                //produtoStock()
-
-
-
-
-                    //alert(data);
-
-
-                }});
-
-
-                });
-            </script>
 
             <script type="text/javascript">
                 //Atualizando o preço final do carrinho
@@ -679,7 +641,6 @@
             $(document).ready(function(){
 
                 $('.valor').keyup(function(){
-
                      var total=$('[name="valor[]"]')
                      var __total=[];
                      var sum=0;
@@ -700,9 +661,7 @@
                         $("#troco").val(troco);
 
                     }
-
-
-                        $("#ppago").val(realporpagar);
+                    $("#ppago").val(realporpagar);
 
                     });
             });
@@ -770,6 +729,7 @@
                   data: {fpagamento:_fpagamento,detalhes:_detalhes,referencia:_referencia,valor:_valor,mesa_id:$mesa_id,porpagar:$porpagar,pago:$pago,ppago:$ppago,_troco:$troco,formtype:$formtype,cliente:_cliente},
 
                   success: function(data) {
+                        document.getElementById("ticket-edit-mesa-modal").style.display = "none";
                         ultimasvendas();
                         //zerando os campos
                         $porpagar=($('[name="porpagar"]').val(0));
@@ -952,9 +912,7 @@
                              }
                             //alert(parseFloat(_total))
                                 $(".total").val( Number(_total).toFixed(2));
-                                //document.getElementById("spanTotal").innerHTML= Number(_total-(_total*0.17)).toFixed(2);
-                                //document.getElementById("spanTotalVendas").innerHTML=Number(_total*0.17).toFixed(2);
-                                //produtoStock();
+
 
 
                 }}
@@ -998,6 +956,7 @@
                         $('input[name="loanidshow"]').val(ui.item.label);
                         $('input[name="cliente"]').val(ui.item.id);
                         document.getElementById("creditar").disabled = false;
+                        document.getElementById("factura").disabled = false;
                         //set id cliente on link
                         var identificador_de_bulk = $('.identificador_de_bulk').val();
                         var link = document.getElementById("factura");

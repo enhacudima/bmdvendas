@@ -36,8 +36,8 @@
                             </div>
                             <div class="row">
                                     <div class="from-group col-lg-12">
-                                        <label>Apelido</label>
-                                        <input type="text" name="apelido" id="sname" class="form-control" value="{{$client->apelido}}" required autofocus>
+                                        <label>Tipo de Cliente</label>
+                                        <input type="text" name="tipo" id="tipo" class="form-control" value="{{$client->tipo}}" required autofocus>
                                     </div>
                             </div>
 

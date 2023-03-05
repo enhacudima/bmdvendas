@@ -55,8 +55,7 @@
             </td>
             <td align="center">
                 <img src="{{ asset('imglogo/pp.jpg') }}" alt="Logo" width="150" class="logo"/><br><br>
-                <i>{{$itens[0]->nome}} {{$itens[0]->apelido}}</i><br>
-                <i>{{$itens[0]->nuit}}</i><br>
+
 
                 {{config('company.address')}}<br>
                 @if(config('company.country'))  {{config('company.country')}} <br> @endif
@@ -67,6 +66,9 @@
                 Operador: {{Auth::user()->name}}<br>
                 Código: {{$itens[0]->codigo_venda}}
                 <br />
+                @if(isset($itens[0]->nome))
+                Cliente: <i>{{$itens[0]->nome}} {{$itens[0]->apelido}}</i><br>
+                @endif
                 Date: {{ date('d-M-Y H:m') }}<br>
 
 
@@ -151,7 +153,7 @@
 
             </div>
             <hr>
-             <i>Power By Evidevi</i>
+             Power By Evidevi
             </td>
         </tr>
 
