@@ -489,7 +489,7 @@
     });
 
     function updateQuantity($q,$id){
-        console.log($q)
+        //console.log($q)
         $idbulk=($('[name="idbulk"]').val());
         $mesa_id=($('[name="mesa_id"]').val());
 
@@ -888,7 +888,7 @@
 
                     $value=$(this).data("value");
                     //alert($value);
-                    console.log($value);
+                    //console.log($value);
                 if (confirm("Clique 'Ok' para continuar"))
                 {
                   $.ajax({

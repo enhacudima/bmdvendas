@@ -224,8 +224,10 @@ class VendasController extends Controller
                 if ($request->formtype == "car") {
                     $produtos->car_id = $car_name->id;
                 }
-
-                $produtos->save();
+                $check = $this->CheckQt($entrada_id, $quantidate);
+                if($check){
+                    $produtos->save();
+                }
             }
 
 
@@ -262,6 +264,16 @@ class VendasController extends Controller
         }
     }
 
+    private function CheckQt($entrada_id, $quantidadeNova)
+    {
+        $entrada = DB::table('produtos_venda_view')->where('entrada_id',$entrada_id)->first();
+        if ($entrada->saldo >= $quantidadeNova) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function atualizarvendatemp(Request $request)
     {
         $this->authorize('actualizar_venda_temp_venda');
@@ -281,7 +293,11 @@ class VendasController extends Controller
                 $produtos->user_id = auth()->user()->id;
                 $produtos->quantidade = $quantidade[$key];
                 $produtos->price_unit = $this->getUnitPrice($produtos->entrada_id, $quantidade[$key]);
-                $produtos->save();
+
+                $check = $this->CheckQt($produtos->entrada_id, $quantidade[$key]);
+                if ($check) {
+                    $produtos->save();
+                }
             }
 
             if ($request->formtype == "car") {
