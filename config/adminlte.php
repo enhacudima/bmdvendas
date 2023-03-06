@@ -172,21 +172,21 @@ return [
         'can'  => 'report',
         'submenu'=>[
                     [
-                     'text'=> 'Movimentos',
-                     'url'  => 'report_produt',
-
-                    ],
-                    [
                      'text'=> 'Stock Atual',
                      'url'  => 'report_stock_atual',
 
                     ],
                     [
                         'text' => 'Vendas',
-                        'submenu' =>[
+                        'submenu' => [
                                         [
-                                         'text'=> 'Facturas',
-                                         'url'  => 'vendas_facturas ',
+                                        'text'=> 'Facturas',
+                                        'url'  => 'vendas_facturas ',
+
+                                        ],
+                                        [
+                                            'text' => 'Vendas',
+                                            'url'  => 'report_produt',
 
                                         ],
                                         [

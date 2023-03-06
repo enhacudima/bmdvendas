@@ -26,10 +26,10 @@ class ClienteController extends Controller
 
     public function clienteshow($id)
     {
-
         $this->authorize('show_cliente');
 
-    	$client=Cliente::find($id);
+    	$client=Cliente::with('vendas.caixa.produtos')->find($id);
+        //dd($client->vendas);
 
     	return view('admin.cliente.show',compact('client'));
     }

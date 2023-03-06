@@ -13,7 +13,7 @@
     <div class="panel panel-default">
 
     <div class="panel-heading">
-        <h4>Report Ajuste de Produto
+        <h4>Report de venda Produto
         </h4>
     </div>
 
@@ -84,13 +84,13 @@
             <thead >
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Data</th>
                 <th scope="col">Produto</th>
+                <th scope="col">Marca</th>
                 <th scope="col">Lot</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Preço Únitario</th>
-                <th scope="col">Total Entrada (unidade)</th>
-                <th scope="col">Total Ajuste (unidade)</th>
-                <th scope="col">Variance (unidade)</th>
+                <th scope="col">Total Venda (unidade)</th>
                 <th scope="col">Total de Saida</th>
             </tr>
             </thead>
@@ -100,14 +100,16 @@
             @foreach($movimentos as $key => $cil)
                 <tr>
                  <td>{{++$key}}</td>
+                 <td>{{$cil->updated_at}}</td>
                  <td>
                     <a class="btn btn btn-success btn-xs" href="{{action('ProdutoController@show', $cil->produto_id)}}">
                         <i class="fa fa-pencil fa-fw"></i> {{$cil->name}}
                     </a>
                 </td>
+                <td>{{$cil->brand}}</td>
                 <td>
-                 <a class="btn btn btn-primary btn-xs" href="{{action('ProdutoController@lotshow', $cil->id)}}">
-                    <i class="fa fa-pencil fa-fw"></i> {{$cil->entrada_lot}}
+                 <a class="btn btn btn-primary btn-xs" href="{{action('ProdutoController@lotshow', $cil->entrada_id)}}">
+                    <i class="fa fa-pencil fa-fw"></i> {{$cil->lot}}
                  </a>
                 </td>
 
@@ -117,12 +119,11 @@
                     <td><span class="label label-warning">Desativado</span></td>
                  @endif
 
-                <td>{{number_format($cil->entrada_preco, 2)}} MTN</td>
-                <td>{{$cil->total_entrada}}</td>
-                <td>{{$cil->total_saida}}</td>
-                <td>{{$cil->total_entrada - $cil->total_saida}}</td>
-                <td>{{number_format($cil->entrada_preco * $cil->total_saida, 2)}} MTN</td>
-                @php($i=$cil->entrada_preco * $cil->total_saida+$i)
+
+                <td>{{$cil->price_unit}}</td>
+                <td>{{$cil->quantidade}}</td>
+                <td>{{number_format($cil->total, 2)}} MTN</td>
+                @php($i=$cil->total + $i)
                 </tr>
             @endforeach
                 <tr>

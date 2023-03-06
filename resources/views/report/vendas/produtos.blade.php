@@ -87,9 +87,9 @@
             <thead >
             <tr>
                 <th scope="col">Produto</th>
-                <th scope="col">Preço Unitario (Mtn)</th>
+                <th scope="col">Marca</th>
                 <th scope="col">Quantidade</th>
-                <th scope="col">Total Vendido</th>
+                <th scope="col">Total Vendido (Mtn)</th>
             </tr>
             </thead>
             <tbody>
@@ -99,12 +99,12 @@
             @foreach($movimentos as $cil)
                 <tr>
                 <td>{{$cil->name}}</td>
-                <td>{{number_format($cil->preco,2)}}</td>
+                <td>{{$cil->brand}}</td>
                 <td>{{number_format($cil->quantidade,2)}}</td>
-                <td>{{number_format($cil->quantidade*$cil->preco,2)}}</td>
+                <td>{{number_format($cil->total,2)}}</td>
                 </tr>
                 @php($p=$cil->quantidade+$p)
-                @php($t=$cil->quantidade*$cil->preco+$t)
+                @php($t=$cil->total+$t)
             @endforeach
                 <tr>
                     <td></td>
@@ -124,6 +124,8 @@
 </div>
 @stop
 @section('js')
+
+
     <script>
 
     $(document).ready(function() {
@@ -149,8 +151,7 @@
 @stop
 
 @section('css')
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css">
+
 
 <style type="text/css">
     .dataTables_wrapper .dt-buttons {

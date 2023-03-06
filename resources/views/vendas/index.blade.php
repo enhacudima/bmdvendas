@@ -103,7 +103,7 @@
                                                     <input  class="form-control col-md-2" step="any" type="number"  name="preco_final[]" id="preco_final[]" disabled="true" value="{{$value->preco_final}}">
                                                 </td>
                                                 <td>
-                                                    <input onkeyup="updateQuantity(this.value,{{$value->id}})"  class="form-control col-md-2 " data-id="{{$value->id}}" step="any" type="number"  name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}">
+                                                    <input onChange="updateQuantity(this.value,{{$value->id}})"  class="form-control col-md-2 " data-id="{{$value->id}}" step="any" type="number"  name="quantidade[]" id="quantidade[]"  value="{{$value->quantidade}}">
                                                 </td>
                                                 <td>
                                                     <input   class="form-control col-md-2" step="any" type="number"  name="total[]" id="total[]"  disabled="" value="{{$value->quantidade * $value->preco_final}}">

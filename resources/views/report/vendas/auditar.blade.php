@@ -103,9 +103,7 @@
             <thead >
             <tr>
                 <th scope="col">Produto</th>
-                <th scope="col">Preço Unitario (Mtn)</th>
                 <th scope="col">Quantidade</th>
-                <th scope="col">Total Vendido</th>
             </tr>
             </thead>
             <tbody>
@@ -115,18 +113,14 @@
                 @foreach($movimentos as $cil)
                     <tr>
                     <td>{{$cil->name}}</td>
-                    <td>{{number_format($cil->preco,2)}}</td>
                     <td>{{number_format($cil->quantidade,2)}}</td>
-                    <td>{{number_format($cil->quantidade*$cil->preco,2)}}</td>
                     </tr>
                     @php($p=$cil->quantidade+$p)
                     @php($t=$cil->quantidade*$cil->preco+$t)
                 @endforeach
                     <tr>
-                        <td></td>
                         <td>Total:</td>
                         <td>{{number_format($p,2)}} Uni</td>
-                        <td>{{number_format($t,2)}} MTN</td>
                     </tr>
                 @endif
             </tbody>

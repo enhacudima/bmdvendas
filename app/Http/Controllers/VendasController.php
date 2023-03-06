@@ -636,7 +636,7 @@ class VendasController extends Controller
                         <input class="form-control col-md-2" step="0.01" type="number" name="preco_final[]" id="preco_final[]" disabled="true" value="' . $value->preco_final . '">
                         </td>
                         <td>
-                        <input onkeyup="updateQuantity(this.value,' . $value->id . ')" class="form-control col-md-2  " data-id="' . $value->id . '" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="' . ($value->quantidade ? $value->quantidade : 0)  . '">
+                        <input onChange="updateQuantity(this.value,' . $value->id . ')" class="form-control col-md-2  " data-id="' . $value->id . '" step="0.01" type="number" name="quantidade[]" id="quantidade[]"  value="' . ($value->quantidade ? $value->quantidade : 0)  . '">
                         </td>
                         <td>
                         <input  class="form-control col-md-2" step="0.01" type="number" name="total[]" id="total[]"  disabled="" value="' . $value->quantidade * $value->preco_final . '">

@@ -88,7 +88,10 @@
 
                         </form>
                 </div>
-            </div>
+        </div>
+
+    @include('admin.cliente.sales')
+
 <script type="text/javascript">
 
 $(document).ready(function(){

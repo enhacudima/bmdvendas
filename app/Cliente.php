@@ -13,9 +13,10 @@ class Cliente extends Model
 
     public $timestamps=true;
 
- 	public function pacientes ()
- 	{
- 		return $this->hasMany('App\Paciente','cliente_id','id');
- 	}
-    
+
+    public function vendas()
+    {
+        return $this->hasMany('App\ClienteVenda', 'cliente_id', 'id');
+    }
+
 }

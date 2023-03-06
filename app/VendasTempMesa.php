@@ -12,4 +12,10 @@ class VendasTempMesa extends Model
     public $primaryKey = 'id';
 
     public $timestamps=true;
+
+
+    public function produtos()
+    {
+        return $this->belongsTo('App\Produtos', 'produto_id', 'id');
+    }
 }

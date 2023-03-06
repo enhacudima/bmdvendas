@@ -37,7 +37,7 @@ class ReportController extends Controller
 
         $this->authorize('report');
 
-        $movimentos = DB::table('produtos_venda_view')->get();
+        $movimentos = DB::table('vendas_view')->get();
 
 
         return view('report.movimentos.report', compact('movimentos'));
@@ -70,33 +70,10 @@ class ReportController extends Controller
         $radio = $request->radio;
 
 
-        if ($radio == "movimento") {
+        $movimentos = DB::table('vendas_view')->whereBetween('created_at', [$inicio, $fim])->get();
 
-            $movimentos = DB::table('produtos_venda_view')->whereBetween('created_at', [$inicio, $fim])->get();
+        return view('report.movimentos.report', compact('movimentos'));
 
-
-            return view('report.movimentos.report', compact('movimentos'));
-        } elseif ($radio == "ajuste") {
-            return "This function has been disabled by the administrator";
-            $movimentos = DB::table('produtos_entradas_view')
-                ->whereBetween('produtos_ajustes_view.created_at', [$inicio, $fim])
-                ->join('produtos', 'produtos_entradas_view.id', 'produtos.id')
-                ->leftjoin('produtos_ajustes_view', 'produtos_entradas_view.entrada_lot', 'produtos_ajustes_view.lot')
-                ->select(
-                    'produtos.id',
-                    'produtos.name',
-                    'produtos_entradas_view.entrada_lot',
-                    'produtos_ajustes_view.lot',
-                    'produtos_entradas_view.entrada_preco',
-                    DB::raw('Sum(produtos_ajustes_view.total_ajuste) as total_ajuste '),
-                    DB::raw('Sum(produtos_entradas_view.total_entrada) as total_entrada')
-                )
-                ->groupby('produtos_ajustes_view.lot', 'produtos.name', 'produtos.id', 'produtos_entradas_view.entrada_lot', 'entrada_preco')
-                ->get();
-
-
-            return view('report.movimentos.report', compact('movimentos'));
-        }
     }
 
     public function reportMovimentoFilterAtual(Request $request)
@@ -239,14 +216,7 @@ class ReportController extends Controller
 
     public function reportProdutoVenda()
     {
-        $movimentos = Ajustes::join('produtos', 'produtos_ajustes.produto_id', 'produtos.id')
-            ->select(
-                'produtos.name as name',
-                'produtos_ajustes.preco_uni as preco',
-                DB::raw('Sum(produtos_ajustes.quantidade_unidade) as quantidade')
-            )
-            ->groupby('produtos.name', 'produtos_ajustes.preco_uni')
-            ->get();
+        $movimentos = DB::table('vendas_produtos_view')->get();
 
 
         return view('report.vendas.produtos', compact('movimentos'));
@@ -269,27 +239,12 @@ class ReportController extends Controller
         $radio = $request->radio;
 
         if ($radio == "criacao") {
-            $movimentos = Ajustes::whereBetween('produtos_ajustes.created_at', [$inicio, $fim])
-                ->join('produtos', 'produtos_ajustes.produto_id', 'produtos.id')
-                ->select(
-                    'produtos.name as name',
-                    'produtos_ajustes.preco_uni as preco',
-                    DB::raw('Sum(produtos_ajustes.quantidade_unidade) as quantidade')
-                )
-                ->groupby('produtos.name', 'produtos_ajustes.preco_uni')
+            $movimentos = DB::table('vendas_produtos_view')->whereBetween('created_at', [$inicio, $fim])
                 ->get();
             return view('report.vendas.produtos', compact('movimentos'));
         } elseif ($radio == "atualizacao") {
-            $movimentos = Ajustes::whereBetween('produtos_ajustes.updated_at', [$inicio, $fim])
-                ->join('produtos', 'produtos_ajustes.produto_id', 'produtos.id')
-                ->select(
-                    'produtos.name as name',
-                    'produtos_ajustes.preco_uni as preco',
-                    DB::raw('Sum(produtos_ajustes.quantidade_unidade) as quantidade')
-                )
-                ->groupby('produtos.name', 'produtos_ajustes.preco_uni')
+            $movimentos = DB::table('vendas_produtos_view')->whereBetween('updated_at', [$inicio, $fim])
                 ->get();
-
             return view('report.vendas.produtos', compact('movimentos'));
         }
     }
