@@ -36,8 +36,18 @@
                             </div>
                             <div class="row">
                                     <div class="from-group col-lg-12">
-                                        <label>Tipo de Cliente</label>
-                                        <input type="text" name="tipo" id="tipo" class="form-control" value="{{$client->tipo}}" required autofocus>
+                                        <label>Tipo e Cliente</label>
+                                        <select name="tipo" id="tipo" class="form-control" required autofocus >
+                                            <option selected disabled value="{{ $client->tipo}}">
+                                                {{ $client->tipo}}
+                                            </option>
+                                            <option value="Grossista">
+                                                Grossista
+                                            </option>
+                                            <option value="Retalhista">
+                                                Retalhista
+                                            </option>
+                                        </select>
                                     </div>
                             </div>
 

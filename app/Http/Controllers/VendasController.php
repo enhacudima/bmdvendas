@@ -24,6 +24,7 @@ class VendasController extends Controller
 
     use UniqueIDTrait;
 
+    public $minQtG = 10;
 
     public function __construct()
     {
@@ -87,8 +88,8 @@ class VendasController extends Controller
         <b>Marca:</b> ' . $value->brand . '<br>
         <b>Unidade:</b> ' . $value->tipodeunidadedemedida . ' (' . $value->unidadedemedida . ')' . '<br>
         <b>Codigo:</b> ' . $value->codigoproduto . '<br>
-        <b style="color:orange">Preço: ' . number_format(round($value->entrada_preco, 2)) . ' MT</b><br>
-        <b style="color:orange">Revendedor: ' . number_format(round($value->preco_final_revendedor, 2)) . 'Mtn, (Min '. number_format(round($value->min_quantidade_revendedor, 2)) .')</b><br>
+        <b style="color:green">Preço: ' . number_format(round($value->entrada_preco, 2)) . ' MT</b><br>
+        <b style="color:orange">Preço de Revendedor: ' . number_format(round($value->preco_final_revendedor, 2)) . 'Mtn</b><br>
         <b>Em Stock:</b> ' . number_format(round($q, 2), 2, ',', ' ') . ' Unt ' . $msg . '
         </td>
         <td>' .
@@ -219,7 +220,7 @@ class VendasController extends Controller
                 $produtos->entrada_id = $entrada_id;
                 $produtos->identificador_de_bulk = $identificador_de_bulk;
                 $produtos->mesa_id = $data['mesa_id'];
-                $produtos->price_unit = $this->getUnitPrice($entrada_id, $quantidate);
+                //$produtos->price_unit = $this->getUnitPrice($entrada_id, $quantidate);
 
                 if ($request->formtype == "car") {
                     $produtos->car_id = $car_name->id;
@@ -227,6 +228,7 @@ class VendasController extends Controller
                 $check = $this->CheckQt($entrada_id, $quantidate);
                 if($check){
                     $produtos->save();
+                    $this->getUnitPrices($produtos->identificador_de_bulk);
                 }
             }
 
@@ -253,13 +255,12 @@ class VendasController extends Controller
     private function getUnitPrice($entrada_id, $quantidadeNova)
     {
         $entrada = Entradas::find($entrada_id);
-        if ($entrada->min_quantidade_revendedor > 0) {
-            if ($quantidadeNova >= $entrada->min_quantidade_revendedor) {
+        if ($quantidadeNova >= $this->minQtG) {
+            if($entrada->preco_final_revendedor > 0){
                 return $entrada->preco_final_revendedor;
-            }else{
-                return $entrada->preco_final;
             }
-        } else {
+            return $entrada->preco_final;
+        }else{
             return $entrada->preco_final;
         }
     }
@@ -292,11 +293,12 @@ class VendasController extends Controller
                 $produtos = VendasTempMesa::find($value);
                 $produtos->user_id = auth()->user()->id;
                 $produtos->quantidade = $quantidade[$key];
-                $produtos->price_unit = $this->getUnitPrice($produtos->entrada_id, $quantidade[$key]);
+                //$produtos->price_unit = $this->getUnitPrice($produtos->entrada_id, $quantidade[$key]);
 
                 $check = $this->CheckQt($produtos->entrada_id, $quantidade[$key]);
                 if ($check) {
                     $produtos->save();
+                    $this->getUnitPrices($produtos->identificador_de_bulk);
                 }
             }
 
@@ -317,6 +319,17 @@ class VendasController extends Controller
             $output = $this->dataMesaTemp($data_mesa);
             return response($output);
         }
+    }
+
+    private function getUnitPrices($identificador_de_bulk)
+    {
+        $prods = VendasTempMesa::where('identificador_de_bulk', $identificador_de_bulk)->get();
+        $tQt = VendasTempMesa::where('identificador_de_bulk', $identificador_de_bulk)->sum('quantidade');
+        foreach ($prods as $key => $prod) {
+            $prod->price_unit = $this->getUnitPrice($prod->entrada_id, $tQt);
+            $prod->save();
+        }
+
     }
 
     function data_mesa($mesa_id, $filter = 'mesa_id')
@@ -559,7 +572,7 @@ class VendasController extends Controller
             $mesa_id = VendasTempMesa::find($linha_id);
 
             VendasTempMesa::where('id', $linha_id)->delete();
-
+            $this->getUnitPrices($mesa_id->identificador_de_bulk);
 
             if ($request->formtype == "car") {
                 $data_mesa = VendasTempMesa::where('mesa_id', $mesa_id->mesa_id)->whereNull('codigo_venda')->where('vendas_temp_mesa.car_id', $car_)

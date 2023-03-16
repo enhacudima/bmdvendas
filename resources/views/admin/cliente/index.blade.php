@@ -35,7 +35,14 @@
             <div class="row">
                     <div class="from-group col-lg-12">
                         <label>Tipo e Cliente</label>
-                        <input type="text" name="tipo" id="tipo" class="form-control" value="{{old('tipo')}}" required autofocus>
+                        <select name="tipo" id="tipo" class="form-control" required autofocus >
+                            <option value="Grossista" @selected(old('tipo') == "Grossista")>
+                                Grossista
+                            </option>
+                            <option value="Retalhista" @selected(old('tipo') == "Retalhista")>
+                                Retalhista
+                            </option>
+                        </select>
                     </div>
             </div>
             <div class="row">

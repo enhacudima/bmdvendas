@@ -47,7 +47,7 @@
                  <!--end-->
                 <table id="produtosVenda" class="table table-striped  table-hover" cellspacing="0" width="100%">
                     <thead>
-                        <th width="20%">Image</th>
+                        <th width="20%"></th>
                         <th width="70%">Detalhes</th>
                         <th width="10%">Ação</th>
                     </thead>
