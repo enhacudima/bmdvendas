@@ -36,11 +36,11 @@
                     <div class="from-group col-lg-12">
                         <label>Tipo e Cliente</label>
                         <select name="tipo" id="tipo" class="form-control" required autofocus >
-                            <option value="Grossista" @selected(old('tipo') == "Grossista")>
-                                Grossista
+                            <option value="Revendedor" @selected(old('tipo') == "Revendedor")>
+                                Revendedor
                             </option>
-                            <option value="Retalhista" @selected(old('tipo') == "Retalhista")>
-                                Retalhista
+                            <option value="Particular" @selected(old('tipo') == "Particular")>
+                                Particular
                             </option>
                         </select>
                     </div>

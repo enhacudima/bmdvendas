@@ -41,11 +41,11 @@
                                             <option selected disabled value="{{ $client->tipo}}">
                                                 {{ $client->tipo}}
                                             </option>
-                                            <option value="Grossista">
-                                                Grossista
+                                            <option value="Revendedor">
+                                                Revendedor
                                             </option>
-                                            <option value="Retalhista">
-                                                Retalhista
+                                            <option value="Particular">
+                                                Particular
                                             </option>
                                         </select>
                                     </div>
